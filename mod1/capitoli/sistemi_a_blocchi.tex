@@ -372,3 +372,447 @@ e di conseguenza anche lo schema equivalente
 	\draw [->] (x) -- node[]{\(X(s)\)} (ctrl);
 	\draw [->] (ctrl) -- node[]{\(Y(s)\)} (y);
 \end{tikzpicture}\end{center}
+
+\subsection{Esercizi}
+\begin{esercizio}[Dati \(A=\frac{1}{2}\) e \(y=x\), determinare \(B\)] ~ % fixes paragraph spacing
+
+\begin{center}\begin{tikzpicture}[auto,node distance=2cm,>=latex']
+	\node [input] (u) {};
+	\node [tmp, right of=u] (tmp1) {};
+	\node [tmp, right of=tmp1] (tmp2) {};
+	\node [sum, right of=tmp2, node distance=2cm] (sum) {};
+	\node [block, above of=tmp2, node distance=1cm] (A) {\(A\)};
+	\node [block, below of=tmp2, node distance=1cm] (B) {\(B\)};
+	\node [sum, right of=A] (sumA) {};
+	\node [sum, right of=B] (sumB) {};
+	\node [output, right of=sum] (y) {};
+	\draw (u) -- node[pos=0]{\(u\)} (tmp1);
+	\draw [->] (tmp1) |- (A);
+	\draw [->] (tmp1) |- (B);
+	\draw (tmp1) -- (tmp2);
+	\draw [->] (tmp2) -| node[pos=0.9,anchor=west]{\(-\)} (sumA);
+	\draw [->] (tmp2) -| node[pos=0.9,anchor=west]{\(-\)} (sumB);
+	\draw [->] (A) -- (sumA);
+	\draw [->] (B) -- (sumB);
+	\draw [->] (sumA) -| (sum);
+	\draw [->] (sumB) -| (sum);
+	\draw [->] (sum) -- node[pos=1]{\(y\)} (y);
+\end{tikzpicture}\end{center}
+
+Applicando la teoria, si ricava l'equazione \(y = Ax + Bx - x - x = x(A+B -2)\).
+Sostituendo le condizioni, si ha \(\frac{1}{2} + B - 2 = 1\), ovvero
+\[
+	B = \frac{5}{2}
+\]
+\end{esercizio}
+
+\begin{esercizio}[Dati \(A=2\), \(B=\frac{1}{2}\), \(y=3x\), determinare \(C\)] ~
+
+\begin{center}\begin{tikzpicture}[auto,node distance=2cm,>=latex']
+	\node [input] (x) {};
+	\node [sum, right of=x] (sum) {};
+	\node [block, right of=sum] (B) {\(B\)};
+	\node [block, above of=B, node distance=1.5cm] (A) {\(A\)};
+	\node [block, below of=B, node distance=1.5cm] (C) {\(C\)};
+	\node [tmp, right of=B] (tmp) {};
+	\node [output, right of=tmp] (y) {};
+	\draw [->] (x) -- node[pos=0]{\(x\)} (sum);
+	\draw [->] (sum) -- (B) -- (tmp) -- node[pos=1]{\(y\)} (y);
+	\draw [->] (tmp) |- (A) -| node[pos=0.9,anchor=west]{\(-\)} (sum);
+	\draw [->] (tmp) |- (C) -| node[pos=0.9,anchor=west]{\(-\)} (sum);
+\end{tikzpicture}\end{center}
+
+Riconoscendo che \(A \| C\), posso semplificare il blocco come segue:
+\begin{center}\begin{tikzpicture}[auto,node distance=2cm,>=latex']
+	\node [input] (x) {};
+	\node [sum, right of=x] (sum) {};
+	\node [block, right of=sum] (B) {\(B\)};
+	\node [block, below of=B, node distance=1.5cm] (C) {\(A + C\)};
+	\node [tmp, right of=B] (tmp) {};
+	\node [output, right of=tmp] (y) {};
+	\draw [->] (x) -- node[pos=0]{\(x\)} (sum);
+	\draw [->] (sum) -- (B) -- (tmp) -- node[pos=1]{\(y\)} (y);
+	\draw [->] (tmp) |- (C) -| node[pos=0.9,anchor=west]{\(-\)} (sum);
+\end{tikzpicture}\end{center}
+
+È chiaro che il sistema è a retroazione negativa. Quindi l'equazione del sistema è
+\begin{align*}
+	y = \frac{B}{1+(A+C)B}x \Rightarrow 3x &= \frac{\frac{1}{2}}{1+(2+C)\frac{1}{2}}x \\
+	6 &= \frac{1}{1+(2+C)\frac{1}{2}} \\
+	1+(2+C)\frac{1}{2} &= 2 + \frac{C}{2} = \frac{1}{6} \\
+	C &= -\frac{11}{3}
+\end{align*}
+\end{esercizio}
+
+\begin{esercizio}[Semplifica il seguente sistema a blocchi e ricava la funzione di trasferimento] ~
+
+\begin{center}\begin{tikzpicture}[auto,node distance=2cm,>=latex']
+	\node [input] (x) {};
+	\node [sum, right of=x] (sum1) {};
+	\node [block, right of=sum1] (A) {\(A\)};
+	\node [block, right of=A] (B) {\(B\)};
+	\node [block, right of=B] (C) {\(C\)};
+	\node [output, right of=C] (y) {};
+	\draw [->] (x) -- node[pos=0]{\(x\)} (sum1);
+	\draw [->] (sum1) -- (A);
+	\draw [->] (A) -- node[name=AB]{} (B);
+	\draw [->] (B) -- node[name=BC]{} (C);
+	\draw [->] (C) -- node[name=Cy]{} (y);
+	\draw (C) -- node[pos=1]{\(y\)} (y);
+	% secondo livello
+	\node [sum, below of=AB] (sum2) {};
+	\node [sum, below of=BC] (sum3) {};
+	\draw [->] (Cy) |- (sum3);
+	\draw [->] (sum3) -- node[pos=0.9,anchor=north]{\(-\)} (sum2);
+	\draw [->] (sum2) -| node[pos=0.9,anchor=east]{\(-\)} (sum);
+	\draw [->] (AB) -- (sum2);
+	\draw [->] (BC) -- (sum3);
+\end{tikzpicture}\end{center}
+
+Una semplificazione ottimale del suddetto schema sarebbe portare i nodi,
+con i rispettivi sommatori, a valle dei blocchi.
+\begin{center}\begin{tikzpicture}[auto,node distance=2cm,>=latex']
+	\begin{scope}
+		\node [input] (x) {};
+		\node [sum, right of=x] (sum1) {};
+		\node [block, right of=sum1] (A) {\(A\)};
+		\node [block, right of=A] (B) {\(B \cdot C\)};
+		\node [output, right of=B, node distance=3cm] (y) {};
+		\draw [->] (x) -- node[pos=0]{\(x\)} (sum1);
+		\draw [->] (sum1) -- (A);
+		\draw [->] (A) -- node[name=AB]{} (B);
+		\draw [->] (B) -- node[pos=1]{\(y\)} (y);
+		\draw (B) -- node[name=o1,pos=0.3]{} (y);
+		\draw (B) -- node[name=o2,pos=0.6]{} (y);
+		\node [block, below of=o1, node distance=1.5cm] (C) {\(\frac{1}{C}\)};
+		\node [sum, below of=C] (sum2) {};
+		\draw [->] (o1) -- (C);
+		\draw [->] (C) -- (sum2);
+		\draw [->] (o2) |- (sum2);
+		\node [sum, below of=AB, node distance=2.5cm] (sum3) {};
+		\draw [->] (sum2) -- node[pos=0.9,anchor=north]{\(-\)} (sum3);
+		\draw [->] (AB) -- (sum3);
+		\draw [->] (sum3) -| node[pos=0.9,anchor=east]{\(-\)} (sum1);
+	\end{scope}
+	\begin{scope}[xshift=8.5cm]
+		\node [input] (x) {};
+		\node [sum, right of=x] (sum1) {};
+		\node [block, right of=sum1] (A) {\(A \cdot B \cdot C\)};
+		\node [output, right of=A, node distance=4cm] (y) {};
+		\draw [->] (x) -- node[pos=0]{\(x\)} (sum1);
+		\draw [->] (sum1) -- (A);
+		\draw [->] (A) -- node[pos=1]{\(y\)} (y);
+		\draw (A) -- node[name=o1,pos=0.2]{} (y);
+		\draw (A) -- node[name=o2,pos=0.6]{} (y);
+		\draw (A) -- node[name=o3,pos=0.85]{} (y);
+		\node [block, below of=o1] (B) {\(\frac{1}{BC}\)};
+		\node [block, below of=o2] (C) {\(\frac{1}{C}\)};
+		\node [sum, below of=B] (sum2) {};
+		\node [sum, below of=C] (sum3) {};
+		\draw [->] (o1) -- (B);
+		\draw [->] (o2) -- (C);
+		\draw [->] (o3) |- (sum3);
+		\draw [->] (B) -- (sum2);
+		\draw [->] (C) -- (sum3);
+		\draw [->] (sum3) -- node[pos=0.9,anchor=north]{\(-\)} (sum2);
+		\draw [->] (sum2) -| node[pos=0.9,anchor=east]{\(-\)} (sum1);
+	\end{scope}
+\end{tikzpicture}
+\begin{tikzpicture}[auto,node distance=2cm,>=latex']
+	\node [input] (x) {};
+	\node [sum, right of=x] (sum) {};
+	\node [block, right of=sum] (A) {\(A \cdot B \cdot C\)};
+	\node [output, right of=A] (y) {};
+	\draw [->] (x) -- node[pos=0]{\(x\)} (sum);
+	\draw [->] (sum) -- (A);
+	\draw [->] (A) -- node[pos=1]{\(y\)} (y);
+	\draw (A) -- node[name=o]{} (y);
+	\node [block, below of=A] (B) {\(\frac{1}{BC} + \frac{1}{C} + 1\)};
+	\draw [->] (o) |- (B);
+	\draw [->] (B) -| node[pos=0.9,anchor=east]{\(-\)} (sum);
+\end{tikzpicture}\end{center}
+che esprime l'equazione
+\[
+	y = \frac{ABC}{1 + \Bigl( \frac{1}{BC} + \frac{1}{C} + 1 \Bigr) ABC}
+\]
+\end{esercizio}
+
+\begin{esercizio}[Semplifica il seguente sistema a blocchi e ricava la funzione di trasferimento] ~
+\begin{center}\begin{tikzpicture}[auto,node distance=2cm,>=latex']
+	\node [input] (x) {};
+	\node [sum, right of=x, node distance=2cm] (sum1) {};
+	\node [output, right of=sum1] (y) {};
+	\draw [->] (x) -- node[name=o1,pos=0.4]{} (sum1);
+	\draw (x) -- node[pos=0.1]{\(x\)} (sum1);
+	\draw [->] (sum1) -- node[name=o2,pos=0.6]{} (y);
+	\draw (sum1) -- node[pos=0.9]{\(y\)} (y);
+	\node [block, above of=sum1, node distance=1.5cm] (B) {\(B\)};
+	\node [block, left of=B, node distance=1.2cm] (A) {\(A\)};
+	\node [block, right of=B, node distance=1.2cm] (C) {\(C\)};
+	\node [sum, above of=B] (sum2) {};
+	\draw [->] (sum1) -| (A);
+	\draw [->] (A) |- (sum2);
+	\draw [->] (sum1) -| (C);
+	\draw [->] (C) |- node[pos=0.9,anchor=south]{\(-\)} (sum2);
+	\draw [->] (sum2) -- (B);
+	\draw [->] (B) -- (sum1);
+\end{tikzpicture}\end{center}
+
+È possibile semplificare lo schema portando il sommatore superiore a valle del
+blocco \(B\). Di conseguenza si riconosce una doppia struttura che riconduce ad
+un sistema a retroazione negativa:
+\begin{center}\begin{tikzpicture}[auto,node distance=2cm,>=latex']
+	\begin{scope}
+		\node [input] (x) {};
+		\node [sum, right of=x, node distance=2cm] (sum1) {};
+		\node [output, right of=sum1] (y) {};
+		\draw [->] (x) -- node[name=o1,pos=0.4]{} (sum1);
+		\draw (x) -- node[pos=0.1]{\(x\)} (sum1);
+		\draw [->] (sum1) -- node[name=o2,pos=0.6]{} (y);
+		\draw (sum1) -- node[pos=0.9]{\(y\)} (y);
+		\node [tmp, above of=sum1, node distance=1.5cm] (B) {\(B\)};
+		\node [block, left of=B, node distance=1.2cm] (A) {\(AB\)};
+		\node [block, right of=B, node distance=1.2cm] (C) {\(BC\)};
+		\node [sum, above of=B] (sum2) {};
+		\draw [->] (sum1) -| (A);
+		\draw [->] (A) |- (sum2);
+		\draw [->] (sum1) -| (C);
+		\draw [->] (C) |- node[pos=0.9,anchor=south]{\(-\)} (sum2);
+		\draw [->] (sum2) -- (sum1);
+	\end{scope}
+	\begin{scope}[xshift=5cm]
+		\node [input] (x) {};
+		\node [tmp, right of=x, node distance=1cm] (tmp1) {};
+		\node [tmp, right of=tmp1, node distance=1cm] (tmp2) {};
+		\node [sum, right of=tmp2] (sum1) {};
+		\node [block, above of=tmp2, node distance=1cm] (A) {\(AB\)};
+		\node [tmp, below of=tmp2, node distance=1cm] (tmp2b) {};
+		\draw [->] (x) -- node[pos=0]{\(x\)} (tmp1) |- (A);
+		\draw [->] (A) -| (sum1);
+		\draw [->] (x) -- (tmp1) |- (tmp2b) -| (sum1);
+		% seconda parte
+		\node [sum, right of=sum1] (sum2) {};
+		\node [output, right of=sum2, node distance=3cm] (y) {};
+		\draw [->] (sum1) -- (sum2);
+		\draw [->] (sum2) -- node[name=align,pos=0.4]{} (y);
+		\draw (sum2) -- node[pos=1]{\(y\)} (y);
+		\node [block, below of=align, node distance=1cm] (B) {\(BC\)};
+		\draw [->] (B) -| node[pos=0.9,anchor=east]{\(-\)} (sum2);
+		\node [tmp, left of=y, node distance=0.5cm] (tmp3) {};
+		\draw [->] (tmp3) |- (B);
+	\end{scope}
+\end{tikzpicture}
+\begin{tikzpicture}[auto,node distance=2cm,>=latex']
+	\begin{scope}
+		\node [input] (x) {};
+		\node [block, right of=x] (A) {\(1 + AB\)};
+		\node [sum, right of=A, node distance=2cm] (sum1) {};
+		\draw [->] (x) -- node[pos=0]{\(x\)} (A);
+		\draw [->] (A) -- (sum1);
+		% seconda parte
+		\node [output, right of=sum1, node distance=3cm] (y) {};
+		\draw [->] (sum1) -- node[name=align,pos=0.4]{} (y);
+		\draw (sum1) -- node[pos=1]{\(y\)} (y);
+		\node [block, below of=align, node distance=1cm] (B) {\(BC\)};
+		\draw [->] (B) -| node[pos=0.9,anchor=east]{\(-\)} (sum1);
+		\node [tmp, left of=y, node distance=0.5cm] (tmp3) {};
+		\draw [->] (tmp3) |- (B);
+	\end{scope}
+	\begin{scope}[xshift=8cm]
+		\node [input] (x) {};
+		\node [sum, right of=x] (sum) {};
+		\node [block, right of=sum] (A) {\(1 + AB\)};
+		\node [output, right of=A] (y) {};
+		\node [block, below of=A] (B) {\(BC \frac{1}{1 + AB}\)};
+		\draw [->] (x) -- node[pos=0]{\(x\)} (sum);
+		\draw [->] (sum) -- (A);
+		\draw [->] (A) -- node[name=retro]{} (y);
+		\draw (A) -- node[pos=1]{\(y\)} (y);
+		\draw [->] (retro) |- (B);
+		\draw [->] (B) -| node[pos=0.9]{\(-\)} (sum);
+	\end{scope}
+\end{tikzpicture}
+\end{center}
+
+La semplificazione ci permette di ricavare intuitivamente la funzione di trasferimento
+del sistema:
+\[
+	y = \frac{1 + AB}{1 + BC \frac{1}{1 + AB} (1 + AB)} = \frac{1 + AB}{1 + BC}
+\]
+\end{esercizio}
+
+\begin{esercizio}[Determina la funzione di trasferimento del seguente sistema] ~
+
+\begin{center}\begin{tikzpicture}[auto,node distance=2cm,>=latex']
+	\node [input] (x) {};
+	\node [sum, right of=x] (sum1) {};
+	\node [block, right of=sum1, node distance=1.5cm] (G1) {\(G_1\)};
+	\node [sum, right of=G1, node distance=1.5cm] (sum2) {};
+	\node [input, above of=sum2, node distance=1cm] (d) {};
+	\node [block, right of=sum2, node distance=1.5cm] (G2) {\(G_2\)};
+	\node [output, right of=G2, node distance=1.5cm] (y) {};
+	\node [block, below of=sum2, node distance=1cm] (H) {\(H\)};
+	\draw [->] (x) -- node[pos=0,anchor=south]{\(x\)} (sum1);
+	\draw [->] (sum1) -- (G1);
+	\draw [->] (G1) -- (sum2);
+	\draw [->] (d) -- node[pos=0,anchor=east]{\(d\)} (sum2);
+	\draw [->] (sum2) -- (G2);
+	\draw [->] (G2) -- node[pos=1,anchor=south]{\(y\)} (y);
+	\draw (G2) -- node[name=retro]{} (y);
+	\draw [->] (retro) |- (H);
+	\draw [->] (H) -| (sum1);
+\end{tikzpicture}\end{center}
+
+È possibile considerare le entrate uno ad uno e sommare le funzioni di
+trasferimento ottenute.
+
+\paragraph{Risposta a \(x\)}
+\begin{center}\begin{tikzpicture}[auto,node distance=2cm,>=latex']
+	\node [input] (x) {};
+	\node [sum, right of=x] (sum) {};
+	\node [block, right of=sum, node distance=1.5cm] (G) {\(G_1 G_2\)};
+	\node [output, right of=G] (y) {};
+	\node [block, below of=G, node distance=1.5cm] (H) {\(H\)};
+	\draw [->] (x) -- node[pos=0]{\(x\)} (sum);
+	\draw [->] (sum) -- (G);
+	\draw [->] (G) -- node[pos=1]{\(y\)} (y);
+	\draw (G) -- node[name=retro]{} (y);
+	\draw [->] (retro) |- (H);
+	\draw [->] (H) -| (sum);
+\end{tikzpicture}\end{center}
+
+\[
+	y_x = \frac{G_1 G_2}{1 + H G_1 G_2}
+\]
+
+\paragraph{Risposta a \(d\)}
+\begin{center}\begin{tikzpicture}[auto,node distance=2cm,>=latex']
+	\node [input] (d) {};
+	\node [sum, right of=d] (sum) {};
+	\node [block, right of=sum, node distance=1.5cm] (G) {\(G_2\)};
+	\node [output, right of=G] (y) {};
+	\node [block, below of=G, node distance=1.5cm] (H) {\(G_1 H\)};
+	\draw [->] (d) -- node[pos=0]{\(d\)} (sum);
+	\draw [->] (sum) -- (G);
+	\draw [->] (G) -- node[pos=1]{\(y\)} (y);
+	\draw (G) -- node[name=retro]{} (y);
+	\draw [->] (retro) |- (H);
+	\draw [->] (H) -| (sum);
+\end{tikzpicture}\end{center}
+
+\[
+	y_d = \frac{G_2}{1 + G_1 G_2 H}
+\]
+
+Quindi la funzione di trasferimento dell'intero sistema è
+\[
+	y = y_x + y_d = \frac{G_2 ( 1 + G_1 )}{1 + G_1 G_2 H}
+\]
+\end{esercizio}
+
+\begin{esercizio}[Determina la funzione di trasferimento del seguente sistema] ~
+
+\begin{center}\begin{tikzpicture}[auto,node distance=2cm,>=latex']
+	\node [input] (x) {};
+	\node [sum, right of=x] (sum1) {};
+	\node [sum, right of=sum1, fill=red!30] (sum2) {};
+	\node [block, right of=sum1, node distance=2.5cm, fill=red!30] (G1) {\(G_1\)};
+	\node [block, below of=G1, node distance=1.5cm, fill=red!30] (G3) {\(G_3\)};
+	\node [block, below of=G3, node distance=1.5cm] (G4) {\(G_4\)};
+	\node [tmp, right of=G1, node distance=1cm] (tmp1) {};
+	\node [block, right of=tmp1, node distance=1cm] (G2) {\(G_2\)};
+	\node [block, above of=G2, node distance=1.5cm] (G6) {\(G_6\)};
+	\node [tmp, right of=G2, node distance=1cm] (tmp2) {};
+	\node [block, right of=tmp2, node distance=1cm] (G5) {\(G_5\)};
+	\node [sum, right of=G5] (sum3) {};
+	\node [output, right of=sum3, node distance=1.5cm] (y) {};
+	\draw [->] (x) -- node[pos=0]{\(x\)} (sum1);
+	\draw [->] (sum1) -- (sum2);
+	\draw [->] (sum2) -- (G1);
+	\draw [->] (G1) -- (tmp1) -- (G2);
+	\draw [->] (G2) -- (G5);
+	\draw [->] (G5) -- (sum3);
+	\draw [->] (sum3) -- node[pos=1]{\(y\)} (y);
+	\draw [->] (tmp1) |- (G6);
+	\draw [->] (G6) -| (sum3);
+	\draw [->] (tmp1) |- (G3);
+	\draw [->] (G3) -| (sum2);
+	\draw [->] (tmp2) |- (G4);
+	\draw [->] (G4) -| node[pos=0.9]{\(-\)} (sum1);
+\end{tikzpicture}\end{center}
+
+Il sistema è più complesso rispetto gli altri. Il metodo di risoluzione consiste
+nel riconoscere le parti che possono essere semplificare, come quella appena
+evidenziata che costituisce una retroazione positiva.
+
+\begin{center}\begin{tikzpicture}[auto,node distance=2cm,>=latex']
+	\node [input] (x) {};
+	\node [sum, right of=x] (sum1) {};
+	\node [block, right of=sum1] (G1) {\(\frac{G_1}{1 - G_1 G_3}\)};
+	\node [block, below of=G1, node distance=1.5cm] (G4) {\(G_4\)};
+	\node [tmp, right of=G1, node distance=1cm] (tmp1) {};
+	\node [block, right of=tmp1, node distance=1cm, fill=red!30] (G2) {\(G_2\)};
+	\node [block, above of=G2, node distance=1.5cm, fill=red!30] (G6) {\(G_6\)};
+	\node [tmp, right of=G2, node distance=1cm] (tmp2) {};
+	\node [block, right of=tmp2, node distance=1cm, fill=red!30] (G5) {\(G_5\)};
+	\node [sum, right of=G5, fill=red!30] (sum3) {};
+	\node [output, right of=sum3, node distance=1.5cm] (y) {};
+	\draw [->] (x) -- node[pos=0]{\(x\)} (sum1);
+	\draw [->] (sum1) -- (G1);
+	\draw [->] (G1) -- (tmp1) -- (G2);
+	\draw [->] (G2) -- (G5);
+	\draw [->] (G5) -- (sum3);
+	\draw [->] (sum3) -- node[pos=1]{\(y\)} (y);
+	\draw [->] (tmp1) |- (G6);
+	\draw [->] (G6) -| (sum3);
+	\draw [->] (tmp2) |- (G4);
+	\draw [->] (G4) -| node[pos=0.9]{\(-\)} (sum1);
+\end{tikzpicture}\end{center}
+È possibile, per l'area evidenziata, portare \(G_2\) a monte del nodo per il ramo
+di \(G_6\).
+\begin{center}\begin{tikzpicture}[auto,node distance=2cm,>=latex']
+	\node [input] (x) {};
+	\node [sum, right of=x] (sum1) {};
+	\node [block, right of=sum1, fill=red!30] (G1) {\(\frac{G_1}{1 - G_1 G_3}\)};
+	\node [block, below of=G1, node distance=1.5cm] (G4) {\(G_4\)};
+	\node [block, right of=G1, fill=red!30] (G2) {\(G_2\)};
+	\node [tmp, right of=G2, node distance=1cm] (tmp1) {};
+	\node [block, right of=tmp1, node distance=1cm, fill=blue!30] (G5) {\(G_5\)};
+	\node [block, above of=G5, node distance=1.5cm, fill=blue!30] (G6) {\(\frac{G_6}{G_2}\)};
+	\node [sum, right of=G5, fill=blue!30] (sum3) {};
+	\node [output, right of=sum3, node distance=1.5cm] (y) {};
+	\draw [->] (x) -- node[pos=0]{\(x\)} (sum1);
+	\draw [->] (sum1) -- (G1);
+	\draw [->] (G1) -- (G2);
+	\draw [->] (G2) -- (tmp1) -- (G5);
+	\draw [->] (G5) -- (sum3);
+	\draw [->] (sum3) -- node[pos=1]{\(y\)} (y);
+	\draw [->] (tmp1) |- (G6);
+	\draw [->] (G6) -| (sum3);
+	\draw [->] (tmp1) |- (G4);
+	\draw [->] (G4) -| node[pos=0.9]{\(-\)} (sum1);
+\end{tikzpicture}\end{center}
+Gli elementi evidenziati in rosso rappresentano una serie,
+mentre quelli in blu sono paralleli.
+\begin{center}\begin{tikzpicture}[auto,node distance=2cm,>=latex']
+	\node [input] (x) {};
+	\node [sum, right of=x, fill=red!30] (sum1) {};
+	\node [block, right of=sum1, fill=red!30] (G1) {\(\frac{G_1 G_2}{1 - G_1 G_3}\)};
+	\node [block, below of=G1, node distance=1.5cm, fill=red!30] (G4) {\(G_4\)};
+	\node [tmp, right of=G1, node distance=1.5cm] (tmp1) {};
+	\node [block, right of=tmp1, node distance=1.5cm] (G5) {\(G_5 + \frac{G_6}{G_2}\)};
+	\node [output, right of=G5, node distance=1.5cm] (y) {};
+	\draw [->] (x) -- node[pos=0]{\(x\)} (sum1);
+	\draw [->] (sum1) -- (G1);
+	\draw [->] (G1) -- (tmp1) -- (G5);
+	\draw [->] (G5) -- node[pos=1]{\(y\)} (y);
+	\draw [->] (tmp1) |- (G4);
+	\draw [->] (G4) -| node[pos=0.9]{\(-\)} (sum1);
+\end{tikzpicture}\end{center}
+Infine si semplifica il sistema a retroazione negativa e si ricava la seguente equazione:
+\[
+	y = \frac{\frac{G_1 G_2}{1 - G_1 G_3}}{1 + G_4 \Bigl( \frac{G_1 G_2}{1 - G_1 G_3} \Bigr)} \Bigl( G_5 + \frac{G_6}{G_2} \Bigr) =
+	\frac{\frac{G_1 G_2}{1 - G_1 G_3}}{\frac{1 - G_1 G_3 + G_4 G_1 G_2}{1 - G_1 G_3}} \Bigl( \frac{G_2 G_5 + G_6}{G_2} \Bigr) =
+	\frac{G_1 \bigl( G_2 G_5 + G_6 \bigr)}{1 - G_1 \bigl( G_3 - G_2 G_4 \bigr)}
+\]
+\end{esercizio}
