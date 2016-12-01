@@ -1,0 +1,77 @@
+% lingua
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[italian]{babel}
+\usepackage[babel]{csquotes}
+
+\usepackage[mark]{gitinfo2}
+
+% ambienti math
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{thmtools}
+
+% indici acronimi bibliografia
+\usepackage{makeidx}
+%\usepackage[backend=biber]{biblatex}
+\usepackage{multicol}
+\usepackage{acronym}
+
+% diagrammi circuiti elettrici
+\usepackage[siunitx]{circuitikz}
+
+% grafica
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{pgfplots,pgfplotstable}
+\pgfplotsset{compat=1.12,/tikz/prefix=plots/}
+\usetikzlibrary{math,matrix,chains}
+\usetikzlibrary{scopes,positioning,fit,intersections}
+\usetikzlibrary{angles,shapes,arrows,patterns,fadings}
+\usetikzlibrary{decorations.pathreplacing,decorations.pathmorphing,decorations.markings,decorations.shapes}
+\usepgfplotslibrary{fillbetween,patchplots}
+\pgfplotsset{every linear axis/.append style={axis lines=middle,no markers,enlargelimits}}
+\pgfplotsset{trig format plots=rad}
+\pgfplotsset{/pgfplots/colormap={graywhite}{gray=(0.75) gray=(1.0)}}
+
+% icone creative commons
+\usepackage{ccicons}
+
+% float and figure
+\usepackage{float}
+\usepackage{subfig}
+\usepackage{caption}
+\captionsetup{tableposition=top,figureposition=bottom,font=small,format=hang}
+\usepackage{booktabs}
+\usepackage{tablefootnote}
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\newcommand{\footnoteref}[1]{\textsuperscript{\ref{#1}}}
+
+% hyperlink
+\usepackage{hyperref}
+\hypersetup{
+	pdfauthor={Giovanni Grieco},
+	pdftitle={Appunti di Fondamenti di Automatica},
+	pdfsubject={Modulo I - Analisi di Sistemi di Controllo},
+	pdfencoding=auto,
+	psdextra,
+	colorlinks,
+	linkcolor={black},
+	citecolor={blue!50!black},
+	urlcolor={blue!80!black}
+}
+
+
+% definizioni nuovi stili teoremi
+\theoremstyle{definition}
+\newtheorem{definizione}{Definizione}[chapter]
+\newtheorem{esempio}{Esempio}[chapter]
+\newtheorem{esercizio}{Esercizio}[chapter]
+\newtheorem{nota}{Nota}[chapter]
+\newcommand{\keyword}[2][]{\textsc{#2}\index{#1}}
+
+% fix: Warning Font shape for text `textbullet' undefined (Font)
+\renewcommand\textbullet{\ensuremath{\bullet}}

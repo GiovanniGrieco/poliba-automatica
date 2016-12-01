@@ -1,0 +1,58 @@
+\documentclass[10pt,a4paper,onecolumn,titlepage,twoside,openright,final]{book}
+\include{preambolo}
+
+% formato pagina
+\usepackage[width=15.00cm, left=3.00cm, height=23.00cm]{geometry}
+
+% frontespizio Poliba
+\usepackage{polibatitle}
+\title{Appunti di \\ Fondamenti di Automatica}
+\subtitle{Modulo I: \emph{Analisi di sistemi di controllo}}
+\author{Giovanni Grieco}
+\authoremail{giovanni.grc96@gmail.com}
+\authorURL{https://it.linkedin.com/in/giovanni-grieco-17284459}
+\professor{Prof.ssa M. Fanti}
+\department{Dipartimento di Ingegneria Elettrica e dell'Informazione}
+\version{\gitRel}
+\versiondate{\gitAuthorDate}
+
+\makeindex
+
+\begin{document}
+
+% diagrammi a blocchi
+\tikzset{
+	block/.style = {draw, fill=white, rectangle, minimum height=3em, minimum width=3em},
+	tmp/.style  = {coordinate},
+	sum/.style= {draw, fill=white, circle, node distance=1cm},
+	input/.style = {coordinate},
+	output/.style= {coordinate},
+	pinstyle/.style = {pin edge={to-,thin,black}}
+}
+
+\frontmatter
+\maketitle
+\newpage
+
+\vspace{\stretch{2}}\null
+\vfill
+Il presente documento è rilasciato sotto licenza \ccLogo\  \textbf{Creative Commons 4.0 by-sa-nc} \ccbyncsa.
+
+È consentita la creazione di opere derivate, traduzioni, adattamenti, totali o parziali,
+fatta salva l'attribuzione dell'autore originale e il mantenimento della licenza.
+
+Per collaborare alla stesura e alla correzione dei sorgenti è possibile iscriversi
+come contributori al repository GitHub all'indirizzo \url{https://github.com/corsaroquad/poliba-automatica}
+
+Giovanni \textsc{Grieco}\\Politecnico di Bari
+\cleardoublepage\clearpage{\pagestyle{empty}\cleardoublepage}
+
+% indice contenuti
+\tableofcontents
+
+\mainmatter
+\part{Analisi dei Sistemi di Controllo}
+% TODO: Prima parte - prima dell'esonero di novembre
+\include{mod1/capitoli/sistemi_a_blocchi}
+
+\end{document}
