@@ -1,0 +1,371 @@
+\chapter{Diagrammi a blocchi}
+
+I diagrammi a blocchi servono per descrivere in modo astratto i sistemi automatici.
+È possibile descrivere all'interno del blocco una propria \emph{funzione di trasferimento},
+e questa sarà preceduta da delle \emph{frecce entranti} che faranno da \emph{input} e
+da delle \emph{frecce uscenti} che faranno da \emph{output}.
+
+Ogni input e output, secondo la logica del sistema, può essere sommato o sottrato con
+altri fattori, come altri input e/o output oppure disturbi.
+Il seguente esempio mostra un sistema statico con solo un input e un output.
+\begin{center}\begin{tikzpicture}[auto, node distance=2cm,>=latex']
+	\node [input, name=rinput] (rinput) {};
+	\node [block, right of=rinput] (controller) {\(G(s)\)};
+	\node [output, right of=controller, node distance=2cm] (output) {};
+	\draw [->] (rinput) -- node{\(X(s)\)} (controller);
+	\draw [->] (controller) -- node [name=y] {\(Y(s)\)}(output);
+\end{tikzpicture}\end{center}
+
+In caso di strutture più complesse e con l'interazione di più grandezze si parla
+di \emph{sistema interconnesso}.
+
+Esistono diverse relazioni che regolano la struttura dei diagrammi a blocchi,
+di seguito elencate e con i rispettivi metodi per poterli semplificare.
+
+\section{Strutture equivalenti}
+\subsection{Blocchi in parallelo}
+\begin{center}\begin{tikzpicture}[auto, node distance=2cm,>=latex']
+	\node [input, name=xinput] (xinput) {};
+	\node [block, right of=xinput] (ctrl1) {\(G_1(s)\)};
+	\node [block, below of=ctrl1, node distance=2cm] (ctrl2) {\(G_2(s)\)};
+	\node [sum, right of=ctrl1, node distance=2cm] (sum) {};
+	\node [output, right of=sum] (output) {};
+	\draw [->] (xinput) -- node[name=z]{} node{\(X(s)\)} (ctrl1);
+	\draw [->] (ctrl1) -- node[name=out1] {\(Y_1(s)\)} (sum);
+	\draw [->] (z) |- (ctrl2);
+	\draw [->] (ctrl2) -| node[pos=0.25,anchor=south]{\(Y_2(s)\)} (sum);
+	\draw [->] (sum) -- node[] {\(Y(s)\)} (output);
+\end{tikzpicture}\end{center}
+
+Le equazioni espresse nello schema sono
+\begin{align*}
+	Y_1(s) &= G_1(s)\,X(s) \\
+	Y_2(s) &= G_2(s)\,X(s) \\
+	Y(s) &= Y_1(s) + Y_2(s) \\
+	\implies Y(s) &= \sum_{i=1}^\infty G_i(s)\,X(s)
+\end{align*}
+e quindi si può semplificare lo schema con un unico blocco che ne faccia la somma:
+\begin{center}\begin{tikzpicture}[auto, node distance=2cm,>=latex']
+	\node [input, name=x] (x) {};
+	\node [block, right of=x] (ctrl) {\(\sum_{i=0}^\infty G_i(s)\)};
+	\node [output, right of=ctrl] (y) {};
+	\draw [->] (x) -- node[]{\(X(s)\)} (ctrl);
+	\draw [->] (ctrl) -- node[]{\(Y(s)\)} (y);
+\end{tikzpicture}\end{center}
+
+Si conclude che \emph{il parallelo di due o più blocchi è equivalente alla somma
+algebrica delle f.d.t. (guadagni) dei rispettivi blocchi interessati}.
+
+\subsection{Blocchi in cascata o in serie}
+\begin{center}\begin{tikzpicture}[auto, node distance=2cm,>=latex']
+	\node [input, name=x] (x) {};
+	\node [block, right of=x] (ctrl1) {\(G_1(s)\)};
+	\node [block, right of=ctrl1, node distance=3cm] (ctrl2) {\(G_2(s)\)};
+	\node [output, right of=ctrl2] (y) {};
+	\draw [->] (x) -- node[]{\(X(s)\)} (ctrl1);
+	\draw [->] (ctrl1) -- node[]{\(Z(s)\)} (ctrl2);
+	\draw [->] (ctrl2) -- node[]{\(Y(s)\)} (y);
+\end{tikzpicture}\end{center}
+
+Le equazioni espresse nello schema sono
+\begin{align*}
+	Y(s) &= G_2(s)Z(s) \\
+	Z(s) &= G_1(s)X(s) \\
+	\implies Y(s) &= \prod_{i=1}^\infty G_i(s)X(s)
+\end{align*}
+e quindi si può semplificare lo schema con un blocco che ne faccia il prodotto:
+\begin{center}\begin{tikzpicture}[auto, node distance=2cm,>=latex']
+	\node [input] (x) {};
+	\node [block, right of=x] (ctrl) {\(\prod_{i=0}^\infty G_i(s)\)};
+	\node [output, right of=ctrl] (y) {};
+	\draw [->] (x) -- node[]{\(X(s)\)} (ctrl);
+	\draw [->] (ctrl) -- node[]{\(Y(s)\)} (y);
+\end{tikzpicture}\end{center}
+
+Si conclude che \emph{una serie di blocchi equivale al prodotto algebrico delle
+f.d.t. dei rispettivi blocchi interessati}.
+
+\subsection{Scambio di nodi sommatori}
+\begin{center}\begin{tikzpicture}[auto, node distance=2cm,>=latex']
+	\node [input] (x) {};
+	\node [sum, right of=x] (sum1) {};
+	\node [input, above of=sum1] (y) {};
+	\node [sum, right of=sum1] (sum2) {};
+	\node [input, above of=sum2] (w) {};
+	\node [input, right of=sum2] (z) {};
+	\draw [->] (x) -- node[]{\(X(s)\)} (sum1);
+	\draw [->] (y) -- node[]{\(Y(s)\)} (sum1);
+	\draw [->] (sum1) -- (sum2);
+	\draw [->] (w) -- node[]{\(W(s)\)} (sum2);
+	\draw [->] (sum2) -- node[]{\(Z(s)\)} (z);
+\end{tikzpicture}\end{center}
+
+L'equazione è \(Z(s) = W(s) + \bigl(Y(s) + X(s)\bigr)\) che, per la proprietà associativa
+dell'addizione, può essere rivalutata come
+\begin{align*}
+	Z(s) &= \bigl(X(s) + W(s)\bigr) + Y(s) \\
+	Z(s) &= \bigl(Y(s) + W(s)\bigr) + X(s) \\
+	Z(s) &= X(s) + Y(s) + W(s)
+\end{align*}
+\begin{center}\begin{tikzpicture}[auto,node distance=2cm,>=latex']
+	\begin{scope}
+		\node [input] (x) {};
+		\node [sum, right of=x] (sum1) {};
+		\node [input, above of=sum1] (w) {};
+		\node [sum, right of=sum1] (sum2) {};
+		\node [input, below of=sum2] (y) {};
+		\node [output, right of=sum2] (z) {};
+		\draw [->] (x) -- node[]{\(X(s)\)} (sum1);
+		\draw [->] (w) -- node[]{\(W(s)\)} (sum1);
+		\draw [->] (sum1) -- (sum2);
+		\draw [->] (y) -- node[]{\(Y(s)\)} (sum2);
+		\draw [->] (sum2) -- node[]{\(Z(s)\)} (z);
+	\end{scope}
+	\begin{scope}[xshift=5cm]
+		\node [input] (y) {};
+		\node [sum, right of=y, node distance=2cm] (sum1) {};
+		\node [input, below of=sum1] (w) {};
+		\node [sum, right of=sum1] (sum2) {};
+		\node [input, above of=sum2] (x) {};
+		\node [output, right of=sum2] (z) {};
+		\draw [->] (y) -- node[]{\(Y(s)\)} (sum1);
+		\draw [->] (w) -- node[]{\(W(s)\)} (sum1);
+		\draw [->] (sum1) -- (sum2);
+		\draw [->] (x) -- node[]{\(X(s)\)} (sum2);
+		\draw [->] (sum2) -- node[]{\(Z(s)\)} (z);
+	\end{scope}
+	\begin{scope}[xshift=11cm]
+		\node [input] (x) {};
+		\node [sum, right of=x, node distance=2cm] (sum) {};
+		\node [input, above of=sum] (y) {};
+		\node [input, below of=sum] (w) {};
+		\node [output, right of=sum] (z) {};
+		\draw [->] (x) -- node[]{\(X(s)\)} (sum);
+		\draw [->] (y) -- node[]{\(Y(s)\)} (sum);
+		\draw [->] (w) -- node[]{\(W(s)\)} (sum);
+		\draw [->] (sum) -- node[]{\(Z(s)\)} (z);
+	\end{scope}
+\end{tikzpicture}\end{center}
+
+Si conclude che \emph{l'ordine dei blocchi collegati ad un sommatore è ininfluente
+e possono essere collegati da un unico blocco sommatore}.
+
+\subsection{Spostamento di un punto di prelievo a monte di un blocco}
+\begin{center}\begin{tikzpicture}[auto,node distance=2cm,>=latex']
+	\node [input] (x) {};
+	\node [block, right of=x] (ctrl) {\(G(s)\)};
+	\node [output, right of=ctrl] (y) {};
+	\node [output, below of=x, node distance=1cm] (yy) {};
+	\draw [->] (x) -- node[]{\(X(s)\)} (ctrl);
+	\draw [->] (ctrl) -- node[name=out]{\(Y(s)\)} (y);
+	\draw [->] (out) |- node[pos=0.8]{\(Y(s)\)} (yy);
+\end{tikzpicture}\end{center}
+
+Questo schema, dato che ha per entrambe le uscite equazione \(Y(s) = G(s)X(s)\)
+può essere sostituito dall'equivalente
+\begin{center}\begin{tikzpicture}[auto,node distance=2cm,>=latex']
+	\node [input] (x) {};
+	\node [block, right of=x, node distance=4cm] (ctrl1) {\(G(s)\)};
+	\node [output, right of=ctrl1] (y) {\(Y(s)\)};
+	\draw [->] (x) -- node[name=align,pos=0.5]{\(X(s)\)} (ctrl1);
+	\draw [] (x) -- node[name=in,pos=0.85]{} (ctrl1);
+	\draw [->] (ctrl1) -- node[]{\(Y(s)\)} (y);
+	% secondo livello
+	\node [block, below of=align] (ctrl2) {\(G(s)\)};
+	\node [output, left of=ctrl2, node distance=1.8cm] (yy) {};
+	\draw [->] (in) |- (ctrl2);
+	\draw [->] (ctrl2) -- node[]{\(Y(s)\)} (yy);
+\end{tikzpicture}\end{center}
+
+\subsection{Spostamento di un punto di prelievo a valle di un blocco}
+\begin{center}\begin{tikzpicture}[auto,node distance=2cm,>=latex']
+	\node [input] (x) {};
+	\node [block, right of=x, node distance=3cm] (ctrl) {\(G(s)\)};
+	\node [output, right of=ctrl] (y) {};
+	\draw [->] (x) -- node[name=in,pos=0.5]{\(X(s)\)} (ctrl);
+	\draw [->] (ctrl) -- node[]{\(Y(s)\)} (y);
+	% secondo livello
+	\node [output, below of=x, node distance=1cm] (xx) {};
+	\draw [->] (in) |- node[pos=0.7]{\(X(s)\)} (xx);
+\end{tikzpicture}\end{center}
+
+Questo schema, dato che ha per una uscita equazione \(Y(s) = G(s)X(s)\) mentre
+per l'altra l'identità \(X(s) = X(s)\), può essere riscritta ponendo alla prima
+equazione \(X(s) = \frac{Y(s)}{G(s)}\). Di conseguenza lo schema equivalente è
+\begin{center}\begin{tikzpicture}[auto,node distance=2cm,>=latex']
+	\node [input] (x) {};
+	\node [block, right of=x] (ctrl1) {\(G(s)\)};
+	\node [output, right of=ctrl1] (y) {};
+	\draw [->] (x) -- node[]{\(X(s)\)} (ctrl1);
+	\draw [->] (ctrl1) -- node[name=out]{\(Y(s)\)} (y);
+	% secondo livello
+	\node [block, below of=ctrl1, node distance=1.5cm] (ctrl2) {\(\frac{1}{G(s)}\)};
+	\node [output, left of=ctrl2] (xx) {};
+	\draw [->] (out) |- (ctrl2);
+	\draw [->] (ctrl2) -- node[]{\(X(s)\)} (xx);
+\end{tikzpicture}\end{center}
+
+\subsection{Spostamento di un nodo sommatore a valle di un blocco}
+\begin{center}\begin{tikzpicture}[auto,node distance=2cm,>=latex']
+	\node [input] (x) {};
+	\node [input, below of=x, node distance=1cm] (y) {};
+	\node [sum, right of=x] (sum) {};
+	\node [block, right of=sum] (ctrl) {\(G(s)\)};
+	\node [output, right of=ctrl] (z) {};
+	\draw [->] (x) -- node[]{\(X(s)\)} (sum);
+	\draw [->] (y) -| node[pos=0.2]{\(Y(s)\)} (sum);
+	\draw [->] (sum) -- (ctrl) {};
+	\draw [->] (ctrl) -- node[]{\(Z(s)\)} (z);
+\end{tikzpicture}\end{center}
+
+Questo schema esprime la relazione \(Z(s) = G(s)\bigl(X(s) + Y(s)\bigr)\),
+che può essere reinterpretata, eseguendo il prodotto, come \(Z(s) = G(s)X(s) + G(s)Y(s)\).
+Lo schema equivalente è il seguente
+\begin{center}\begin{tikzpicture}[auto,node distance=2cm,>=latex']
+	\node [input] (x) {};
+	\node [input, below of=x] (y) {};
+	\node [block, right of=x] (ctrl1) {\(G(s)\)};
+	\node [block, below of=ctrl1] (ctrl2) {\(G(s)\)};
+	\node [sum, right of=ctrl1, node distance=2cm] (sum) {};
+	\node [output, right of=sum] (z) {};
+	\draw [->] (x) -- node[]{\(X(s)\)} (ctrl1);
+	\draw [->] (y) -- node[]{\(Y(s)\)} (ctrl2);
+	\draw [->] (ctrl1) -- (sum);
+	\draw [->] (ctrl2) -| (sum);
+	\draw [->] (sum) -- node[]{\(Z(s)\)} (z);
+\end{tikzpicture}\end{center}
+
+\subsection{Spostamento di un nodo sommatore a monte di un blocco}
+\begin{center}\begin{tikzpicture}[auto,node distance=2cm,>=latex']
+	\node [input] (x) {};
+	\node [input, below of=x, node distance=1cm] (y) {};
+	\node [block, right of=x] (ctrl) {\(G(s)\)};
+	\node [sum, right of=ctrl] (sum) {};
+	\node [output, right of=sum] (z) {};
+	\draw [->] (x) -- node[]{\(X(s)\)} (ctrl);
+	\draw [->] (ctrl) -- (sum);
+	\draw [->] (y) -| node[pos=0.13]{\(Y(s)\)} (sum);
+	\draw [->] (sum) -- node[]{\(Z(s)\)} (z);
+\end{tikzpicture}\end{center}
+
+Questo schema esprime la relazione \(Z(s) = X(s)G(s) + Y(s)\).
+Dividendo per \(G(s)\) si ottiene
+\(\frac{1}{G(s)}Z(s) = X(s) + \frac{Y(s)}{G(s)} \rightarrow
+Z(s) = G(s) \bigl(X(s) + \frac{1}{G(s)}Y(s)\bigr)\)
+che corrisponde all'equivalente
+\begin{center}\begin{tikzpicture}[auto,node distance=2cm,>=latex']
+	\node [input] (x) {};
+	\node [sum, right of=x, node distance=3cm] (sum) {};
+	\node [block, right of=sum] (ctrl1) {\(G(s)\)};
+	\node [output, right of=ctrl1] (z) {};
+	\draw [->] (x) -- node[pos=0.25]{\(X(s)\)} (sum);
+	\draw [->] (sum) -- (ctrl1);
+	\draw [->] (ctrl1) -- node[]{\(Z(s)\)} (z);
+	% secondo livello
+	\node [input, below of=x, node distance=1cm] (y) {};
+	\node [block, right of=y] (ctrl2) {\(\frac{1}{G(s)}\)};
+	\draw [->] (y) -- node[]{\(Y(s)\)} (ctrl2);
+	\draw [->] (ctrl2) -| (sum);
+\end{tikzpicture}\end{center}
+
+\subsection{Spostamento nodo a monte di un sommatore}
+\begin{center}\begin{tikzpicture}[auto,node distance=2cm,>=latex']
+	\node [input] (x) {};
+	\node [sum, right of=x] (sum) {};
+	\node [input, above of=sum, node distance=1cm] (y) {};
+	\node [output, right of=sum] (z) {};
+	\draw [->] (x) -- node[]{\(X(s)\)} (sum);
+	\draw [->] (y) -- node[]{\(Y(s)\)} (sum);
+	\draw [->] (sum) -- node[pos=0.7]{\(Z(s)\)} (z);
+	\draw (sum) -- node[name=out]{} (z);
+	\node [output, below of=out, node distance=1cm] (zz) {};
+	\draw [->] (out) -- (zz);
+\end{tikzpicture}\end{center}
+
+Questo schema presenta un nodo dove due output \(Z\) presentano lo stesso valore.
+È possibile ottenere un equivalente separando i due output:
+\begin{center}\begin{tikzpicture}[auto,node distance=2cm,>=latex']
+	\node [input] (x) {};
+	\node [sum, right of=x] (sum1) {};
+	\node [input, above of=sum1] (y) {};
+	\node [output, right of=sum1] (z) {};
+	\node [output, below of=z, node distance=1cm] (zz) {};
+	\node [sum, left of=zz] (sum2) {};
+	\draw [->] (x) -- node[name=inx]{\(X(s)\)} (sum1);
+	\draw [->] (inx) |- (sum2);
+	\draw (y) -- node[pos=0.2]{\(Y(s)\)} (sum1);
+	\draw [->] (y) -- node[name=iny]{} (sum1);
+	\draw [->] (iny) -| (sum2);
+	\draw [->] (sum1) -- node[pos=0.9]{\(Z(s)\)} (z);
+	\draw [->] (sum2) -- node[pos=0.9]{\(Z(s)\)} (zz);
+\end{tikzpicture}\end{center}
+
+\subsection{Spostamento nodo a valle di un sommatore}
+\begin{center}\begin{tikzpicture}[auto,node distance=2cm,>=latex']
+	\node [input] (x) {};
+	\node [sum, right of=x] (sum) {};
+	\node [input, above of=sum, node distance=1cm] (y) {};
+	\node [output, right of=sum] (z) {};
+	\draw [->] (x) -- node[name=in]{\(X(s)\)} (sum);
+	\draw [->] (y) -- node[]{\(Y(s)\)} (sum);
+	\draw [->] (sum) -- node[pos=0.9]{\(Z(s)\)} (z);
+	\node [output, below of=in, node distance=1cm] (xx) {};
+	\draw [->] (in) -- (xx);
+\end{tikzpicture}\end{center}
+
+Questo schema presenta una uscita uguale a \(X(s)\), perciò se si volesse porre a
+monte il sommatore, è necessario replicarlo per sottrarre \(Y(s)\) per quell'output.
+\begin{center}\begin{tikzpicture}[auto,node distance=2cm,>=latex']
+	\node [input] (x) {};
+	\node [sum, right of=x] (sum1) {};
+	\node [input, above of=sum1, node distance=1cm] (y) {};
+	\node [output, right of=sum1] (z) {};
+	\draw [->] (x) -- node[name=inx]{\(X(s)\)} (sum1);
+	\draw (y) -- node[pos=0.1]{\(Y(s)\)} (sum1);
+	\draw [->] (y) -- node[name=iny]{} (sum1);
+	\draw [->] (sum1) -- node[pos=0.9]{\(Z(s)\)} (z);
+	% secondo livello
+	\node [output, below of=z, node distance=1cm] (xx) {};
+	\node [sum, left of=xx] (sum2) {};
+	\draw [->] (inx) |- (sum2);
+	\draw [->] (iny) -| node[pos=0.9,anchor=east]{\(-\)} (sum2);
+	\draw [->] (sum2) -- node[pos=0.8]{\(X(s)\)} (xx);
+\end{tikzpicture}\end{center}
+
+\subsection{Riduzione di un anello a retroazione negativa o positiva}
+\begin{center}\begin{tikzpicture}[auto,node distance=2cm,>=latex']
+	\node [input] (x) {};
+	\node [sum, right of=x] (sum) {};
+	\node [block, right of=sum] (ctrl) {\(G(s)\)};
+	\node [block, below of=ctrl, node distance=1.5cm] (rectrl) {\(H(s)\)};
+	\node [output, right of=ctrl] (y) {};
+	\draw [->] (x) -- node[]{\(X(s)\)} (sum);
+	\draw [->] (sum) -- node[]{\(E(s)\)} (ctrl);
+	\draw [->] (ctrl) -- node[name=out]{\(Y(s)\)} (y);
+	\draw [->] (out) |- (rectrl);
+	\draw [->] (rectrl) -| node[pos=0.9,anchor=east]{\(\mp\)} (sum);
+	\draw (rectrl) -| node[pos=0.7,anchor=west]{\(Z(s)\)} (sum);
+\end{tikzpicture}\end{center}
+
+Questo schema esprime una relazione di \emph{retroazione} negativa con le seguenti equazioni:
+\[\begin{cases}
+	Y(s) = G(s)E(s) \\
+	E(s) = X(s) \mp Z(s) \\
+	Z(s) = H(s)Y(s)
+\end{cases}\]
+Ricavando \(Y(s)\) è possibile ottenere la relazione equivalente
+\begin{align*}
+	E(s) &= X(s) \mp H(s)Y(s) \\
+	Y(s) &= G(s)X(s) \mp G(s)H(s)Y(s) \\
+	Y(s) \pm G(s)H(s)Y(s) &= G(s)H(s) \\
+	Y(s) \bigl(1 \pm G(s)H(s)\bigr) &= G(s)X(s) \\
+	\implies Y(s) &= \frac{G(s)X(s)}{1 \pm G(s)H(s)}
+\end{align*}
+e di conseguenza anche lo schema equivalente
+\begin{center}\begin{tikzpicture}[auto,node distance=2cm,>=latex']
+	\node [input] (x) {};
+	\node [block, right of=x] (ctrl) {\(\frac{G(s)}{1 \pm G(s)H(s)}\)};
+	\node [output, right of=ctrl] (y) {};
+	\draw [->] (x) -- node[]{\(X(s)\)} (ctrl);
+	\draw [->] (ctrl) -- node[]{\(Y(s)\)} (y);
+\end{tikzpicture}\end{center}
