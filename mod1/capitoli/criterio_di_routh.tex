@@ -1,0 +1,103 @@
+\chapter{Criterio di Routh}
+
+Per un sistema è importante il fattore dell'\emph{accuratezza}, questo considerato
+quando si considerano i poli del sistema e si analizzano il loro comportamento,
+specie se il sistema fosse a \emph{retroazione} (o anello chiuso) e avesse possibili
+disturbi/parametri che potrebbero variare variare.
+
+Il \emph{luogo delle radici} è la descrizione dei valori dei poli che assumono al variare
+dei parametri di sistema. Con la sua osservazione su un piano di Gauss, è possibile
+determinare la stabilità del sistema e quindi comprendere il range possibile dei
+parametri per un suo uso in sicurezza.
+
+Per il tracciamento del luogo delle radici, si preferisce studiare il sistema
+\emph{al limite della stabilità}, quindi è importante conoscere possibili poli
+sull'asse immaginario/punto di origine e sul semipiano positivo. Poiché tali
+punti corrispondono al limite della stabilità di un sistema in retroazione, per
+determinarli si può far ricorso al \emph{criterio di Routh}.
+
+È consigliato limitare il guadagno parametrico del sistema, questo perché si
+possono verificare problemi di saturazione e i poli tendono verso il semipiano
+destro (ovvero verso gli asintoti, quindi al limite della stabilità), quindi
+l'intero sistema diventa instabile. L'obiettivo è comunque scegliere dei valori
+parametrici tale da migliore il più possibile la precisione del sistema a regime.
+
+Per applicare il criterio di Routh si usa la \emph{tabella di taratura} del luogo,
+che consente di determinare il miglior guadagno parametrico e la corrispondente
+stabilità del sistema.
+
+\paragraph{Lemma di Routh}
+Condizione necessaria affinché tutte le radici del polinomio \(q(s) = 0\) siano a
+parte reale \(\Re s_i < 0\) è che i coefficienti \(a_i > 0\).
+
+\begin{esempio}[Caso generale]
+Sia dato il sistema generico
+\[
+	G(s) = \frac{b_n s^n + \dots + b_0}{a_n s^n + a_{n-1}s^{n-1} + \dots + a_1 s + a_0}
+\]
+Se si trovassero le radici del denominatore con \(a_i > 0\), il sistema è
+sicuramente stabile.
+La condizione è sufficiente per \(n=1\) e \(n=2\):
+\begin{itemize}
+	\item con \(a_1 s + a_0 = 0 \colon s = -\frac{a_0}{a_1}\)
+	\item con \(a_2 s^2 + a_1 s + a_0 = 0 \colon s_{1,2} = -\frac{a_1 \pm \sqrt{a^2_1 -4a_0 a_2}}{2a_2}\)
+\end{itemize}
+Per sistemi più grandi si usa la \emph{tabella di Routh}:
+\[\begin{array}{r|rrr}
+	s^n 	& a_n 	  & a_{n-2} & \dots	\\
+	s^{n-1} & a_{n-1} & a_{n-3} & \dots 	\\
+	s^{n-2} & b_1 	  & b_2     & \dots 	\\
+	\vdots 	& c_1
+\end{array}\]
+dove
+\[
+	b_1 = \frac{a_{n-1} a_{n-2} - a_n a_{n-3}}{a_{n-1}} \qquad
+	c_1 = \frac{b_1 a_{n-3} - a_{n-1}b_2}{b_1}
+\]
+
+\end{esempio}
+
+\begin{esempio}
+Si considera il seguente sistema:
+\[
+	G(s) = \frac{s^5 + 3}{s^6 + 2s^5 + 2s^4 - s^3 - 2s - 2}
+\]
+Per verificare il criterio di Routh bisogna considerare la tabella di Routh e
+seguire una specie di algoritmo:
+\begin{itemize}
+	\item Per la prima riga si considera la sequenza di coefficienti ad indice pari
+	\item Per la seconda riga i coefficienti di indice dispari
+	\item Per la cella \((2,1)\) si esegue \((2,1)\cdot(1,2) - (1,1)\cdot(2,2)\).
+		È possibile dividere o moltiplicare per la cella \((2,1)\) o
+		sottomultipli, a patto che \emph{il segno non vari}.
+	\item Per le celle successive sulla stessa riga, si trasla l'operazione
+		mantenendo costante la prima colonna.
+	\item Per le righe successive si riutilizzano i punti sopra citati.%
+		\footnote{La cella di \(s^0\) ha quasi sempre lo stesso valore
+			dell'ultima cella presente nella riga di \(s^2\)}
+\end{itemize}
+\[\begin{array}{r|rrrr}
+	\tikzmark{6}s^6 &   1 &   2 &  0 & -2	\\
+	\tikzmark{5}s^5 &   2 & - 1 & -2 	\\
+	\tikzmark{4}s^4 &   5 &   2 & -4 	\\
+	\tikzmark{3}s^3 & - 9 & - 2		\\
+	\tikzmark{2}s^2 &   8 & -36		\\
+	\tikzmark{1}s^1 & -85			\\
+	\tikzmark{0}s^0 & -36
+\end{array}\]
+\begin{tikzpicture}[overlay, remember picture, yshift=.25\baselineskip, shorten >=.5pt, shorten <=.5pt]
+	\draw [->] ({pic cs:6}) [bend right] to node[left]{\scriptsize p} ({pic cs:5});
+	\draw [->] ({pic cs:5}) [bend right] to node[left]{\scriptsize p} ({pic cs:4});
+	\draw [->] ({pic cs:4}) [bend right] to node[left]{\scriptsize v} ({pic cs:3});
+	\draw [->] ({pic cs:3}) [bend right] to node[left]{\scriptsize v} ({pic cs:2});
+	\draw [->] ({pic cs:2}) [bend right] to node[left]{\scriptsize v} ({pic cs:1});
+	\draw [->] ({pic cs:1}) [bend right] to node[left]{\scriptsize p} ({pic cs:0});
+\end{tikzpicture}
+\begin{itemize}
+	\item Si segnano le permanenze (p) e le variazioni (v) di segno tra la prima cella
+		di una riga e la cella della seguente.
+	\item Le permanenze indicano il numero di poli con \(\Re s < 0\), mentre
+		le variazioni i poli con \(\Re s > 0\).
+\end{itemize}
+In questo caso si hanno 3 permanenze e 3 variazioni: il sistema è \emph{instabile}.
+\end{esempio}
