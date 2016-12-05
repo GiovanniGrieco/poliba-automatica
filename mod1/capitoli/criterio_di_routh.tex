@@ -77,21 +77,21 @@ seguire una specie di algoritmo:
 			dell'ultima cella presente nella riga di \(s^2\)}
 \end{itemize}
 \[\begin{array}{r|rrrr}
-	\tikzmark{6}s^6 &   1 &   2 &  0 & -2	\\
-	\tikzmark{5}s^5 &   2 & - 1 & -2 	\\
-	\tikzmark{4}s^4 &   5 &   2 & -4 	\\
-	\tikzmark{3}s^3 & - 9 & - 2		\\
-	\tikzmark{2}s^2 &   8 & -36		\\
-	\tikzmark{1}s^1 & -85			\\
-	\tikzmark{0}s^0 & -36
+	\tikzmark{g22m6}s^6 &   1 &   2 &  0 & -2	\\
+	\tikzmark{g22m5}s^5 &   2 & - 1 & -2 	\\
+	\tikzmark{g22m4}s^4 &   5 &   2 & -4 	\\
+	\tikzmark{g22m3}s^3 & - 9 & - 2		\\
+	\tikzmark{g22m2}s^2 &   8 & -36		\\
+	\tikzmark{g22m1}s^1 & -85			\\
+	\tikzmark{g22m0}s^0 & -36
 \end{array}\]
 \begin{tikzpicture}[overlay, remember picture, yshift=.25\baselineskip, shorten >=.5pt, shorten <=.5pt]
-	\draw [->] ({pic cs:6}) [bend right] to node[left]{\scriptsize p} ({pic cs:5});
-	\draw [->] ({pic cs:5}) [bend right] to node[left]{\scriptsize p} ({pic cs:4});
-	\draw [->] ({pic cs:4}) [bend right] to node[left]{\scriptsize v} ({pic cs:3});
-	\draw [->] ({pic cs:3}) [bend right] to node[left]{\scriptsize v} ({pic cs:2});
-	\draw [->] ({pic cs:2}) [bend right] to node[left]{\scriptsize v} ({pic cs:1});
-	\draw [->] ({pic cs:1}) [bend right] to node[left]{\scriptsize p} ({pic cs:0});
+	\draw [->] ({pic cs:g22m6}) [bend right] to node[left]{\scriptsize p} ({pic cs:g22m5});
+	\draw [->] ({pic cs:g22m5}) [bend right] to node[left]{\scriptsize p} ({pic cs:g22m4});
+	\draw [->] ({pic cs:g22m4}) [bend right] to node[left]{\scriptsize v} ({pic cs:g22m3});
+	\draw [->] ({pic cs:g22m3}) [bend right] to node[left]{\scriptsize v} ({pic cs:g22m2});
+	\draw [->] ({pic cs:g22m2}) [bend right] to node[left]{\scriptsize v} ({pic cs:g22m1});
+	\draw [->] ({pic cs:g22m1}) [bend right] to node[left]{\scriptsize p} ({pic cs:g22m0});
 \end{tikzpicture}
 \begin{itemize}
 	\item Si segnano le permanenze (p) e le variazioni (v) di segno tra la prima cella
@@ -101,3 +101,754 @@ seguire una specie di algoritmo:
 \end{itemize}
 In questo caso si hanno 3 permanenze e 3 variazioni: il sistema è \emph{instabile}.
 \end{esempio}
+
+\begin{esempio} Sia dato il seguente sistema:
+\[
+	G(s) = \frac{k}{s^3 - 12s +16}
+\]
+Il parametro \(k\) presente al numeratore non deve interessare perché si stanno
+considerando solo i poli.
+
+Si nota che manca il coefficiente di \(s^2\), che è \(0\).
+Si procede con la tabella di Routh:
+\[\begin{array}{r|rr}
+	s^3 & 1 & -12 \\
+	s^2 & 0 & 16
+\end{array}\]
+A questo punto è necessario fermarsi perché lo \(0\) non ha segno. Per ovviare ciò,
+si segue un metodo di sostituzione della riga:
+\begin{itemize}
+	\item Si moltiplica la riga per \((-1)^h\) con \(h\) il numero di zeri
+		incontrati fin'ora. (\(0;\; -16\))
+	\item Si traslano a sinistra le celle (quelle in testa vanno in coda): (\(-16;\; 0\))
+	\item Si effettua la somma in colonna tra la riga originale e quella
+		ottenuta con questo metodo:
+		\[\begin{array}{rr|r}
+			  0 & 16 & +\\
+			-16 &  0 & =\\
+			\midrule
+			-16 & 16
+		\end{array}\]
+	\item La riga ottenuta sostituisce quella originale.
+\end{itemize}
+\[\begin{array}{r|rr}
+	\tikzmark{g23m3} s^3 &   1 & -12 \\
+	\tikzmark{g23m2a}s^2 &   0 &  16 \\
+	\midrule
+	\tikzmark{g23m2b}s^2 & -16 &  16 \\
+	\tikzmark{g23m1} s^1 & -11 	  \\
+	\tikzmark{g23m0} s^0 &  16
+\end{array}\]
+\begin{tikzpicture}[overlay, remember picture, yshift=.25\baselineskip, shorten >=.5pt, shorten <=.5pt]
+	\draw [->] ({pic cs:g23m3})  [bend right] to node[left]{\scriptsize v} ({pic cs:g23m2b});
+	\draw [->] ({pic cs:g23m2b}) [bend right] to node[left]{\scriptsize p} ({pic cs:g23m1});
+	\draw [->] ({pic cs:g23m1})  [bend right] to node[left]{\scriptsize v} ({pic cs:g23m0});
+\end{tikzpicture}
+Sono presenti due variazioni e una permanenza: il sistema è \emph{instabile}.
+\end{esempio}
+
+\begin{esempio} Si applichi il criterio di Routh al seguente sistema:
+\[
+	G(s) = \frac{s^5 + 4s + 1}{s^6 + 2s^5 + 8s^4 + 12s^3 + 20s^2 + 16s + 16}
+\]
+\[\begin{array}{r|rrrr}
+	s^6 & 1 &  8 & 20 & 16	\\
+	s^5 & 2 & 12 & 16 	\\
+	s^4 & 1 &  6 &  8	\\
+	s^3 & 0 &  0
+\end{array}\]
+A questo punto è necessario fermarsi perché si ha una riga completamente nulla.
+Questo significa che esistono delle radici puramente immaginarie simmetriche
+rispetto l'origine.
+
+Si considerano i coefficienti della riga precedente e si costruisce un'equazione
+di variabile \(s\): \(s^4 + 6s^2 + 8 = 0\). Derivandola si ha \(4s^3 + 12s = 0\).
+La coppia di coefficienti di questa equazione costituiscono la nuova riga che
+sostituisce quella nulla. Si nota che i coefficienti hanno multiplo in comune 4,
+quindi dividento tutto per 4 si ha \((1;\; 3)\).
+\[\begin{array}{r|rrrr}
+	\tikzmark{g24m6} s^6 & 1 &  8 & 20 & 16	\\
+	\tikzmark{g24m5} s^5 & 2 & 12 & 16 	\\
+	\tikzmark{g24m4} s^4 & 1 &  6 &  8	\\
+			 s^3 & 0 &  0		\\
+	\midrule
+	\tikzmark{g24m3} s^3 & 1 &  3		\\
+	\tikzmark{g24m2} s^2 & 3 &  8		\\
+	\tikzmark{g24m1} s^1 & 1			\\
+	\tikzmark{g24m0} s^0 & 8
+\end{array}\]
+\begin{tikzpicture}[overlay, remember picture, yshift=.25\baselineskip, shorten >=.5pt, shorten <=.5pt]
+	\draw [->] ({pic cs:g24m6}) [bend right] to node[left]{\scriptsize p} ({pic cs:g24m5});
+	\draw [->] ({pic cs:g24m5}) [bend right] to node[left]{\scriptsize p} ({pic cs:g24m4});
+	\draw [->] ({pic cs:g24m4}) [bend right] to node[left]{\scriptsize p} ({pic cs:g24m3});
+	\draw [->] ({pic cs:g24m3}) [bend right] to node[left]{\scriptsize p} ({pic cs:g24m2});
+	\draw [->] ({pic cs:g24m2}) [bend right] to node[left]{\scriptsize p} ({pic cs:g24m1});
+	\draw [->] ({pic cs:g24m1}) [bend right] to node[left]{\scriptsize p} ({pic cs:g24m0});
+\end{tikzpicture}
+Nonostante siano tutte permanenze, bisogna tenere in considerazione che si è
+sostituita una riga vuota e, come detto sopra, si hanno dei poli sull'asse
+immaginario. Per verificarlo, basta considerare le soluzioni dell'equazione
+precedente \(4s^3 + 12s = 0\) che ha soluzioni \(s_1 = 0\) e \(s_{2,3} = \pm\jmath\sqrt{3}\).
+Per questo motivo il sistema è \emph{semplicemente stabile}.
+\end{esempio}
+
+\begin{esempio} Si applichi il criterio di Routh al seguente sistema:
+\[
+	G(s) = \frac{s^5 + 4s + 1}{s^5 + 5s^4 + 4s^3 + 120s^2 + 3s + 315}
+\]
+\[\begin{array}{r|rrr}
+	\tikzmark{g25m5} s^5 & 1 & 4 & 3 \\
+	\tikzmark{g25m4} s^4 & \cancelto{1}{3} & \cancelto{24}{120} & \cancelto{63}{315} \\
+	\tikzmark{g25m3} s^3 & \cancelto{-1}{-20} & \cancelto{-3}{-60} \\
+	\tikzmark{g25m2} s^2 & \cancelto{1}{21} & \cancelto{3}{63} \\
+			 s^1 & 0 \\
+	\midrule
+	\tikzmark{g25m1} s^1 & 2 \\
+	\tikzmark{g25m0} s^0 & 3
+\end{array}\]
+\begin{tikzpicture}[overlay, remember picture, yshift=.25\baselineskip, shorten >=.5pt, shorten <=.5pt]
+	\draw [->] ({pic cs:g25m5}) [bend right] to node[left]{\scriptsize p} ({pic cs:g25m4});
+	\draw [->] ({pic cs:g25m4}) [bend right] to node[left]{\scriptsize v} ({pic cs:g25m3});
+	\draw [->] ({pic cs:g25m3}) [bend right] to node[left]{\scriptsize v} ({pic cs:g25m2});
+	\draw [->] ({pic cs:g25m2}) [bend right] to node[left]{\scriptsize p} ({pic cs:g25m1});
+	\draw [->] ({pic cs:g25m1}) [bend right] to node[left]{\scriptsize p} ({pic cs:g25m0});
+\end{tikzpicture}
+Il sistema presenta 3 permanenze e 2 variazioni, quindi è \emph{instabile}.
+\end{esempio}
+
+\section{Esercizi}
+\begin{esercizio} Si applichi il criterio di Routh a
+\[
+	P(s) = s^4 + 4s^3 + 3s^2 + 8s + 5
+\]
+\[\begin{array}{r|rrr}
+	\tikzmark{e21m4} s^4 & 1 & 3 & 5 \\
+	\tikzmark{e21m3} s^3 & 4 & 8 \\
+	\tikzmark{e21m2} s^2 & \cancelto{1}{4} & \cancelto{5}{20} \\
+	\tikzmark{e21m1} s^1 & -12 \\
+	\tikzmark{e21m0} s^0 & 5
+\end{array}\]
+\begin{tikzpicture}[overlay, remember picture, yshift=.25\baselineskip, shorten >=.5pt, shorten <=.5pt]
+	\draw [->] ({pic cs:e21m4}) [bend right] to node[left]{\scriptsize p} ({pic cs:e21m3});
+	\draw [->] ({pic cs:e21m3}) [bend right] to node[left]{\scriptsize p} ({pic cs:e21m2});
+	\draw [->] ({pic cs:e21m2}) [bend right] to node[left]{\scriptsize v} ({pic cs:e21m1});
+	\draw [->] ({pic cs:e21m1}) [bend right] to node[left]{\scriptsize v} ({pic cs:e21m0});
+\end{tikzpicture}
+Il sistema è \emph{instabile} con 2 poli aventi \(\Re s > 0\).
+\end{esercizio}
+
+\begin{esercizio} Si applichi il criterio di Routh a
+\[
+	P(s) = 8s^4 + 3s^3 + 7s^2 + 2s + 1
+\]
+\[\begin{array}{r|rrr}
+	\tikzmark{e22m4} s^4 & 8 & 7 & 1 \\
+	\tikzmark{e22m3} s^3 & 3 & 2 	 \\
+	\tikzmark{e22m2} s^2 & 5 & 3	 \\
+	\tikzmark{e22m1} s^1 & 1	 \\
+	\tikzmark{e22m0} s^0 & 3
+\end{array}\]
+\begin{tikzpicture}[overlay, remember picture, yshift=.25\baselineskip, shorten >=.5pt, shorten <=.5pt]
+	\draw [->] ({pic cs:e22m4}) [bend right] to node[left]{\scriptsize p} ({pic cs:e22m3});
+	\draw [->] ({pic cs:e22m3}) [bend right] to node[left]{\scriptsize p} ({pic cs:e22m2});
+	\draw [->] ({pic cs:e22m2}) [bend right] to node[left]{\scriptsize p} ({pic cs:e22m1});
+	\draw [->] ({pic cs:e22m1}) [bend right] to node[left]{\scriptsize p} ({pic cs:e22m0});
+\end{tikzpicture}
+Il sistema presenta solo poli con \(\Re s < 0\), quindi è \emph{asintoticamente stabile}.
+\end{esercizio}
+
+\begin{esercizio} Si applichi il criterio di Routh a
+\[
+	P(s) = s^4 + s^3 + 5s^2 + 5s + 2
+\]
+\[\begin{array}{r|rrr}
+	\tikzmark{e23m4} s^4 &  1 & 5 & 2 \\
+	\tikzmark{e23m3} s^3 &  1 & 5	 \\
+	s^2 &  0 & 2	 		 \\
+	\midrule
+	\tikzmark{e23m2} s^2 & -2 & 2	 \\
+	\tikzmark{e23m1} s^1 & \cancelto{6}{12} \\
+	\tikzmark{e23m0} s^0 & 2
+\end{array}\]
+\begin{tikzpicture}[overlay, remember picture, yshift=.25\baselineskip, shorten >=.5pt, shorten <=.5pt]
+	\draw [->] ({pic cs:e23m4}) [bend right] to node[left]{\scriptsize p} ({pic cs:e23m3});
+	\draw [->] ({pic cs:e23m3}) [bend right] to node[left]{\scriptsize v} ({pic cs:e23m2});
+	\draw [->] ({pic cs:e23m2}) [bend right] to node[left]{\scriptsize v} ({pic cs:e23m1});
+	\draw [->] ({pic cs:e23m1}) [bend right] to node[left]{\scriptsize p} ({pic cs:e23m0});
+\end{tikzpicture}
+Il sistema presenta 2 poli con \(\Re s > 0\), quindi è \emph{instabile}.
+\end{esercizio}
+
+\begin{esercizio} Si applichi il criterio di Routh a
+\[
+	P(s) = s^5 + s^4 + 4s^3 + 4s^2 + 7s + 7
+\]
+\[\begin{array}{r|rrr}
+	\tikzmark{e24m5} s^5 & 1 & 4 & 7 \\
+	\tikzmark{e24m4} s^4 & 1 & 4 & 7 \\
+			 s^3 & 0 & 0	 \\
+	\midrule
+	\tikzmark{e24m3} s^3 & \cancelto{1}{4} & \cancelto{2}{8} \\
+	\tikzmark{e24m2} s^2 & 2 & 7	\\
+	\tikzmark{e24m1} s^1 & -3	\\
+	\tikzmark{e24m0} s^0 & 7
+\end{array}\]
+\begin{tikzpicture}[overlay, remember picture, yshift=.25\baselineskip, shorten >=.5pt, shorten <=.5pt]
+	\draw [->] ({pic cs:e24m5}) [bend right] to node[left]{\scriptsize p} ({pic cs:e24m4});
+	\draw [->] ({pic cs:e24m4}) [bend right] to node[left]{\scriptsize p} ({pic cs:e24m3});
+	\draw [->] ({pic cs:e24m3}) [bend right] to node[left]{\scriptsize p} ({pic cs:e24m2});
+	\draw [->] ({pic cs:e24m2}) [bend right] to node[left]{\scriptsize v} ({pic cs:e24m1});
+	\draw [->] ({pic cs:e24m1}) [bend right] to node[left]{\scriptsize v} ({pic cs:e24m0});
+\end{tikzpicture}
+Il sistema presenta 2 poli con \(\Re s > 0\), quindi è \emph{instabile}.
+\end{esercizio}
+
+\begin{esercizio} Si applichi il criterio di Routh a
+\[
+	P(s) = s^5 + 2s^4 + 4s^3 + 4s^2 + 3s + 2
+\]
+\[\begin{array}{r|rrr}
+	\tikzmark{e25m5} s^5 & 1 & 4 & 3 \\
+	\tikzmark{e25m4} s^4 & 2 & 4 & 2 \\
+	\tikzmark{e25m3} s^3 & \cancelto{1}{4} & \cancelto{1}{4} \\
+	\tikzmark{e25m2} s^2 & \cancelto{1}{2} & \cancelto{1}{2} \\
+			 s^1 & 0 	 \\
+	\midrule
+	\tikzmark{e25m1} s^1 & 2 	 \\
+	\tikzmark{e25m0} s^0 & 1
+\end{array}\]
+\begin{tikzpicture}[overlay, remember picture, yshift=.25\baselineskip, shorten >=.5pt, shorten <=.5pt]
+	\draw [->] ({pic cs:e25m5}) [bend right] to node[left]{\scriptsize p} ({pic cs:e25m4});
+	\draw [->] ({pic cs:e25m4}) [bend right] to node[left]{\scriptsize p} ({pic cs:e25m3});
+	\draw [->] ({pic cs:e25m3}) [bend right] to node[left]{\scriptsize p} ({pic cs:e25m2});
+	\draw [->] ({pic cs:e25m2}) [bend right] to node[left]{\scriptsize p} ({pic cs:e25m1});
+	\draw [->] ({pic cs:e25m1}) [bend right] to node[left]{\scriptsize p} ({pic cs:e25m0});
+\end{tikzpicture}
+Il sistema presenta, al limite della stabilità, due poli puramente immaginari dati
+dall'equazione \(s^2 + 1 = 0\), questa utilizzata per sostituire la riga nulla.
+Quindi il sistema è \emph{semplicemente stabile}.
+\end{esercizio}
+
+\begin{esercizio} Si applichi il criterio di Routh e si stabiliscano i poli per
+\[
+	P(s) = s^6 + s^5 + 3s^4 + 3s^3 + 3s^2 + 2s + 1
+\]
+\[\begin{array}{r|rrrr}
+	\tikzmark{e26m6} s^6 &  1 & 3 & 3 & 1	\\
+	\tikzmark{e26m5} s^5 &  1 & 3 & 2	\\
+			 s^4 &  0 & 1 & 1	\\
+	\midrule
+	\tikzmark{e26m4} s^4 & -1 & 0 & -1	\\
+	\tikzmark{e26m3} s^3 & \cancelto{1}{3} & \cancelto{1}{3} \\
+	\tikzmark{e26m2} s^2 &  1 & 1		\\
+			 s^1 &  0		\\
+	\midrule
+	\tikzmark{e26m1} s^1 &  2		\\
+	\tikzmark{e26m0} s^0 &  1
+\end{array}\]
+\begin{tikzpicture}[overlay, remember picture, yshift=.25\baselineskip, shorten >=.5pt, shorten <=.5pt]
+	\draw [->] ({pic cs:e26m6}) [bend right] to node[left]{\scriptsize p} ({pic cs:e26m5});
+	\draw [->] ({pic cs:e26m5}) [bend right] to node[left]{\scriptsize v} ({pic cs:e26m4});
+	\draw [->] ({pic cs:e26m4}) [bend right] to node[left]{\scriptsize v} ({pic cs:e26m3});
+	\draw [->] ({pic cs:e26m3}) [bend right] to node[left]{\scriptsize p} ({pic cs:e26m2});
+	\draw [->] ({pic cs:e26m2}) [bend right] to node[left]{\scriptsize p} ({pic cs:e26m1});
+	\draw [->] ({pic cs:e26m1}) [bend right] to node[left]{\scriptsize p} ({pic cs:e26m0});
+\end{tikzpicture}
+Il sistema deve avere 6 poli (equazione di grado 6): infatti presenta 2 poli con
+\(\Re s_i > 0\), 2 poli puramente immaginari \(s_{1,2} = \pm\jmath\) soluzioni
+dell'equazione \(s^2 + 1 = 0\), ricavata per sostituire la riga nulla \(s^1\),
+e 2 poli con \(\Re s_i < 0\). Per concludere, il sistema è \emph{instabile}.
+\end{esercizio}
+
+\begin{esercizio}[Parametrico] Si applichi il criterio di Routh a
+\[
+	P(s) = s^3 + 5s^2 + 6s + k
+\]
+\[\begin{array}{r|rr}
+	\tikzmark{e27m3} s^3 & 1 & 6 \\
+	\tikzmark{e27m2} s^2 & 5 & k \\
+	\tikzmark{e27m1} s^1 & 30-k  \\
+	\tikzmark{e27m0} s^0 & k
+\end{array}\]
+\begin{tikzpicture}[overlay, remember picture, yshift=.25\baselineskip, shorten >=.5pt, shorten <=.5pt]
+	\draw [->] ({pic cs:e27m3}) [bend right] to node[left]{\scriptsize p} ({pic cs:e27m2});
+	\draw [->] ({pic cs:e27m2}) [bend right] to node[left]{\scriptsize ?} ({pic cs:e27m1});
+	\draw [->] ({pic cs:e27m1}) [bend right] to node[left]{\scriptsize ?} ({pic cs:e27m0});
+\end{tikzpicture}
+
+\begin{itemize}
+	\item Se \(k > 30\):
+		\[
+			\begin{cases}
+				2 \text{ poli con } \Re s_i > 0 \\
+				1 \text{ polo con } \Re s   < 0
+			\end{cases} \implies \text{sistema \emph{instabile}}
+		\]
+	\item Se \(k = 30\):
+		\[\begin{array}{r|rr}
+			\tikzmark{e27bm3} s^3 & 1 & 6	\\
+			\tikzmark{e27bm2} s^2 & 5 & 30	\\
+					  s^1 & 0 	\\
+			\midrule
+			\tikzmark{e27bm1} s^1 & 10	\\
+			\tikzmark{e27bm0} s^0 & 30
+		\end{array}\]
+		\begin{tikzpicture}[overlay, remember picture, yshift=.25\baselineskip, shorten >=.5pt, shorten <=.5pt]
+			\draw [->] ({pic cs:e27bm3}) [bend right] to node[left]{\scriptsize p} ({pic cs:e27bm2});
+			\draw [->] ({pic cs:e27bm2}) [bend right] to node[left]{\scriptsize p} ({pic cs:e27bm1});
+			\draw [->] ({pic cs:e27bm1}) [bend right] to node[left]{\scriptsize p} ({pic cs:e27bm0});
+		\end{tikzpicture}
+		Le soluzioni dell'equazione \(5s^2 + 30 = 0\) sono puramente
+		immaginari, quindi il sistema è \emph{semplicemente stabile}
+	\item Se \(0 < k < 30\): 3 poli con \(\Re s_i < 0 \implies\) sistema \emph{asintoticamente stabile}
+	\item Se \(k < 0\):
+		\[
+			\begin{cases}
+				1 \text{ polo con } \Re s   > 0 \\
+				2 \text{ poli con } \Re s_i < 0
+			\end{cases} \implies \text{sistema \emph{instabile}}
+		\]
+	\item Se \(k = 0\):
+		\[\begin{array}{r|rr}
+			\tikzmark{e27cm3} s^3 & 1 & 6	\\
+			\tikzmark{e27cm2} s^2 & 5 & 0	\\
+			\tikzmark{e27cm1} s^1 & 30	\\
+					  s^0 & 0	\\
+			\midrule
+			\tikzmark{e27cm0} s^0 & 30
+		\end{array}\]
+		\begin{tikzpicture}[overlay, remember picture, yshift=.25\baselineskip, shorten >=.5pt, shorten <=.5pt]
+			\draw [->] ({pic cs:e27cm3}) [bend right] to node[left]{\scriptsize p} ({pic cs:e27cm2});
+			\draw [->] ({pic cs:e27cm2}) [bend right] to node[left]{\scriptsize p} ({pic cs:e27cm1});
+			\draw [->] ({pic cs:e27cm1}) [bend right] to node[left]{\scriptsize p} ({pic cs:e27cm0});
+		\end{tikzpicture}
+		La soluzione dell'equazione \(30s = 0\) coincide con l'origine,
+		quindi il sistema è \emph{semplicemente stabile}
+\end{itemize}
+\end{esercizio}
+
+\begin{esercizio}[Parametrico] Si applichi il criterio di Routh e si stabiliscano i poli per
+\[
+	G_0 (s) = \frac{s-1}{s^2 + 5s^2 + (k-6)s + k}
+\]
+\[\begin{array}{r|rr}
+	\tikzmark{e28am3} s^3 & 	  1 & k-6 \\
+	\tikzmark{e28am2} s^2 & 	  5 &   k \\
+	\tikzmark{e28am1} s^1 & 2k-15 	  	  \\
+	\tikzmark{e28am0} s^0 & k
+\end{array}\]
+\begin{tikzpicture}[overlay, remember picture, yshift=.25\baselineskip, shorten >=.5pt, shorten <=.5pt]
+	\draw [->] ({pic cs:e28am3}) [bend right] to node[left]{\scriptsize p} ({pic cs:e28am2});
+	\draw [->] ({pic cs:e28am2}) [bend right] to node[left]{\scriptsize ?} ({pic cs:e28am1});
+	\draw [->] ({pic cs:e28am1}) [bend right] to node[left]{\scriptsize ?} ({pic cs:e28am0});
+\end{tikzpicture}
+\begin{itemize}
+	\item Se \(k < 0\):
+		\[\begin{cases}
+			1 \text{ polo con } \Re s   > 0 \\
+			2 \text{ poli con } \Re s_i < 0
+		\end{cases} \implies \text{sistema \emph{instabile}}\]
+	\item Se \(k = 0\):
+		\[\begin{array}{r|rr}
+			\tikzmark{e28bm3} s^3 &   1 & -6\\
+			\tikzmark{e28bm2} s^2 &   5 & 0	\\
+			\tikzmark{e28bm1} s^1 & -30	\\
+					  s^0 &   0	\\
+			\midrule
+			\tikzmark{e28bm0} s^0 & -30
+		\end{array}\]
+		\begin{tikzpicture}[overlay, remember picture, yshift=.25\baselineskip, shorten >=.5pt, shorten <=.5pt]
+			\draw [->] ({pic cs:e28bm3}) [bend right] to node[left]{\scriptsize p} ({pic cs:e28bm2});
+			\draw [->] ({pic cs:e28bm2}) [bend right] to node[left]{\scriptsize v} ({pic cs:e28bm1});
+			\draw [->] ({pic cs:e28bm1}) [bend right] to node[left]{\scriptsize p} ({pic cs:e28bm0});
+		\end{tikzpicture}
+		\[\begin{cases}
+			1 \text{ polo con } \Re s > 0	\\
+			1 \text{ polo all'origine} 	\\
+			1 \text{ polo con } \Re s < 0
+		\end{cases} \implies \text{sistema \emph{instabile}}\]
+	\item Se \(0 < k < \frac{15}{2}\):
+		\[\begin{cases}
+			2 \text{ poli con } \Re s_i > 0 \\
+			1 \text{ polo con } \Re s   < 0
+		\end{cases} \implies \text{sistema \emph{instabile}}\]
+	\item Se \(k = \frac{15}{2}\):
+		\[\begin{array}{r|rr}
+			\tikzmark{e28dm3} s^3 &  1 & \frac{15}{2} - 6	\\
+			\tikzmark{e28dm2} s^2 &  5 & \frac{15}{2}	\\
+					  s^1 &  0			\\
+			\midrule
+			\tikzmark{e28dm1} s^1 &  2			\\
+			\tikzmark{e28dm0} s^0 & 15
+		\end{array}\]
+		\begin{tikzpicture}[overlay, remember picture, yshift=.25\baselineskip, shorten >=.5pt, shorten <=.5pt]
+			\draw [->] ({pic cs:e28dm3}) [bend right] to node[left]{\scriptsize p} ({pic cs:e28dm2});
+			\draw [->] ({pic cs:e28dm2}) [bend right] to node[left]{\scriptsize p} ({pic cs:e28dm1});
+			\draw [->] ({pic cs:e28dm1}) [bend right] to node[left]{\scriptsize p} ({pic cs:e28dm0});
+		\end{tikzpicture}
+		\[\begin{cases}
+			2 \text{ poli puramente immaginari} \\
+			1 \text{ polo con } \Re s < 0
+		\end{cases} \implies \text{sistema \emph{semplicemente stabile}}\]
+	\item Se \(k > \frac{15}{2}\):
+		\[\begin{cases}
+			3 \text{ poli con } \Re s_i < 0
+		\end{cases} \implies \text{sistema \emph{asintoticamente stabile}}\]
+\end{itemize}
+\end{esercizio}
+
+\begin{esercizio}[Sistema a retroazione negativa] Dato il sistema
+\begin{center}\begin{tikzpicture}[auto,node distance=2cm,>=latex']
+	\node [input] (x) {};
+	\node [sum, right of=x] (sum) {};
+	\node [block, right of=sum, node distance=1.5cm] (G1) {\(G_c (s)\)};
+	\node [block, right of=G1] (G2) {\(G_p (s)\)};
+	\node [output, right of=G2] (y) {};
+	\node [tmp, below of=G1, node distance=1cm] (tmp) {};
+	\draw [->] (x) -- (sum);
+	\draw [->] (sum) -- (G1);
+	\draw [->] (G1) -- (G2);
+	\draw [->] (G2) -- node[name=retro]{} (y);
+	\draw [->] (retro) |- (tmp) -| node[pos=0.9,anchor=east]{\(-\)} (sum);
+\end{tikzpicture}\end{center}
+con
+\begin{align*}
+	G_c (s) &= k \frac{s+1}{s-2} \\
+	G_p (s) &= \frac{1}{s^2 + 2s + 10}
+\end{align*}
+si applichi il criterio di Routh e si discutano i poli al variare del parametro \(k\).
+
+\paragraph{Soluzione}
+\(G_c\) e \(G_p\) sono in serie, quindi
+\[
+	G(s) = G_c(s)G_p(s) = \frac{k(s+1)}{(s-2)(s^2 + 2s + 10)}
+\]
+Si considera \((s-2)(s^2+2s+10)+k(s+1) = s^3 \cancel{-2s^2} \cancel{+2s^2} -4s +10s -20 +ks +k = s^3 +(k+6)s -20+k\),
+quindi \[P(s) = s^3 +(k+6)s -20+k\]
+\[\begin{array}{r|rr}
+	s^3 & 1 & k+6 \\
+	s^2 & 0 & -20+k \\
+	\midrule
+	s^2 & 20-k & -20+k \\
+	s^1 & -k^2+13k+140
+\end{array}\]
+È possibile semplificare l'equazione \(-k^2 +13k +140 = 0\) trovando le sue radici:
+\begin{align*}
+	k^2 -13k -140 &= 0 \\
+	k_{1,2} = \frac{13 \pm27}{2} &= \begin{cases} -7 \\ 20 \end{cases} \\
+	\implies k^2 -13k -140 &= (k +7) (k -20) \\
+	-k^2 +13k +140 &= (k +7) (20 -k) \\
+	\implies \frac{-k^2 +13k +140}{20 -k} &= k+7
+\end{align*}
+Di conseguenza
+\[\begin{array}{r|rr}
+	s^3 &    1 &   k+6 \\
+	s^2 & 20-k & -20+k \\
+	s^1 &  k+7 	   \\
+	s^0 & -20+k
+\end{array}\]
+\begin{itemize}
+	\item Se \(k < -7\):
+		\[\begin{cases}
+			1 \text{ polo con } \Re s > 0
+		\end{cases}\]
+	\item Se \(k = -7\):
+		\[\begin{array}{r|rr}
+			\tikzmark{e29am3} s^3 &  1 & -1 \\
+			\tikzmark{e29am2} s^2 &  1 & -1 \\
+					  s^1 &  0	\\
+			\midrule
+			\tikzmark{e29am1} s^1 &  2	\\
+			\tikzmark{e29am0} s^0 & -1
+		\end{array}\]
+		\begin{tikzpicture}[overlay, remember picture, yshift=.25\baselineskip, shorten >=.5pt, shorten <=.5pt]
+			\draw [->] ({pic cs:e29am3}) [bend right] to node[left]{\scriptsize p} ({pic cs:e29am2});
+			\draw [->] ({pic cs:e29am2}) [bend right] to node[left]{\scriptsize p} ({pic cs:e29am1});
+			\draw [->] ({pic cs:e29am1}) [bend right] to node[left]{\scriptsize v} ({pic cs:e29am0});
+		\end{tikzpicture}
+		\[\begin{cases}
+			2 \text{ poli con } \Re s > 0	\\
+		\end{cases} \implies \text{sistema \emph{instabile}}\]
+	\item Se \(-7 < k < 20\):
+		\[\begin{cases}
+			1 \text{ polo con } \Re s   > 0
+		\end{cases} \implies \text{sistema \emph{instabile}}\]
+	\item Se \(k = 20\):
+		\[\begin{array}{r|rr}
+			\tikzmark{e29bm3} s^3 &  1 & 26 \\
+					  s^2 &  0 &  0 \\
+			\midrule
+			\tikzmark{e29bm2} s^2 &  3 & 26 \\
+			\tikzmark{e29bm1} s^1 & 52	\\
+			\tikzmark{e29bm0} s^0 & 26
+		\end{array}\]
+		\begin{tikzpicture}[overlay, remember picture, yshift=.25\baselineskip, shorten >=.5pt, shorten <=.5pt]
+			\draw [->] ({pic cs:e29bm3}) [bend right] to node[left]{\scriptsize p} ({pic cs:e29bm2});
+			\draw [->] ({pic cs:e29bm2}) [bend right] to node[left]{\scriptsize p} ({pic cs:e29bm1});
+			\draw [->] ({pic cs:e29bm1}) [bend right] to node[left]{\scriptsize p} ({pic cs:e29bm0});
+		\end{tikzpicture}
+		\[\begin{cases}
+			1 \text{ polo all'origine} 		\\
+			2 \text{ poli puramente immaginari}
+		\end{cases} \implies \text{sistema \emph{semplicemente stabile}}\]
+	\item Se \(k > 20\):
+		\[\begin{cases}
+			2 \text{ poli con } \Re s_i > 0
+		\end{cases}\]
+	\item Il sistema non è asintoticamente stabile \(\forall k\)
+\end{itemize}
+\end{esercizio}
+
+\begin{esercizio}[Parametrico] Si applichi il criterio di Routh e si discutino i poli al variare di \(k\) per
+\[
+	G(s) = \frac{250k (s-3)}{(s+3)(s^2 +50s +2500)}
+\]
+\begin{align*}
+	P(s) &= 250k (s-3) + (s+3)(s^2 +50s +2500) = 		   \\
+	     &= 250ks -705k +s^3 +3s^2 +50s^2 +150s +2500s +7500 = \\
+	     &= s^3 +53s^2 +(250k +2650)s +7500 -750k
+\end{align*}
+\[\begin{array}{r|rr}
+	\tikzmark{e210am3} s^3 & 1 & 250k +2650 \\
+	\tikzmark{e210am2} s^2 & 53 & 7500 -750k \\
+	\tikzmark{e210am1} s^1 & 280k +2659 \\
+	\tikzmark{e210am0} s^0 & 10-k
+\end{array}\]
+\begin{tikzpicture}[overlay, remember picture, yshift=.25\baselineskip, shorten >=.5pt, shorten <=.5pt]
+	\draw [->] ({pic cs:e210am3}) [bend right] to node[left]{\scriptsize p} ({pic cs:e210am2});
+	\draw [->] ({pic cs:e210am2}) [bend right] to node[left]{\scriptsize ?} ({pic cs:e210am1});
+	\draw [->] ({pic cs:e210am1}) [bend right] to node[left]{\scriptsize ?} ({pic cs:e210am0});
+\end{tikzpicture}
+\begin{itemize}
+	\item Se \(k < -\frac{2659}{280}\):
+		\[\begin{cases}
+			2 \text{ poli con } \Re s_i > 0 \\
+			1 \text{ polo con } \Re s   < 0
+		\end{cases} \implies \text{sistema \emph{instabile}}\]
+	\item Se \(k = -\frac{2659}{280}\):
+		\[\begin{array}{r|rr}
+			\tikzmark{e210bm3} s^3 & 1 & 250k + 2650 \\
+			\tikzmark{e210bm2} s^2 & 53 & 7500 -750k \\
+					   s^1 & 0 \\
+			\midrule
+			\tikzmark{e210bm1} s^1 & 106 \\
+			\tikzmark{e210bm0} s^0 & 7500 -750k
+		\end{array}\]
+		\begin{tikzpicture}[overlay, remember picture, yshift=.25\baselineskip, shorten >=.5pt, shorten <=.5pt]
+			\draw [->] ({pic cs:e210bm3}) [bend right] to node[left]{\scriptsize p} ({pic cs:e210bm2});
+			\draw [->] ({pic cs:e210bm2}) [bend right] to node[left]{\scriptsize p} ({pic cs:e210bm1});
+			\draw [->] ({pic cs:e210bm1}) [bend right] to node[left]{\scriptsize p} ({pic cs:e210bm0});
+		\end{tikzpicture}
+		\[\begin{cases}
+			2 \text{ poli puramente immaginari} \\
+			1 \text{ polo con } \Re s < 0
+		\end{cases} \implies \text{sistema \emph{semplicemente stabile}}\]
+	\item Se \(-\frac{2659}{280} < k < 10\):
+		\[\begin{cases}
+			3 \text{ poli con } \Re s_i < 0
+		\end{cases} \implies \text{sistema \emph{asintoticamente stabile}}\]
+	\item Se \(k = 10\):
+		\[\begin{array}{r|rr}
+			\tikzmark{e210cm3} s^3 & 1 & 5150 \\
+			\tikzmark{e210cm2} s^2 & 53 & 0 \\
+			\tikzmark{e210cm1} s^1 & 5459 \\
+					   s^0 & 0 \\
+			\midrule
+			\tikzmark{e210cm0} s^0 & 5459
+		\end{array}\]
+		\begin{tikzpicture}[overlay, remember picture, yshift=.25\baselineskip, shorten >=.5pt, shorten <=.5pt]
+			\draw [->] ({pic cs:e210cm3}) [bend right] to node[left]{\scriptsize p} ({pic cs:e210cm2});
+			\draw [->] ({pic cs:e210cm2}) [bend right] to node[left]{\scriptsize p} ({pic cs:e210cm1});
+			\draw [->] ({pic cs:e210cm1}) [bend right] to node[left]{\scriptsize p} ({pic cs:e210cm0});
+		\end{tikzpicture}
+		\[\begin{cases}
+			1 \text{ polo all'origine} \\
+			2 \text{ poli con } \Re s_i < 0
+		\end{cases} \implies \text{sistema \emph{semplicemente stabile}}\]
+	\item Se \(k > 10\):
+		\[\begin{cases}
+			1 \text{ polo con } \Re s   > 0 \\
+			2 \text{ poli con } \Re s_i < 0
+		\end{cases} \implies \text{sistema \emph{instabile}}\]
+\end{itemize}
+\end{esercizio}
+
+\begin{esercizio}[Parametrico] Si applichi il criterio di Routh e si discutino i
+poli al variare di \(k\) al seguente sistema
+\[
+	G_c(s) = k \qquad G_p(s) = \frac{s-1}{s (s+1) (s^2 +8s +25)}
+\]
+
+La funzione di trasferimento e \(P(s)\) sono dati da
+\begin{align*}
+	G(s) &= G_c(s) G_p(s) = \frac{k(s-1)}{s (s+1) (s^2 +8s +25)} \\
+	P(s) &= k(s-1) + s (s+1) (s^2 +8s +25) = ks -k +(s^2 +s)(s^2 +8s +25) = \\
+	     &= ks -k +s^4 +s^3 +8s^3 +8s^2 +25s^2 +25s = \\
+	     &= s^4 +9s^3 +33s^2 +(25+k)s -k
+\end{align*}
+\[\begin{array}{r|rrr}
+	s^4 & 1 & 33 & -k \\
+	s^3 & 9 & 25+k \\
+	s^2 & 272-k & -k(25+k)
+\end{array}\]
+Per ricavare la riga successiva:
+\begin{align*}
+	(272-k)(25+k) + 9k(25+k) &= 6800 -25k +272k -k^2 +225k +9k^2 = \\
+	&= 8k^2 +472k +6800 \implies k^2 +59k +850\\
+	k_{1,2} &= \frac{-59 \pm 9}{2} = \begin{cases} -25 \\ -34 \end{cases} \\
+	\implies k^2 +59k +850 &= (k-25)(k-34)
+\end{align*}
+quindi
+\[\begin{array}{r|rrr}
+	\tikzmark{e211am4} s^4 &     1 &       33 & -k 	\\
+	\tikzmark{e211am3} s^3 &     9 &     25+k 	\\
+	\tikzmark{e211am2} s^2 & 272-k & -k(25+k)	\\
+	\tikzmark{e211am1} s^1 & (k-25)(k-34)		\\
+	\tikzmark{e211am0} s^0 & -k(25+k)
+\end{array}\]
+\begin{tikzpicture}[overlay, remember picture, yshift=.25\baselineskip, shorten >=.5pt, shorten <=.5pt]
+	\draw [->] ({pic cs:e211am4}) [bend right] to node[left]{\scriptsize p} ({pic cs:e211am3});
+	\draw [->] ({pic cs:e211am3}) [bend right] to node[left]{\scriptsize ?} ({pic cs:e211am2});
+	\draw [->] ({pic cs:e211am2}) [bend right] to node[left]{\scriptsize ?} ({pic cs:e211am1});
+	\draw [->] ({pic cs:e211am1}) [bend right] to node[left]{\scriptsize ?} ({pic cs:e211am0});
+\end{tikzpicture}
+
+\begin{itemize}
+	\item Se \(k < -25\):
+		\[\begin{cases}
+			1 \text{ polo con } \Re s   > 0 \\
+			3 \text{ poli con } \Re s_i < 0
+		\end{cases} \implies \text{sistema \emph{instabile}}\]
+	\item Se \(k = -25\):
+		\[\begin{array}{r|rrr}
+			\tikzmark{e211bm4} s^4 &    1 & 33 & 25 \\
+			\tikzmark{e211bm3} s^3 &    9 & 50 	\\
+			\tikzmark{e211bm2} s^2 &  247 &  0	\\
+			\tikzmark{e211bm1} s^1 & 2950		\\
+					   s^0 & 0 		\\
+			\midrule
+			\tikzmark{e211bm0} s^0 & 2950
+		\end{array}\]
+		\begin{tikzpicture}[overlay, remember picture, yshift=.25\baselineskip, shorten >=.5pt, shorten <=.5pt]
+			\draw [->] ({pic cs:e211bm4}) [bend right] to node[left]{\scriptsize p} ({pic cs:e211bm3});
+			\draw [->] ({pic cs:e211bm3}) [bend right] to node[left]{\scriptsize p} ({pic cs:e211bm2});
+			\draw [->] ({pic cs:e211bm2}) [bend right] to node[left]{\scriptsize p} ({pic cs:e211bm1});
+			\draw [->] ({pic cs:e211bm1}) [bend right] to node[left]{\scriptsize p} ({pic cs:e211bm0});
+		\end{tikzpicture}
+		\[\begin{cases}
+			1 \text{ polo all'origine} 	\\
+			3 \text{ poli con } \Re s_i < 0
+		\end{cases} \implies \text{sistema \emph{semplicemente stabile}}\]
+	\item Se \(-25 < k < 0\):
+		\[\begin{cases}
+			4 \text{ poli con } \Re s_i < 0
+		\end{cases} \implies \text{sistema \emph{asintoticamente stabile}}\]
+	\item Se \(k = 0\):
+		\[\begin{array}{r|rrr}
+			\tikzmark{e211cm4} s^4 &   1 & 33 & 0	\\
+			\tikzmark{e211cm3} s^3 &   9 & 25	\\
+			\tikzmark{e211cm2} s^2 & 272 &  0	\\
+			\tikzmark{e211cm1} s^1 & 850		\\
+					   s^0 & 0		\\
+			\midrule
+			\tikzmark{e211cm0} s^9 & 850
+		\end{array}\]
+		\begin{tikzpicture}[overlay, remember picture, yshift=.25\baselineskip, shorten >=.5pt, shorten <=.5pt]
+			\draw [->] ({pic cs:e211cm4}) [bend right] to node[left]{\scriptsize p} ({pic cs:e211cm3});
+			\draw [->] ({pic cs:e211cm3}) [bend right] to node[left]{\scriptsize p} ({pic cs:e211cm2});
+			\draw [->] ({pic cs:e211cm2}) [bend right] to node[left]{\scriptsize p} ({pic cs:e211cm1});
+			\draw [->] ({pic cs:e211cm1}) [bend right] to node[left]{\scriptsize p} ({pic cs:e211cm0});
+		\end{tikzpicture}
+		\[\begin{cases}
+			1 \text{ polo all'origine} 	\\
+			3 \text{ poli con } \Re s_i < 0
+		\end{cases} \implies \text{sistema \emph{semplicemente stabile}}\]
+	\item Se \(0 < k < 25\):
+		\[\begin{cases}
+			1 \text{ polo con } \Re s   > 0 \\
+			3 \text{ poli con } \Re s_i < 0
+		\end{cases} \implies \text{sistema \emph{instabile}}\]
+	\item Se \(k = 25\):
+		\[\begin{array}{r|rrr}
+			\tikzmark{e211dm4} s^4 &     1 &    33 & -25 \\
+			\tikzmark{e211dm3} s^3 &     9 &     0	     \\
+			\tikzmark{e211dm2} s^2 &   247 & -1250	     \\
+					   s^1 &     0		     \\
+			\midrule
+			\tikzmark{e211dm1} s^1 &   494		     \\
+			\tikzmark{e211dm0} s^0 & -1250
+		\end{array}\]
+		\begin{tikzpicture}[overlay, remember picture, yshift=.25\baselineskip, shorten >=.5pt, shorten <=.5pt]
+			\draw [->] ({pic cs:e211dm4}) [bend right] to node[left]{\scriptsize p} ({pic cs:e211dm3});
+			\draw [->] ({pic cs:e211dm3}) [bend right] to node[left]{\scriptsize p} ({pic cs:e211dm2});
+			\draw [->] ({pic cs:e211dm2}) [bend right] to node[left]{\scriptsize p} ({pic cs:e211dm1});
+			\draw [->] ({pic cs:e211dm1}) [bend right] to node[left]{\scriptsize v} ({pic cs:e211dm0});
+		\end{tikzpicture}
+		\[\begin{cases}
+			3 \text{ poli con } \Re s_i > 0 \\
+			1 \text{ polo con } \Re s   < 0
+		\end{cases} \implies \text{sistema \emph{instabile}}\]
+	\item Se \(25 < k < 34\):
+		\[\begin{cases}
+			2 \text{ poli con } \Re s_i > 0 \\
+			2 \text{ poli con } \Re s   < 0
+		\end{cases} \implies \text{sistema \emph{instabile}}\]
+	\item Se \(k = 34\):
+		\[\begin{array}{r|rrr}
+			\tikzmark{e211em4} s^4 &     1 &    33 & -34 	\\
+			\tikzmark{e211em3} s^3 &     9 &    59		\\
+			\tikzmark{e211em2} s^2 &   238 & -2006		\\
+					   s^1 &     0			\\
+			\midrule
+			\tikzmark{e211em1} s^1 &   476			\\
+			\tikzmark{e211em0} s^0 & -2006
+		\end{array}\]
+		\begin{tikzpicture}[overlay, remember picture, yshift=.25\baselineskip, shorten >=.5pt, shorten <=.5pt]
+			\draw [->] ({pic cs:e211em4}) [bend right] to node[left]{\scriptsize p} ({pic cs:e211em3});
+			\draw [->] ({pic cs:e211em3}) [bend right] to node[left]{\scriptsize p} ({pic cs:e211em2});
+			\draw [->] ({pic cs:e211em2}) [bend right] to node[left]{\scriptsize p} ({pic cs:e211em1});
+			\draw [->] ({pic cs:e211em1}) [bend right] to node[left]{\scriptsize v} ({pic cs:e211em0});
+		\end{tikzpicture}
+		\[\begin{cases}
+			3 \text{ poli con } \Re s_i > 0 \\
+			1 \text{ polo con } \Re s   < 0
+		\end{cases} \implies \text{sistema \emph{instabile}}\]
+	\item Se \(34 < k \leq 272\):
+		\[\begin{cases}
+			1 \text{ polo con } \Re s   > 0 \\
+			3 \text{ poli con } \Re s_i < 0
+		\end{cases} \implies \text{sistema \emph{instabile}}\]
+	\item Se \(k > 272\):
+		\[\begin{cases}
+			3 \text{ poli con } \Re s_i > 0 \\
+			1 \text{ polo con } \Re s   < 0
+		\end{cases} \implies \text{sistema \emph{instabile}}\]
+\end{itemize}
+\end{esercizio}
+
+\begin{esercizio} Si applichi il criterio di Routh a
+\[
+	G_0(s) = \frac{s-2}{s^5 +5s^4 +11s^3 +23s^2 +28s +12}
+\]
+\[\begin{array}{r|rrr}
+	\tikzmark{e212m5} s^5 & 1 & 11 & 28 \\
+	\tikzmark{e212m4} s^4 & 5 & 23 & 12 \\
+	\tikzmark{e212m3} s^3 & \cancelto{1}{32} & \cancelto{4}{128} \\
+	\tikzmark{e212m2} s^2 & 3 & 12	   \\
+			 s^1 & 0	   \\
+	\midrule
+	\tikzmark{e212m1} s^1 & 6	   \\
+	\tikzmark{e212m0} s^0 & 12
+\end{array}\]
+\begin{tikzpicture}[overlay, remember picture, yshift=.25\baselineskip, shorten >=.5pt, shorten <=.5pt]
+	\draw [->] ({pic cs:e212m5}) [bend right] to node[left]{\scriptsize p} ({pic cs:e212m4});
+	\draw [->] ({pic cs:e212m4}) [bend right] to node[left]{\scriptsize p} ({pic cs:e212m3});
+	\draw [->] ({pic cs:e212m3}) [bend right] to node[left]{\scriptsize p} ({pic cs:e212m2});
+	\draw [->] ({pic cs:e212m2}) [bend right] to node[left]{\scriptsize p} ({pic cs:e212m1});
+	\draw [->] ({pic cs:e212m1}) [bend right] to node[left]{\scriptsize p} ({pic cs:e212m0});
+\end{tikzpicture}
+\[\begin{cases}
+	2 \text{ poli puramente immaginari} \\
+	3 \text{ poli con } \Re s_i < 0
+\end{cases} \implies \text{sistema \emph{semplicemente stabile}}\]
+\end{esercizio}
