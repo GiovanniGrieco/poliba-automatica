@@ -689,22 +689,21 @@ La funzione di trasferimento e \(P(s)\) sono dati da
 \[\begin{array}{r|rrr}
 	s^4 & 1 & 33 & -k \\
 	s^3 & 9 & 25+k \\
-	s^2 & 272-k & -k(25+k)
+	s^2 & 272-k & -9k
 \end{array}\]
 Per ricavare la riga successiva:
 \begin{align*}
-	(272-k)(25+k) + 9k(25+k) &= 6800 -25k +272k -k^2 +225k +9k^2 = \\
-	&= 8k^2 +472k +6800 \implies k^2 +59k +850\\
-	k_{1,2} &= \frac{-59 \pm 9}{2} = \begin{cases} -25 \\ -34 \end{cases} \\
-	\implies k^2 +59k +850 &= (k-25)(k-34)
+	(272-k)(25+k) + 81k &= -k^2 +328k +6800 \\
+	\implies k^2 -328k -6800 &= 0\\
+	k_{1,2} = 164 \pm 36\sqrt{26} &\approx \begin{cases} 347.6 \\ -19.6 \end{cases}
 \end{align*}
 quindi
 \[\begin{array}{r|rrr}
-	\tikzmark{e211am4} s^4 &     1 &       33 & -k 	\\
-	\tikzmark{e211am3} s^3 &     9 &     25+k 	\\
-	\tikzmark{e211am2} s^2 & 272-k & -k(25+k)	\\
-	\tikzmark{e211am1} s^1 & (k-25)(k-34)		\\
-	\tikzmark{e211am0} s^0 & -k(25+k)
+	\tikzmark{e211am4} s^4 & 1 & 33 & -k 	\\
+	\tikzmark{e211am3} s^3 & 9 & 25+k 		\\
+	\tikzmark{e211am2} s^2 & 272-k & -9k	\\
+	\tikzmark{e211am1} s^1 & -k^2 +328k +6800	\\
+	\tikzmark{e211am0} s^0 & -9k
 \end{array}\]
 \begin{tikzpicture}[overlay, remember picture, yshift=.25\baselineskip, shorten >=.5pt, shorten <=.5pt]
 	\draw [->] ({pic cs:e211am4}) [bend right] to node[left]{\scriptsize p} ({pic cs:e211am3});
@@ -712,117 +711,22 @@ quindi
 	\draw [->] ({pic cs:e211am2}) [bend right] to node[left]{\scriptsize ?} ({pic cs:e211am1});
 	\draw [->] ({pic cs:e211am1}) [bend right] to node[left]{\scriptsize ?} ({pic cs:e211am0});
 \end{tikzpicture}
+I casi sono
+\[\begin{cases}
+	272-k > 0 \rightarrow k < 272 \\
+	-9k > 0 \rightarrow k < 0 \\
+	-k^2 +328k +6800 > 0 \rightarrow 164 -36\sqrt{26} < k < 164 +36\sqrt{26}
+\end{cases}\]
 
 \begin{itemize}
-	\item Se \(k < -25\):
-		\[\begin{cases}
-			1 \text{ polo con } \Re s   > 0 \\
-			3 \text{ poli con } \Re s_i < 0
-		\end{cases} \implies \text{sistema \emph{instabile}}\]
-	\item Se \(k = -25\):
-		\[\begin{array}{r|rrr}
-			\tikzmark{e211bm4} s^4 &    1 & 33 & 25 \\
-			\tikzmark{e211bm3} s^3 &    9 & 50 	\\
-			\tikzmark{e211bm2} s^2 &  247 &  0	\\
-			\tikzmark{e211bm1} s^1 & 2950		\\
-					   s^0 & 0 		\\
-			\midrule
-			\tikzmark{e211bm0} s^0 & 2950
-		\end{array}\]
-		\begin{tikzpicture}[overlay, remember picture, yshift=.25\baselineskip, shorten >=.5pt, shorten <=.5pt]
-			\draw [->] ({pic cs:e211bm4}) [bend right] to node[left]{\scriptsize p} ({pic cs:e211bm3});
-			\draw [->] ({pic cs:e211bm3}) [bend right] to node[left]{\scriptsize p} ({pic cs:e211bm2});
-			\draw [->] ({pic cs:e211bm2}) [bend right] to node[left]{\scriptsize p} ({pic cs:e211bm1});
-			\draw [->] ({pic cs:e211bm1}) [bend right] to node[left]{\scriptsize p} ({pic cs:e211bm0});
-		\end{tikzpicture}
-		\[\begin{cases}
-			1 \text{ polo all'origine} 	\\
-			3 \text{ poli con } \Re s_i < 0
-		\end{cases} \implies \text{sistema \emph{semplicemente stabile}}\]
-	\item Se \(-25 < k < 0\):
-		\[\begin{cases}
-			4 \text{ poli con } \Re s_i < 0
-		\end{cases} \implies \text{sistema \emph{asintoticamente stabile}}\]
-	\item Se \(k = 0\):
-		\[\begin{array}{r|rrr}
-			\tikzmark{e211cm4} s^4 &   1 & 33 & 0	\\
-			\tikzmark{e211cm3} s^3 &   9 & 25	\\
-			\tikzmark{e211cm2} s^2 & 272 &  0	\\
-			\tikzmark{e211cm1} s^1 & 850		\\
-					   s^0 & 0		\\
-			\midrule
-			\tikzmark{e211cm0} s^9 & 850
-		\end{array}\]
-		\begin{tikzpicture}[overlay, remember picture, yshift=.25\baselineskip, shorten >=.5pt, shorten <=.5pt]
-			\draw [->] ({pic cs:e211cm4}) [bend right] to node[left]{\scriptsize p} ({pic cs:e211cm3});
-			\draw [->] ({pic cs:e211cm3}) [bend right] to node[left]{\scriptsize p} ({pic cs:e211cm2});
-			\draw [->] ({pic cs:e211cm2}) [bend right] to node[left]{\scriptsize p} ({pic cs:e211cm1});
-			\draw [->] ({pic cs:e211cm1}) [bend right] to node[left]{\scriptsize p} ({pic cs:e211cm0});
-		\end{tikzpicture}
-		\[\begin{cases}
-			1 \text{ polo all'origine} 	\\
-			3 \text{ poli con } \Re s_i < 0
-		\end{cases} \implies \text{sistema \emph{semplicemente stabile}}\]
-	\item Se \(0 < k < 25\):
-		\[\begin{cases}
-			1 \text{ polo con } \Re s   > 0 \\
-			3 \text{ poli con } \Re s_i < 0
-		\end{cases} \implies \text{sistema \emph{instabile}}\]
-	\item Se \(k = 25\):
-		\[\begin{array}{r|rrr}
-			\tikzmark{e211dm4} s^4 &     1 &    33 & -25 \\
-			\tikzmark{e211dm3} s^3 &     9 &     0	     \\
-			\tikzmark{e211dm2} s^2 &   247 & -1250	     \\
-					   s^1 &     0		     \\
-			\midrule
-			\tikzmark{e211dm1} s^1 &   494		     \\
-			\tikzmark{e211dm0} s^0 & -1250
-		\end{array}\]
-		\begin{tikzpicture}[overlay, remember picture, yshift=.25\baselineskip, shorten >=.5pt, shorten <=.5pt]
-			\draw [->] ({pic cs:e211dm4}) [bend right] to node[left]{\scriptsize p} ({pic cs:e211dm3});
-			\draw [->] ({pic cs:e211dm3}) [bend right] to node[left]{\scriptsize p} ({pic cs:e211dm2});
-			\draw [->] ({pic cs:e211dm2}) [bend right] to node[left]{\scriptsize p} ({pic cs:e211dm1});
-			\draw [->] ({pic cs:e211dm1}) [bend right] to node[left]{\scriptsize v} ({pic cs:e211dm0});
-		\end{tikzpicture}
-		\[\begin{cases}
-			3 \text{ poli con } \Re s_i > 0 \\
-			1 \text{ polo con } \Re s   < 0
-		\end{cases} \implies \text{sistema \emph{instabile}}\]
-	\item Se \(25 < k < 34\):
-		\[\begin{cases}
-			2 \text{ poli con } \Re s_i > 0 \\
-			2 \text{ poli con } \Re s   < 0
-		\end{cases} \implies \text{sistema \emph{instabile}}\]
-	\item Se \(k = 34\):
-		\[\begin{array}{r|rrr}
-			\tikzmark{e211em4} s^4 &     1 &    33 & -34 	\\
-			\tikzmark{e211em3} s^3 &     9 &    59		\\
-			\tikzmark{e211em2} s^2 &   238 & -2006		\\
-					   s^1 &     0			\\
-			\midrule
-			\tikzmark{e211em1} s^1 &   476			\\
-			\tikzmark{e211em0} s^0 & -2006
-		\end{array}\]
-		\begin{tikzpicture}[overlay, remember picture, yshift=.25\baselineskip, shorten >=.5pt, shorten <=.5pt]
-			\draw [->] ({pic cs:e211em4}) [bend right] to node[left]{\scriptsize p} ({pic cs:e211em3});
-			\draw [->] ({pic cs:e211em3}) [bend right] to node[left]{\scriptsize p} ({pic cs:e211em2});
-			\draw [->] ({pic cs:e211em2}) [bend right] to node[left]{\scriptsize p} ({pic cs:e211em1});
-			\draw [->] ({pic cs:e211em1}) [bend right] to node[left]{\scriptsize v} ({pic cs:e211em0});
-		\end{tikzpicture}
-		\[\begin{cases}
-			3 \text{ poli con } \Re s_i > 0 \\
-			1 \text{ polo con } \Re s   < 0
-		\end{cases} \implies \text{sistema \emph{instabile}}\]
-	\item Se \(34 < k \leq 272\):
-		\[\begin{cases}
-			1 \text{ polo con } \Re s   > 0 \\
-			3 \text{ poli con } \Re s_i < 0
-		\end{cases} \implies \text{sistema \emph{instabile}}\]
-	\item Se \(k > 272\):
-		\[\begin{cases}
-			3 \text{ poli con } \Re s_i > 0 \\
-			1 \text{ polo con } \Re s   < 0
-		\end{cases} \implies \text{sistema \emph{instabile}}\]
+	\item Se \(164-36\sqrt{26} < k < 0\): sistema \emph{asintoticamente stabile}
+	\item Se \(k = 0\): 1 polo nell'origine \(\implies\) sistema \emph{semplicemente stabile}
+	\item Se \(k = 164-36\sqrt{26}\): 2 poli puramente immaginari \(\implies\) sistema \emph{semplicemente stabile}
+	\item Se \(0 < k < 272\): 1 polo con \(\Re s > 0 \implies\) sistema \emph{instabile}
+	\item Se \(k = 272\): 1 polo nell'origine, 2 poli puramente immaginari e 1 polo con \(\Re s > 0\): sistema \emph{instabile}
+	\item Se \(272 < k < 164+36\sqrt{26}\): 3 poli con \(\Re s_i > 0 \implies\) sistema \emph{instabile}
+	\item Se \(k = 164+36\sqrt{26}\): 1 polo con \(\Re s > 0 \implies\) sistema \emph{instabile}
+	\item Se \(k > 164+36\sqrt{26}\): 1 polo con \(\Re s > 0 \implies\) sistema \emph{instabile}
 \end{itemize}
 \end{esercizio}
 
