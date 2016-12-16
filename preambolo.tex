@@ -14,6 +14,7 @@
 \usepackage{amssymb}
 \usepackage{thmtools}
 \usepackage{cancel}
+\usepackage{bm}
 
 % indici acronimi bibliografia
 \usepackage{makeidx}
@@ -35,9 +36,30 @@
 \usetikzlibrary{decorations.pathreplacing,decorations.pathmorphing,decorations.markings,decorations.shapes}
 \usetikzlibrary{tikzmark}
 \usepgfplotslibrary{fillbetween,patchplots}
-\pgfplotsset{every linear axis/.append style={axis lines=middle,no markers,enlargelimits}}
+\pgfplotsset{every linear axis/.append style={axis lines=middle,enlargelimits}}
 \pgfplotsset{trig format plots=rad}
 \pgfplotsset{/pgfplots/colormap={graywhite}{gray=(0.75) gray=(1.0)}}
+
+% oriented lines
+% Thanks: http://tex.stackexchange.com/questions/163689/add-arrows-to-a-smooth-tikz-function
+\tikzset{
+    set arrow inside/.code={\pgfqkeys{/tikz/arrow inside}{#1}},
+    set arrow inside={end/.initial=>, opt/.initial=},
+    /pgf/decoration/Mark/.style={
+        mark/.expanded=at position #1 with
+        {
+            \noexpand\arrow[\pgfkeysvalueof{/tikz/arrow inside/opt}]{\pgfkeysvalueof{/tikz/arrow inside/end}}
+        }
+    },
+    arrow inside/.style 2 args={
+        set arrow inside={#1},
+        postaction={
+            decorate,decoration={
+                markings,Mark/.list={#2}
+            }
+        }
+    },
+}
 
 % icone creative commons
 \usepackage{ccicons}
