@@ -368,7 +368,7 @@ Sia data la seguente funzione di trasferimento:
 \]
 Determinare il luogo delle radici per \(k>0\) e \(k<0\).
 
-\paragraph{Soluzione}
+\paragraph{Soluzione per \(k > 0\)}
 
 \begin{figure}[ht]
 	\centering
@@ -411,11 +411,11 @@ Determinare il luogo delle radici per \(k>0\) e \(k<0\).
 			P(s) = s^4 +8s^3 +19s^2 +12s +k
 		\]
 		\[\begin{array}{r|rrr}
-			s^4 & 1 & 19 & k \\
-			s^3 & 8 & 12 \\
-			\bm{s^2} & \cancelto{35}{140} & \cancelto{2}{8} k \\
-			s^1 & \bm{105-4k} \\
-			s^0 & 2k
+			s^4 	 &  1 & 19 & k  \\
+			s^3 	 &  8 & 12 	\\
+			\bm{s^2} & 35 & 2k 	\\
+			s^1 	 & \bm{105-4k} 	\\
+			s^0 	 & 2k
 		\end{array}\]
 		\(k = \frac{105}{4} = \frac{35\cdot3}{4} \rightarrow s^2+\frac{3}{2} = 0 \rightarrow s = \pm\jmath\sqrt{\frac{3}{2}}\)
 	\item \emph{Stabilità}:
@@ -426,4 +426,28 @@ Determinare il luogo delle radici per \(k>0\) e \(k<0\).
 			k > \frac{105}{4}\colon & \text{sistema \emph{instabile} con 2 poli instabili}
 		\end{cases}\]
 \end{itemize}
+
+\paragraph{Soluzione per \(k < 0\)}
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=.6]{mod1/assets/rl_ex38n}
+\end{figure}
+
+\begin{itemize}
+	\item \emph{Asintoti}:
+		\[
+			\sigma_a = -2 \qquad \theta_a = \frac{2\cdot\bigl\{ 0,1,2,3 \bigr\}\pi}{4} = \Bigl\{ 0,\frac{\pi}{2},\pi,\frac{3}{2}\pi \Bigr\}
+		\]
+	\item \emph{Stabilità}: per \(k < 0\) il sistema è \emph{instabile} con 1 polo instabile.
+\end{itemize}
+
+\paragraph{Determinare i poli per i punti critici}
+\[\begin{cases}
+	k = 0\colon & \bigl\{ -4,-3,-1,0 \bigr\} \\
+	k = \frac{105}{4}\colon & \begin{cases}
+		\text{2 poli puramente immaginari: } s_{1,2} = \pm\jmath\sqrt{\frac{3}{2}} \\
+		\text{2 poli stabili: } s_{3,4} = -4 \pm\jmath\sqrt{\frac{3}{2}}
+	\end{cases}
+\end{cases}\]
 \end{esercizio}
