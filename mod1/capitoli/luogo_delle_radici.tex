@@ -16,6 +16,26 @@ Il metodo consiste nel dividere lo svolgimento del problema in microaree.
 		\end{align*}
 		con \(n\) e \(m\) rispettivamente grado del denominatore e grado del numeratore.
 	\item \emph{Angoli di partenza e di arrivo per i punti di emergenza/confluenza}
+		si segue la formula
+		\[
+			\varphi_k = \pi +\sum_j \angle(p_k-z_j) -\sum_{j \neq k} \angle(p_k-p_j)
+		\]
+		\[
+			\text{con } a+\jmath b \colon
+			\begin{cases}
+				a = 0 \colon &
+					\begin{cases}
+						b > 0\colon & \frac{\pi}{2} \\
+						b < 0\colon & -\frac{\pi}{2}
+					\end{cases} \\
+				a > 0 \colon & \arctan{\frac{b}{a}} \\
+				a < 0 \colon &
+					\begin{cases}
+						b > 0\colon & \arctan{\frac{b}{a}} +\pi \\
+						b < 0\colon & \arctan{\frac{b}{a}} -\pi
+					\end{cases}
+			\end{cases}
+		\]
 	\item \emph{Intersezioni con l'asse immaginario e punti doppi}
 		per i punti doppi si calcolano le radici di \(G^\prime(s) = 0\).
 		Se però si ha un grado eccessivamente elevato, si può ricorrere
@@ -240,5 +260,170 @@ Determinare il luogo delle radici per \(k>0\).
 			& \theta_a = \frac{\Bigl( 2 \cdot \bigl\{ 0,1 \bigr\} \pi \Bigr) \pi}{2} = \Bigl\{ \frac{\pi}{2}, \frac{3}{2}\pi \Bigr\}
 		\end{align*}
 	\item \emph{Angoli di partenza dei rami}: \(\frac{\pi}{2}\)
+\end{itemize}
+\end{esercizio}
+
+\begin{esercizio}
+Sia data la seguente funzione di trasferimento
+\[
+	G(s) = \frac{s+1}{s^2 (s+9)}
+\]
+Determinare il luogo delle radici per \(k>0\).
+
+\paragraph{Soluzione}
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=.6]{mod1/assets/rl_ex36}
+\end{figure}
+
+\begin{itemize}
+	\item \emph{Punti di singolarità}:
+		\begin{itemize}
+			\item poli: \(\bigl\{ -9, 0\,[\times 2] \bigr\}\)
+			\item zeri: \(\bigl\{ -1 \bigr\}\)
+		\end{itemize}
+	\item \emph{Asintoti}:
+		\begin{align*}
+			& \sigma_a = \frac{0-9+1}{2} = -4 \\
+			& \theta_a = \frac{\Bigl(2 \cdot \bigl\{ 0,1 \bigr\}\Bigr) \pi}{2} = \Bigl\{ \frac{\pi}{2}, \frac{3}{2}\pi \Bigr\}
+		\end{align*}
+\end{itemize}
+I poli all'origine si dirigono verso gli asintoti, ma sono soggetti all'attrazione
+dello zero; quindi verifico possibili punti tripli nell'intervallo \((-4,-1)\):
+\[
+	G^\prime(s) = \frac{s^2(s+9) -\bigl(2s(s+9)+s^2\bigr)(s+1)}{\cancel{s^4 (s+9)^2}} = 0
+	\rightarrow s(s+3)^2 = 0 \rightarrow s = \begin{cases} 0 \\ \bm{-3} \end{cases}
+\]
+Quindi si ha effettivamente un punto triplo in \(s = -3\), che impone la convergenza
+dei rami che partono dai due poli all'origine e la loro emergenza verso gli asintoti.
+\end{esercizio}
+
+\begin{esercizio}
+Sia data la seguente funzione di trasferimento:
+\[
+	G(s) = \frac{1}{s(s+2)\bigl( (s+1)^2 +4 \bigr)}
+\]
+Determinare il luogo delle radici per \(k>0\).
+
+\paragraph{Soluzione}
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=.6]{mod1/assets/rl_ex37}
+\end{figure}
+
+\begin{itemize}
+	\item \emph{Punti di singolarità}:
+		\begin{itemize}
+			\item poli: \(\bigl\{ -2, -1\pm\jmath2, 0 \bigr\}\)
+		\end{itemize}
+	\item \emph{Asintoti}:
+		\begin{align*}
+			& \sigma_a = \frac{0-2-2(1\cancel{\pm\jmath2})}{4} = -1 \\
+			& \theta_a = \frac{\Bigl(2 \cdot \bigl\{ 0,1,2,3 \bigr\} +1)\pi}{4} = \Bigl\{ \frac{\pi}{4}, \frac{3}{4}\pi, \frac{5}{4}\pi, \frac{7}{4}\pi \Bigr\}
+		\end{align*}
+	\item \emph{Punti doppi}:
+		calcolando \(G^\prime(s) = 0\) si ottiene l'equazione
+		\[
+			2s^3 +6s^2 +9s +5 = 0 \rightarrow s = \begin{cases} -1 \\ -1 \pm\jmath\sqrt{\frac{3}{2}} \end{cases}
+		\]
+		Questo significa che ci sono 3 punti doppi dove i poli si
+		''scontrano'' e così si diramano.
+	\item \emph{Angoli di partenza} per i poli complessi e coniugati:
+		\begin{align*}
+			\varphi_+ &= \pi - \angle(-1+\jmath2) -\angle(-1+\jmath2+2) -\angle(\cancel{-1}+\jmath2\cancel{+1}+\jmath2) = \\
+				  &= \pi +\arctan{2} -\pi -\arctan{2} -\frac{\pi}{2} = -\frac{\pi}{2} \\
+			\varphi_- &= \pi -\angle(-1-\jmath2) -\angle(-1-\jmath2+2) -\angle(\cancel{-1}-\jmath2\cancel{+1}-\jmath2) = \\
+				  &= \pi +\arctan{2} -\pi -\arctan{2} +\frac{\pi}{2} = \frac{\pi}{2}
+		\end{align*}
+	\item \emph{Intersezioni con l'asse immaginario}:
+		\[
+			P(s) = s^4 +4s^3 +9s^2 +10s +k
+		\]
+		\[
+			\begin{array}{r|rrr}
+				s^4 & 1 &  9 & k \\
+				s^3 & 4 & 10 \\
+				\bm{s^2} & \cancelto{13}{26} & \cancelto{2}{4} k \\
+				s^1 & \bm{65-4k} \\
+				s^0 & 2k
+			\end{array}
+		\]
+		Per \(k = \frac{65}{4} = \frac{13\cdot5}{4} \rightarrow \cancel{13}s^2 + \frac{\cancel{13}\cdot5}{2} = 0 \rightarrow s = \pm\jmath\sqrt{\frac{5}{2}}\)
+	\item \emph{Stabilità}:
+		\[\begin{cases}
+			k=0\colon & \text{sistema \emph{semplicemente stabile}} \\
+			0<k<\frac{13}{2}\colon & \text{sistema \emph{asintoticamente stabile}} \\
+			k=\frac{13}{2}\colon & \text{sistema \emph{semplicemente stabile}} \\
+			k>\frac{13}{2}\colon & \text{sistema \emph{instabile} con 2 poli instabili}
+		\end{cases}\]
+\end{itemize}
+\end{esercizio}
+
+\begin{esercizio}
+Sia data la seguente funzione di trasferimento:
+\[
+	G(s) = \frac{1}{s(s+1)(s+3)(s+4)}
+\]
+Determinare il luogo delle radici per \(k>0\) e \(k<0\).
+
+\paragraph{Soluzione}
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=.6]{mod1/assets/rl_ex38}
+\end{figure}
+
+\begin{itemize}
+	\item \emph{Punti di singolarità}:
+		\begin{itemize}
+			\item poli: \(\bigl\{ -4,-3,-1,0 \bigr\}\)
+		\end{itemize}
+	\item \emph{Asintoti}:
+		\begin{align*}
+			& \sigma_a = \frac{0-1-3-4}{4} = -2 \\
+			& \theta_a = \frac{\Bigl(2\cdot\bigl\{0,1,2,3\bigr\}+1\Bigr)\pi}{4} = \Bigl\{ \frac{\pi}{4},\frac{3}{4}\pi,\frac{5}{4}\pi,\frac{7}{4}\pi \Bigr\}
+		\end{align*}
+	\item \emph{Punti doppi}: \(k = -s(s+1)(s+3)(s+4)\)
+		\[\begin{array}{rr}
+			\toprule
+			s 	  & k 		\\
+			\midrule
+			-0.3 	  & 2.098 	\\
+			\bm{-0.5} & \bm{2.187}	\\
+			-0.7 	  & 1.594	\\
+			\bottomrule
+		\end{array}\]
+		\(s=-0.5\) è un punto doppio di emergenza.
+		\[\begin{array}{rr}
+			\toprule
+			s 	  & k 		\\
+			\midrule
+			-3.3 	  & 1.594 	\\
+			\bm{-3.5} & \bm{2.187} 	\\
+			-3.7 	  & 2.098 	\\
+			\bottomrule
+		\end{array}\]
+		\(s=-3.5\) è un punto doppio di emergenza.
+	\item \emph{Intersezioni con l'asse immaginario}:
+		\[
+			P(s) = s^4 +8s^3 +19s^2 +12s +k
+		\]
+		\[\begin{array}{r|rrr}
+			s^4 & 1 & 19 & k \\
+			s^3 & 8 & 12 \\
+			\bm{s^2} & \cancelto{35}{140} & \cancelto{2}{8} k \\
+			s^1 & \bm{105-4k} \\
+			s^0 & 2k
+		\end{array}\]
+		\(k = \frac{105}{4} = \frac{35\cdot3}{4} \rightarrow s^2+\frac{3}{2} = 0 \rightarrow s = \pm\jmath\sqrt{\frac{3}{2}}\)
+	\item \emph{Stabilità}:
+		\[\begin{cases}
+			k = 0\colon & \text{sistema \emph{semplicemente stabile}} \\
+			0<k<\frac{105}{4}\colon & \text{sistema \emph{asintoticamente stabile}} \\
+			k = \frac{105}{4}\colon & \text{sistema \emph{semplicemente stabile}} \\
+			k > \frac{105}{4}\colon & \text{sistema \emph{instabile} con 2 poli instabili}
+		\end{cases}\]
 \end{itemize}
 \end{esercizio}
