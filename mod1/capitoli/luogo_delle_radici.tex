@@ -451,3 +451,337 @@ Determinare il luogo delle radici per \(k>0\) e \(k<0\).
 	\end{cases}
 \end{cases}\]
 \end{esercizio}
+
+\begin{esercizio}
+Sia data la seguente funzione di trasferimento:
+\[
+	G(s) = \frac{s-1}{(s+2)(s-2)(s+4)}
+\]
+Determinare il luogo delle radici per \(k\in\mathbb{R}^2\).
+
+\paragraph{Soluzione}
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=.6]{mod1/assets/rl_ex39}
+\end{figure}
+
+\begin{itemize}
+	\item \emph{Punti di singolarità}:
+		\begin{itemize}
+			\item poli: \(\bigl\{ -4,-2,2 \bigr\}\) \\
+			\item zeri: \(\bigl\{ 1 \bigr\}\)
+		\end{itemize}
+	\item \emph{Asintoti}:
+		\[
+			\sigma_a = \frac{-2+2-4-1}{2} = -\frac{5}{2} \qquad
+			\theta_a = \frac{\Bigl(2\cdot \bigl\{0,1\bigr\} +1\Bigr)\pi}{2} = \Bigl\{ \frac{\pi}{2},\frac{3}{2}\pi \Bigr\}
+		\]
+	\item \emph{Punti doppi}:
+		\[
+			k = -\frac{1}{G(s)} = + \frac{(s+2)(s-2)(s+4)}{1-s} \quad
+			\text{per } s \in \Bigl(-4,-\frac{5}{2}\Bigr)
+		\]
+		\[\begin{array}{rr}
+			\toprule
+			s 	  & k 		\\
+			\midrule
+			-3.5 	  & 0.917 	\\
+			-3.3 	  & 1.123 	\\
+			\bm{-3.0} & \bm{1.25} 	\\
+			-2.7 	  & 1.156	\\
+			\bottomrule
+		\end{array}\]
+		Per \(s=-3\) si ha un punto doppio di emergenza.
+	\item \emph{Stabilità}: il sistema è sempre \emph{instabile} con 1 polo instabile.
+\end{itemize}
+\end{esercizio}
+
+\begin{esercizio}
+Siano dati
+\[
+	G_p(s) = \frac{s+1}{s(s-5)(s+5)} \qquad G_c(s) = k
+\]
+Determinare il luogo delle radici del sistema ad anello chiuso per \(k>0\).
+
+\paragraph{Soluzione}
+
+Si ricorda che
+\begin{center}\begin{tikzpicture}[auto,node distance=2cm,>=latex']
+	\node [input] (x) {};
+	\node [sum, right of=x] (sum) {};
+	\node [block, right of=sum] (B) {\(G_c(s)\)};
+	\node [block, right of=B] (D) {\(G_p(s)\)};
+	\node [tmp, right of=D] (tmp) {};
+	\node [output, right of=tmp] (y) {};
+	\draw [->] (x) -- node[pos=0]{\(x\)} (sum);
+	\draw [->] (sum) -- (B) -- node[pos=0.5,name=achr]{} (D) -- (tmp) -- node[pos=1]{\(y\)} (y);
+	\node [block, below of=achr, node distance=1.5cm] (C) {\(H(s)\)};
+	\draw [->] (tmp) |- (C) -| node[pos=0.9,anchor=west]{\(-\)} (sum);
+\end{tikzpicture}\end{center}
+Quindi si ha \(G(s)H(s) = G(s)\) considerando \(H(s)\) unitario.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=.6]{mod1/assets/rl_ex310}
+\end{figure}
+
+\begin{itemize}
+	\item \emph{Punti di singolarità}:
+		\begin{itemize}
+			\item poli: \(\bigl\{ -1 \bigr\}\)
+			\item zeri: \(\bigl\{ -5,0,5 \bigr\}\)
+		\end{itemize}
+	\item \emph{Asintoti}:
+		\[
+			\sigma_a = \frac{0+5-5+1}{2} = \frac{1}{2} \qquad
+			\theta_a = \frac{\Bigl(2\cdot \bigl\{0,1\bigr\}\Bigr)\pi}{2} = \Bigl\{ \frac{\pi}{2},\frac{3}{2}\pi \Bigr\}
+		\]
+	\item \emph{Punti doppi}:
+		\[
+			k = -\frac{1}{G(s)} = -\frac{s(s-5)(s+5)}{s+1} \quad
+			\text{per } s \in \Bigl( \frac{1}{2},5 \Bigr)
+		\]
+		\[\begin{array}{rr}
+			\toprule
+			s 	&       k \\
+			\midrule
+			1 	&      12 \\
+			1.5 	&   13.65 \\
+			\bm{2} 	& \bm{14} \\
+			2.5 	&   13.39 \\
+			\bottomrule
+		\end{array}\]
+		Per \(s=-2\) si ha un punto doppio di emergenza.
+	\item \emph{Stabilità}: per \(k \geq 0\) il sistema è \emph{instabile}
+		con 2 poli instabili.
+\end{itemize}
+\end{esercizio}
+
+\begin{esercizio}
+Sia data la seguente funzione di trasferimento:
+\[
+	G(s) = \frac{s-1}{s^2(s^2+4s+8)}
+\]
+Determinare il luogo delle radici per \(k>0\) e \(k<0\).
+
+\paragraph{Soluzione per \(k>0\)}
+È possibile semplificare \(G(s)\) per rendere noti i poli coniugati e complessi:
+\[
+	G(s) = \frac{s-1}{s^2\bigl( (s+2)^2 +4 \bigr)}
+\]
+
+\begin{figure}[ht]
+	\centering
+	\subfloat[per \(k>0\)]{\includegraphics[scale=.4]{mod1/assets/rl_ex311}}
+	\subfloat[per \(k<0\)]{\includegraphics[scale=.4]{mod1/assets/rl_ex311n}}
+\end{figure}
+
+\begin{itemize}
+	\item \emph{Punti di singolarità}:
+		\begin{itemize}
+			\item poli: \(\bigl\{ -2\pm\jmath2, 0\,[\times 2] \bigr\}\)
+			\item zeri: \(\bigl\{ 1 \bigr\}\)
+		\end{itemize}
+	\item \emph{Asintoti}:
+		\[
+			\sigma_a = \frac{0-4\pm\jmath2-1}{3} = -\frac{5}{3} \qquad
+			\theta_a = \frac{\Bigl(2\cdot \bigl\{ 0,1,2 \bigr\} +1 \Bigr)\pi}{3} = \Bigl\{ \frac{\pi}{3},\pi,\frac{5}{3}\pi \Bigr\}
+		\]
+	\item \emph{Intersezioni con l'asse immaginario}:
+		\[
+			P(s) = s^4 +4s^3 +8s^2 +ks -k
+		\]
+		\[\begin{array}{r|rrr}
+			s^4 	 & 1    &   8 & -k \\
+			s^3 	 & 4    &   k 	   \\
+			\bm{s^2} & 32-k & -4k 	   \\
+			s^1 	 & \bm{48-k} 	   \\
+			s^0 	 & -4k
+		\end{array}\]
+		Per \(k = 48 = 16\cdot3\) si ha \(-16s^2-16\cdot12=0 \rightarrow
+		s = \pm\jmath2\sqrt{3}\).
+	\item \emph{Angoli di partenza} per \(s = \pm\jmath2\sqrt{3}\):
+		\begin{align*}
+			\varphi_- &= \pi + \angle(-2-\jmath2-1) -\angle(-2-\jmath2+2-\jmath2) -2\angle(-2-\jmath2-0) = \\
+				  &= \pi + \arctan{\frac{2}{3}} -\pi +\frac{\pi}{2} -2\arctan{1} +2\pi = \\
+				  &= 2\pi +0.588 +\frac{\pi}{2} -2\frac{\pi}{4} = \SI{0.588}{\radian} \\
+			\varphi_+ &= \pi +\angle(-2+\jmath2-1) -\angle(-2+\jmath2+2+\jmath2) -2\angle(-2+\jmath2-0) = \\
+				  &= \pi +\arctan{-\frac{2}{3}} +\pi -\frac{\pi}{2} -2\arctan{-1} -2\pi = \\
+				  &= -0.588 -\frac{\pi}{2} -2\frac{\pi}{4} = \SI{-0.588}{\radian}
+		\end{align*}
+	\item \emph{Stabilità}:
+		\[\begin{cases}
+			k = 0\colon & \text{sistema \emph{semplicemente stabile}} \\
+			0 < k \leq 48\colon & \text{sistema \emph{instabile} con 1 polo instabile} \\
+			k > 48\colon & \text{sistema \emph{instabile} con 3 poli instabili}
+		\end{cases}\]
+\end{itemize}
+
+\paragraph{Soluzione per \(k<0\)}
+
+\begin{itemize}
+	\item \emph{Asintoti}:
+		\[
+			\sigma_a = -\frac{5}{3} \qquad
+			\theta_a = \frac{\Bigl(2\cdot\bigl\{0,1,2\bigr\}\Bigr)\pi}{3} = \Bigl\{0,\frac{2}{3}\pi,\frac{4}{3}\pi\Bigr\}
+		\]
+	\item \emph{Punti doppi}:
+		\[
+			k = -\frac{s^2\bigl((s+2)^2+4\bigr)}{s-1} \quad
+			\text{per } s \in (-1,+\infty)
+		\]
+		\[\begin{array}{rr}
+			\toprule
+			s 	 & k 		\\
+			\midrule
+			1.3 	 & -83.88 	\\
+			\bm{1.5} & \bm{-73.12} \\
+			2 	 & -80 		\\
+			\bottomrule
+		\end{array}\]
+		Per \(s=1.5\) si ha un punto doppio di \emph{confluenza}.
+	\item \emph{Stabilità}: per \(k<0\) il sistema è \emph{instabile} con
+		2 poli instabili.
+\end{itemize}
+\end{esercizio}
+
+\begin{esercizio}
+Sia data la seguente funzione di trasferimento:
+\[
+	G(s) = \frac{s+4}{s(s^2+2s+2)}
+\]
+Determinare il luogo delle radici per \(k>0\).
+
+\paragraph{Soluzione}
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=.6]{mod1/assets/rl_ex312}
+\end{figure}
+
+\begin{itemize}
+	\item \emph{Punti di singolarità}:
+		\begin{itemize}
+			\item poli: \(\bigl\{-1\pm\jmath,0\bigr\}\)
+			\item zeri: \(\bigl\{-4\bigr\}\)
+		\end{itemize}
+	\item \emph{Asintoti}:
+		\[
+			\sigma_a = \frac{-2\pm\jmath+4}{2} = 1 \qquad
+			\theta_a = \frac{\Bigl(2\cdot\bigl\{0,1\bigr\}+1\Bigr)\pi}{2} = \Bigl\{\frac{\pi}{2},\frac{3}{2}\pi\Bigr\}
+		\]
+	\item \emph{Intersezioni con l'asse immaginario}:
+		\[
+			P(s) = s^3 + 2s^2 +(2+k)s +4k
+		\]
+		\[\begin{array}{r|rr}
+			s^3 & 1 & 2+k 	   \\
+			\bm{s^2} & 2 & 4k  \\
+			s^1 & \bm{2-k} 	   \\
+			s^0 & 4k
+		\end{array}\]
+		Per \(k=2\): \(2s^2+8=0 \rightarrow s=\pm\jmath2\)
+	\item \emph{Angoli di partenza} per \(s=-1\pm\jmath\):
+		\begin{align*}
+			\varphi_- &= \pi +\angle(-1-\jmath+4) -\angle(-1-\jmath+1-\jmath) -\angle(-1-\jmath) = \\
+				  &= \pi +\arctan{-\frac{1}{3}} +\frac{\pi}{2} -\arctan{1} +\pi = \\
+				  &= 2\pi +\frac{\pi}{2} -0.322 -\frac{\pi}{4} = \SI{0.463}{\radian} \\
+			\varphi_+ &= \pi +\angle(-1+\jmath+4) -\angle(-1+\jmath+1+\jmath) -\angle(-1+\jmath) = \\
+				  &= \pi +\arctan{\frac{1}{3}} -\frac{\pi}{2} -\arctan{-1} -\pi = \\
+				  &= -\frac{\pi}{2} +\frac{\pi}{4} +0.322 = \SI{-0.463}{\radian}
+		\end{align*}
+	\item \emph{Stabilità}:
+		\[\begin{cases}
+			k = 0\colon & \text{sistema \emph{semplicemente stabile}} \\
+			0 < k < 2\colon & \text{sistema \emph{asintoticamente stabile}} \\
+			k = 2\colon & \text{sistema \emph{semplicemente stabile}} \\
+			k > 2\colon & \text{sistema \emph{instabile} con 2 poli instabili}
+		\end{cases}\]
+\end{itemize}
+\end{esercizio}
+
+\begin{esercizio}
+Sia data la seguente funzione di trasferimento:
+\[
+	G(s) = \frac{s-6}{s(s^2+4s+13)}
+\]
+Determinare il luogo delle radici per \(k>0\) e \(k<0\).
+
+\paragraph{Soluzione per \(k>0\)}
+
+\begin{figure}[ht]
+	\centering
+	\subfloat[per \(k>0\)]{\includegraphics[scale=.4]{mod1/assets/rl_ex313}}
+	\subfloat[per \(k<0\)]{\includegraphics[scale=.4]{mod1/assets/rl_ex313n}}
+\end{figure}
+
+\begin{itemize}
+	\item \emph{Punti di singolarità}:
+		\begin{itemize}
+			\item poli: \(\bigl\{-2\pm\jmath3,0\bigr\}\)
+			\item zeri: \(\bigl\{6\bigr\}\)
+		\end{itemize}
+	\item \emph{Asintoti}:
+		\[
+			\sigma_a = \frac{-4\pm\jmath3-6}{2} = -5 \qquad
+			\theta_a = \frac{\Bigl(2\cdot\bigl\{0,1\bigr\}+1\Bigr)\pi}{2} = \Bigl\{\frac{\pi}{2},\frac{3}{2}\pi\Bigr\}
+		\]
+	\item \emph{Stabilità}:
+		\[\begin{cases}
+			k=0\colon & \text{sistema \emph{semplicemente stabile}} \\
+			k>0\colon & \text{sistema \emph{instabile} con 1 polo instabile}
+		\end{cases}\]
+\end{itemize}
+
+\paragraph{Soluzione per \(k<0\)}
+
+\begin{itemize}
+	\item \emph{Asintoti}:
+		\[
+			\sigma_a = -5 \qquad
+			\theta_a = \frac{2\cdot\bigl\{0,1\bigr\}\pi}{2} = \bigl\{0,\pi\bigr\}
+		\]
+	\item \emph{Punti doppi}:
+		\[
+			k = -\frac{s\bigl((s+2)^2+9\bigr)}{s-6} \quad
+			\text{per } s \in (6,+\infty)
+		\]
+		\[\begin{array}{rr}
+			\toprule
+			     s &         k \\
+			\midrule
+			     8 &      -436 \\
+			\bm{9} & \bm{-390} \\
+			    10 &      -918 \\
+			\bottomrule
+		\end{array}\]
+		Per \(s=9\) si ha un punto doppio di \emph{confluenza}.
+	\item \emph{Angoli di partenza} per \(s=-2\pm\jmath3\):
+		\begin{align*}
+			\varphi_- &= \angle(-2-\jmath3-6) -\angle(-2-\jmath3+2-\jmath3) -\angle(-2-\jmath3) = \\
+				  &= \arctan{\frac{3}{8}} -\pi +\frac{\pi}{2} -\arctan{\frac{3}{2}} +\pi = \\
+				  &= \frac{\pi}{2} +0.359 -0.983 = \SI{0.946}{\radian} \\
+			\varphi_+ &= \angle(-2+\jmath3-6) -\angle(-2+\jmath3+2-\jmath3) -\angle(-2+\jmath3) = \\
+				  &= \arctan{-\frac{3}{8}} +\pi -\frac{\pi}{2} -\arctan{-\frac{3}{2}} -\pi = \\
+				  &= -\frac{\pi}{2} -0.359 +0.983 = \SI{-0.946}{\radian}
+		\end{align*}
+	\item \emph{Intersezioni con l'asse immaginario}:
+		\[
+			P(s) = s^3 +4s^2 +(13+k)s -6k
+		\]
+		\[\begin{array}{r|rr}
+			s^3 & 1 & 13+k \\
+			s^2 & 4 & -6k  \\
+			s^1 & 26+5k    \\
+			s^0 & -6k
+		\end{array}\]
+		Per \(k = -\frac{26}{5}\) si ha \(4s^2+\frac{4\cdot39}{5}=0 \rightarrow s=\pm\jmath\sqrt{\frac{39}{5}}\).
+	\item \emph{Stabilità}:
+		\[\begin{cases}
+			k < -\frac{26}{5}\colon & \text{sistema \emph{instabile} con 2 poli instabili} \\
+			k = -\frac{26}{5}\colon & \text{sistema \emph{semplicemente stabile}} \\
+			-\frac{26}{5} < k < 0\colon & \text{sistema \emph{asintoticamente stabile}}
+		\end{cases}\]
+\end{itemize}
+\end{esercizio}
