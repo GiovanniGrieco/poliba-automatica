@@ -794,6 +794,12 @@ Sia data la seguente funzione di trasferimento
 Determinare il luogo delle radici per \(k>0\).
 
 \paragraph{Soluzione}
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=.6]{mod1/assets/rl_ex314}
+\end{figure}
+
 \begin{itemize}
 	\item \emph{Punti di singolarità}:
 		\begin{itemize}
@@ -812,9 +818,9 @@ Determinare il luogo delle radici per \(k>0\).
 		\[\begin{array}{r|rrr}
 			s^4 & 1 & 6 & 1-k \\
 			s^3 & 4 & 4+k \\
-			\bm{s^2} 20-k & 4-4k \\
+			\bm{s^2} & 20-k & 4-4k \\
 			s^1 & \bm{-k^2+32k+64} \\
-			s^0 \bm{1-k}
+			s^0 & \bm{1-k}
 		\end{array}\]
 		Considerando
 		\begin{align*}
@@ -823,6 +829,7 @@ Determinare il luogo delle radici per \(k>0\).
 			\rightarrow & (20-16-8\sqrt{5})s^2 +4-4(16+8\sqrt{5}) =0 \\
 			\rightarrow & s=\pm\jmath\sqrt{\frac{15+8\sqrt{5}}{1-2\sqrt{5}}}
 		\end{align*}
+		Si nota inoltre che per \(k=1\) il sistema è \emph{semplicemente stabile}.
 	\item \emph{Stabilità}:
 		\[\begin{cases}
 			0 \leq k < 1\colon & \text{sistema \emph{asintoticamente stabile}} \\
