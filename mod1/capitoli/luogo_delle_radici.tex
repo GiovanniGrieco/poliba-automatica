@@ -785,3 +785,50 @@ Determinare il luogo delle radici per \(k>0\) e \(k<0\).
 		\end{cases}\]
 \end{itemize}
 \end{esercizio}
+
+\begin{esercizio}
+Sia data la seguente funzione di trasferimento
+\[
+	G(s) = \frac{s-1}{(s+1)^4}
+\]
+Determinare il luogo delle radici per \(k>0\).
+
+\paragraph{Soluzione}
+\begin{itemize}
+	\item \emph{Punti di singolarità}:
+		\begin{itemize}
+			\item poli: \(\bigl\{-1\,[\times 4]\bigr\}\)
+			\item zeri: \(\bigl\{1\bigr\}\)
+		\end{itemize}
+	\item \emph{Asintoti}:
+		\[
+			\sigma_a = \frac{4(-1)-1}{3} = -\frac{5}{3} \qquad
+			\theta_a = \frac{\Bigl(2\cdot\bigl\{0,1,2\bigr\}+1\Bigr)\pi}{3} = \Bigl\{\frac{\pi}{3},\pi,\frac{5}{3}\pi\Bigr\}
+		\]
+	\item \emph{Intersezioni con l'asse immaginario}:
+		\[
+			P(s) = (s+1)^4 +ks -k = s^4+4s^3+6s^2+(4+k)s+1-k
+		\]
+		\[\begin{array}{r|rrr}
+			s^4 & 1 & 6 & 1-k \\
+			s^3 & 4 & 4+k \\
+			\bm{s^2} 20-k & 4-4k \\
+			s^1 & \bm{-k^2+32k+64} \\
+			s^0 \bm{1-k}
+		\end{array}\]
+		Considerando
+		\begin{align*}
+			& k^2-32k-64=0 \\
+			\rightarrow & k_1 = 16+8\sqrt{5} \\
+			\rightarrow & (20-16-8\sqrt{5})s^2 +4-4(16+8\sqrt{5}) =0 \\
+			\rightarrow & s=\pm\jmath\sqrt{\frac{15+8\sqrt{5}}{1-2\sqrt{5}}}
+		\end{align*}
+	\item \emph{Stabilità}:
+		\[\begin{cases}
+			0 \leq k < 1\colon & \text{sistema \emph{asintoticamente stabile}} \\
+			k = 1\colon & \text{sistema \emph{semplicemente stabile}} \\
+			1 < k \leq 16+8\sqrt{5}\colon & \text{sistema \emph{instabile} con 1 polo instabile} \\
+			k > 16+8\sqrt{5}\colon & \text{sistema \emph{instabile} con 3 poli instabili}
+		\end{cases}\]
+\end{itemize}
+\end{esercizio}
