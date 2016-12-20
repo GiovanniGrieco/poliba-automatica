@@ -5,17 +5,27 @@ Il metodo consiste nel dividere lo svolgimento del problema in microaree.
 	\item \emph{Mappa poli-zeri}: ovvero le radici del denominatore (poli)
 		convenzionalmente segnati con una croce, mentre le radici del
 		numeratore (zeri) segnati con un cerchio.
-	\item \emph{Punti sull'asse reale}: si evidenzia la parte di asse reale
-		che si sviluppa a sinistra di un polo/zero, con a destra un numero
-		dispari di poli/zeri.
+	\item \emph{Punti sull'asse reale}:
+		\begin{itemize}
+			\item per \(k>0\) si evidenzia la parte di asse reale
+			che si sviluppa a sinistra di un polo/zero, con a destra
+			un numero \emph{dispari} di poli/zeri.
+			\item per \(k<0\) si evidenzia la parte di asse reale
+			che si sviluppa a sinistra di un polo/zero, con a destra
+			un numero \emph{pari} di poli/zeri.
+		\end{itemize}
 	\item \emph{Determinare gli asintoti}: si calcola il centroide e l'angolo
 		di inclinazione degli asintoti con le seguenti formule:
 		\begin{align*}
 			& \sigma_a = \frac{\sum_{i} p_i - \sum_{i} z_i}{n-m} \\
-			& \theta_a = \frac{(2\nu+1)\pi}{n-m} \quad \text{con } \nu = \bigl\{ 0,\dots,n-m-1 \bigr\}
+			& \theta_a = \begin{cases}
+					\frac{(2\nu+1)\pi}{n-m}, & k>0 \\
+					\frac{2\nu\pi}{n-m}, & k<0
+				\end{cases}
+				\quad \text{con } \nu = \bigl[0,\dots,n-m-1\bigr]
 		\end{align*}
 		con \(n\) e \(m\) rispettivamente grado del denominatore e grado del numeratore.
-	\item \emph{Angoli di partenza e di arrivo per i punti di emergenza/confluenza}
+	\item \emph{Angoli di partenza e di arrivo per i punti di emergenza/confluenza}:
 		si segue la formula
 		\[
 			\varphi_k = \pi +\sum_j \angle(p_k-z_j) -\sum_{j \neq k} \angle(p_k-p_j)
@@ -36,7 +46,9 @@ Il metodo consiste nel dividere lo svolgimento del problema in microaree.
 					\end{cases}
 			\end{cases}
 		\]
-	\item \emph{Intersezioni con l'asse immaginario e punti doppi}
+		Si osserva che per i poli reali gli angoli di partenza e di arrivo
+		sono sempre di \(\frac{\pi}{2}\).
+	\item \emph{Punti doppi}:
 		per i punti doppi si calcolano le radici di \(G^\prime(s) = 0\).
 		Se però si ha un grado eccessivamente elevato, si può ricorrere
 		alla \emph{tabella di taratura}, ponendo valori di \(s\) appartenenti
@@ -46,6 +58,11 @@ Il metodo consiste nel dividere lo svolgimento del problema in microaree.
 		\]
 		Per un punto di emergenza ci si deve aspettare un massimo locale,
 		mentre per un punto di confluenza un minimo locale.
+	\item \emph{Intersezioni con l'asse immaginario}: si ricorre al criterio
+		di Routh che permette di determinare il valore di \(k\) per
+		\(s^1\) da sotituire al polinomio per \(s^2\). Se le sue
+		radici sono puramente immaginarie, allora indicano la presenza di
+		intersezioni con l'asse immaginario.
 	\item \emph{Studio della stabilità al variare di \(k\)}: con valori
 		di \(k\) \emph{critici} (ovvero noti), si può intuire
 		dal grafico la stabilità del sistema seguendo i rami orientati;
@@ -55,9 +72,10 @@ Il metodo consiste nel dividere lo svolgimento del problema in microaree.
 
 \begin{nota}
 Durante gli esercizi è possibile che il \(k\) venga sottinteso dalla traccia,
-avendo quindi solo \(G(s)\).
+avendo quindi solo \(G_p(s)\) senza controllore.
 \end{nota}
 
+\section{Esercizi svolti}
 \begin{esercizio}
 Sia data la seguente funzione di trasferimento con parametro \(k\)
 \[
@@ -72,21 +90,27 @@ Determinare il luogo delle radici al variare di \(k > 0\).
 	\includegraphics[scale=.6]{mod1/assets/rl_ex31}
 \end{figure}
 
-Determino centroide e angolo di inclinazione degli asintoti:
-\[
-	\sigma_a = \frac{0 -2 +1}{1} = -1
-	\qquad
-	\theta_a = \frac{(2\nu+1)\pi}{n-m} = \pi
-\]
-
-L'esercizio non richiede altro lavoro perché non presenta punti doppi, di
-intersezione con l'asse immaginario, etc.
-
-Studio la stabilità:
-\[\begin{cases}
-	k = 0 & \text{sistema \emph{semplicemente stabile}} \\
-	k > 0 & \text{sistema \emph{asintoticamente stabile}} \\
-\end{cases}\]
+\begin{itemize}
+	\item \emph{Punti di singolarità}:
+		\begin{itemize}
+			\item poli: \(\bigl\{-2, 0\bigr\}\)
+			\item zeri: \(\bigl\{-1\bigr\}\)
+		\end{itemize}
+	\item \emph{Asintoti}:
+		Determino centroide e angolo di inclinazione degli asintoti
+		\[
+			\sigma_a = \frac{0 -2 +1}{1} = -1
+			\qquad
+			\theta_a = \frac{\Bigl(2\cdot\bigl[0\bigr]+1\Bigr)\pi}{1} = \pi
+		\]
+	\item L'esercizio non richiede altro lavoro perché non presenta punti doppi,
+		di intersezione con l'asse immaginario, etc.
+	\item \emph{Stabilità}:
+		\[\begin{cases}
+			k = 0 & \text{sistema \emph{semplicemente stabile}} \\
+			k > 0 & \text{sistema \emph{asintoticamente stabile}} \\
+		\end{cases}\]
+\end{itemize}
 \end{esercizio}
 
 \begin{esercizio}
@@ -104,9 +128,16 @@ Determinare il luogo delle radici al variare di \(k > 0\).
 \end{figure}
 
 \begin{itemize}
-	\item Poli: \(\bigl\{ 0\,[\times 2] \bigr\}\)
-	\item Zeri: \(\bigl\{ -1 \bigr\}\)
-	\item Asintoti: \(\sigma_a = \frac{0+1}{1} = 1\), \(\theta_a = \pi\)
+	\item \emph{Punti di singolarità}:
+		\begin{itemize}
+			\item poli: \(\bigl\{ 0\,[\times 2] \bigr\}\)
+			\item zeri: \(\bigl\{ -1 \bigr\}\)
+		\end{itemize}
+	\item \emph{Asintoti}:
+		\[
+			\sigma_a = \frac{0+1}{1} = 1 \qquad
+			\theta_a = \frac{\Bigl(2\cdot\bigl[0\bigr]+1\Bigr)\pi}{1} = \pi
+		\]
 	\item Gli angoli di arrivo e di partenza sono entrambi di
 		\(\pm \frac{\pi}{2}\), questo perché non sono punti complessi e
 		coniugati.
@@ -146,7 +177,7 @@ Determinare il luogo delle radici al variare di \(k>0\).
 	\item \emph{Asintoti}:
 		\begin{align*}
 			& \sigma_a = \frac{0-1-5}{3} = -2 \\
-			& \theta_a = \frac{\Bigl( 2 \cdot \bigl\{ 0, \dots, 2 \bigr\} +1 \Bigr) \pi}{3} = \bigl\{ \frac{\pi}{3}, \pi, \frac{5}{3}\pi \bigr\}
+			& \theta_a = \frac{\Bigl( 2 \cdot \bigl[ 0, \dots, 2 \bigr] +1 \Bigr) \pi}{3} = \Bigl[ \frac{\pi}{3}, \pi, \frac{5}{3}\pi \Bigr]
 		\end{align*}
 	\item \emph{Punto doppio di emergenza}:
 		\[
@@ -191,13 +222,13 @@ Determinare il luogo delle radici per \(k>0\).
 \begin{itemize}
 	\item \emph{Punti di singolarità}:
 		\begin{itemize}
-			\item zeri: \(\bigl\{ -4, -1.5 \bigr\}\)
 			\item poli: \(\bigl\{ -2.5, -1, 0 \bigr\}\)
+			\item zeri: \(\bigl\{ -4, -1.5 \bigr\}\)
 		\end{itemize}
 	\item \emph{Asintoti}:
 		\begin{align*}
 			& \sigma_a = \frac{0-1-2.5+1.5+4}{1} = 2 \\
-			& \theta_a = \frac{\Bigl( 2 \cdot \bigl\{0\bigr\} +1 \Bigl)}{1} = \pi
+			& \theta_a = \frac{\Bigl( 2 \cdot \bigl[0\bigr] +1 \Bigl)}{1} = \pi
 		\end{align*}
 	\item \emph{Punto doppio di emergenza}:
 		lo ricavo con la tabella di taratura
@@ -257,7 +288,7 @@ Determinare il luogo delle radici per \(k>0\).
 	\item \emph{Asintoti}:
 		\begin{align*}
 			& \sigma_a = \frac{0-4+1}{2} = -\frac{3}{2} \\
-			& \theta_a = \frac{\Bigl( 2 \cdot \bigl\{ 0,1 \bigr\} \pi \Bigr) \pi}{2} = \Bigl\{ \frac{\pi}{2}, \frac{3}{2}\pi \Bigr\}
+			& \theta_a = \frac{\Bigl( 2 \cdot \bigl[ 0,1 \bigr] \pi \Bigr) \pi}{2} = \Bigl[ \frac{\pi}{2}, \frac{3}{2}\pi \Bigr]
 		\end{align*}
 	\item \emph{Angoli di partenza dei rami}: \(\frac{\pi}{2}\)
 \end{itemize}
@@ -286,7 +317,7 @@ Determinare il luogo delle radici per \(k>0\).
 	\item \emph{Asintoti}:
 		\begin{align*}
 			& \sigma_a = \frac{0-9+1}{2} = -4 \\
-			& \theta_a = \frac{\Bigl(2 \cdot \bigl\{ 0,1 \bigr\}\Bigr) \pi}{2} = \Bigl\{ \frac{\pi}{2}, \frac{3}{2}\pi \Bigr\}
+			& \theta_a = \frac{\Bigl(2 \cdot \bigl[ 0,1 \bigr] +1\Bigr) \pi}{2} = \Bigl[ \frac{\pi}{2}, \frac{3}{2}\pi \Bigr]
 		\end{align*}
 \end{itemize}
 I poli all'origine si dirigono verso gli asintoti, ma sono soggetti all'attrazione
@@ -383,7 +414,7 @@ Determinare il luogo delle radici per \(k>0\) e \(k<0\).
 	\item \emph{Asintoti}:
 		\begin{align*}
 			& \sigma_a = \frac{0-1-3-4}{4} = -2 \\
-			& \theta_a = \frac{\Bigl(2\cdot\bigl\{0,1,2,3\bigr\}+1\Bigr)\pi}{4} = \Bigl\{ \frac{\pi}{4},\frac{3}{4}\pi,\frac{5}{4}\pi,\frac{7}{4}\pi \Bigr\}
+			& \theta_a = \frac{\Bigl(2\cdot\bigl[0,1,2,3\bigr]+1\Bigr)\pi}{4} = \Bigl[ \frac{\pi}{4},\frac{3}{4}\pi,\frac{5}{4}\pi,\frac{7}{4}\pi \Bigr]
 		\end{align*}
 	\item \emph{Punti doppi}: \(k = -s(s+1)(s+3)(s+4)\)
 		\[\begin{array}{rr}
@@ -437,7 +468,7 @@ Determinare il luogo delle radici per \(k>0\) e \(k<0\).
 \begin{itemize}
 	\item \emph{Asintoti}:
 		\[
-			\sigma_a = -2 \qquad \theta_a = \frac{2\cdot\bigl\{ 0,1,2,3 \bigr\}\pi}{4} = \Bigl\{ 0,\frac{\pi}{2},\pi,\frac{3}{2}\pi \Bigr\}
+			\sigma_a = -2 \qquad \theta_a = \frac{2\cdot\bigl[ 0,1,2,3 \bigr]\pi}{4} = \Bigl[ 0,\frac{\pi}{2},\pi,\frac{3}{2}\pi \Bigr]
 		\]
 	\item \emph{Stabilità}: per \(k < 0\) il sistema è \emph{instabile} con 1 polo instabile.
 \end{itemize}
@@ -475,7 +506,7 @@ Determinare il luogo delle radici per \(k\in\mathbb{R}^2\).
 	\item \emph{Asintoti}:
 		\[
 			\sigma_a = \frac{-2+2-4-1}{2} = -\frac{5}{2} \qquad
-			\theta_a = \frac{\Bigl(2\cdot \bigl\{0,1\bigr\} +1\Bigr)\pi}{2} = \Bigl\{ \frac{\pi}{2},\frac{3}{2}\pi \Bigr\}
+			\theta_a = \frac{\Bigl(2\cdot \bigl[0,1\bigr] +1\Bigr)\pi}{2} = \Bigl[ \frac{\pi}{2},\frac{3}{2}\pi \Bigr]
 		\]
 	\item \emph{Punti doppi}:
 		\[
@@ -535,7 +566,7 @@ Quindi si ha \(G(s)H(s) = G(s)\) considerando \(H(s)\) unitario.
 	\item \emph{Asintoti}:
 		\[
 			\sigma_a = \frac{0+5-5+1}{2} = \frac{1}{2} \qquad
-			\theta_a = \frac{\Bigl(2\cdot \bigl\{0,1\bigr\}\Bigr)\pi}{2} = \Bigl\{ \frac{\pi}{2},\frac{3}{2}\pi \Bigr\}
+			\theta_a = \frac{\Bigl(2\cdot \bigl[0,1\bigr]\Bigr)\pi}{2} = \Bigl[ \frac{\pi}{2},\frac{3}{2}\pi \Bigr]
 		\]
 	\item \emph{Punti doppi}:
 		\[
@@ -586,7 +617,7 @@ Determinare il luogo delle radici per \(k>0\) e \(k<0\).
 	\item \emph{Asintoti}:
 		\[
 			\sigma_a = \frac{0-4\pm\jmath2-1}{3} = -\frac{5}{3} \qquad
-			\theta_a = \frac{\Bigl(2\cdot \bigl\{ 0,1,2 \bigr\} +1 \Bigr)\pi}{3} = \Bigl\{ \frac{\pi}{3},\pi,\frac{5}{3}\pi \Bigr\}
+			\theta_a = \frac{\Bigl(2\cdot \bigl[ 0,1,2 \bigr] +1 \Bigr)\pi}{3} = \Bigl[ \frac{\pi}{3},\pi,\frac{5}{3}\pi \Bigr]
 		\]
 	\item \emph{Intersezioni con l'asse immaginario}:
 		\[
@@ -624,7 +655,7 @@ Determinare il luogo delle radici per \(k>0\) e \(k<0\).
 	\item \emph{Asintoti}:
 		\[
 			\sigma_a = -\frac{5}{3} \qquad
-			\theta_a = \frac{\Bigl(2\cdot\bigl\{0,1,2\bigr\}\Bigr)\pi}{3} = \Bigl\{0,\frac{2}{3}\pi,\frac{4}{3}\pi\Bigr\}
+			\theta_a = \frac{\Bigl(2\cdot\bigl[0,1,2\bigr]\Bigr)\pi}{3} = \Bigl[0,\frac{2}{3}\pi,\frac{4}{3}\pi\Bigr]
 		\]
 	\item \emph{Punti doppi}:
 		\[
@@ -669,7 +700,7 @@ Determinare il luogo delle radici per \(k>0\).
 	\item \emph{Asintoti}:
 		\[
 			\sigma_a = \frac{-2\pm\jmath+4}{2} = 1 \qquad
-			\theta_a = \frac{\Bigl(2\cdot\bigl\{0,1\bigr\}+1\Bigr)\pi}{2} = \Bigl\{\frac{\pi}{2},\frac{3}{2}\pi\Bigr\}
+			\theta_a = \frac{\Bigl(2\cdot\bigl[0,1\bigr]+1\Bigr)\pi}{2} = \Bigl[\frac{\pi}{2},\frac{3}{2}\pi\Bigr]
 		\]
 	\item \emph{Intersezioni con l'asse immaginario}:
 		\[
@@ -725,7 +756,7 @@ Determinare il luogo delle radici per \(k>0\) e \(k<0\).
 	\item \emph{Asintoti}:
 		\[
 			\sigma_a = \frac{-4\pm\jmath3-6}{2} = -5 \qquad
-			\theta_a = \frac{\Bigl(2\cdot\bigl\{0,1\bigr\}+1\Bigr)\pi}{2} = \Bigl\{\frac{\pi}{2},\frac{3}{2}\pi\Bigr\}
+			\theta_a = \frac{\Bigl(2\cdot\bigl[0,1\bigr]+1\Bigr)\pi}{2} = \Bigl[\frac{\pi}{2},\frac{3}{2}\pi\Bigr]
 		\]
 	\item \emph{Stabilità}:
 		\[\begin{cases}
@@ -740,7 +771,7 @@ Determinare il luogo delle radici per \(k>0\) e \(k<0\).
 	\item \emph{Asintoti}:
 		\[
 			\sigma_a = -5 \qquad
-			\theta_a = \frac{2\cdot\bigl\{0,1\bigr\}\pi}{2} = \bigl\{0,\pi\bigr\}
+			\theta_a = \frac{2\cdot\bigl[0,1\bigr]\pi}{2} = \bigl[0,\pi\bigr]
 		\]
 	\item \emph{Punti doppi}:
 		\[
@@ -809,7 +840,7 @@ Determinare il luogo delle radici per \(k>0\).
 	\item \emph{Asintoti}:
 		\[
 			\sigma_a = \frac{4(-1)-1}{3} = -\frac{5}{3} \qquad
-			\theta_a = \frac{\Bigl(2\cdot\bigl\{0,1,2\bigr\}+1\Bigr)\pi}{3} = \Bigl\{\frac{\pi}{3},\pi,\frac{5}{3}\pi\Bigr\}
+			\theta_a = \frac{\Bigl(2\cdot\bigl[0,1,2\bigr]+1\Bigr)\pi}{3} = \Bigl[\frac{\pi}{3},\pi,\frac{5}{3}\pi\Bigr]
 		\]
 	\item \emph{Intersezioni con l'asse immaginario}:
 		\[
