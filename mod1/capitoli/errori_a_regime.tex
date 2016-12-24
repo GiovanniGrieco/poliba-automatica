@@ -1,0 +1,60 @@
+\chapter{Errori a regime}
+
+\section{Esercizi svolti}
+\begin{esercizio}
+Siano dati
+\[
+	G(s) = \frac{2}{s^2+2} \qquad H(s) = s+2 \qquad e(t) = u(t) -3y(t)
+\]
+Si determinino \(e_p, e_v, e_a\).
+
+\paragraph{Soluzione}
+Si osserva che la retroazione \emph{non è unitaria}. Questo significa che si ha un errore \(\gamma\) ed è specificato tra i dati come il coefficente di \(y(t)\) in \(e(t)\) (altrimenti sarebbe stato \(\gamma = H(0)\)): quindi \(\gamma = 3\).
+A questo punto è possibile ricavare \(G_{eq}(s)\) per poter poi procedere con gli errori:
+\begin{align*}
+	G_{eq}(s) &= \frac{\gamma G(s)}{1+G(s)\bigl(H(s)-\gamma\bigr)} =
+			\frac{\frac{6}{s^2+2}}{1+\frac{2}{s^2+2}\bigl(s+2-3\bigr)} =
+			\frac{\frac{6}{s^2+2}}{\frac{2^2+2+2s-2}{s^2+2}} =
+		  	\frac{6}{s(s+2)}
+\end{align*}
+e si osserva che il sistema è \emph{di tipo 1} perché ha un polo nell'origine.
+Posso procedere con gli errori di posizione, velocità e accelerazione:
+\begin{align*}
+	k_p &= \lim_{s\to0} G_{eq}(s) = \lim_{s\to0} \frac{6}{s(s+2)} = +\infty \implies e_p = \frac{1}{k_p} = 0 \\
+	e_v &= \lim_{s\to0} \frac{1}{s G_{eq}(s)} = \lim_{s\to0} \frac{s(s+2)}{6s} = \frac{1}{3} \\
+	e_a &= \lim_{s\to0} \frac{s^2 G_{eq}(s)} = \lim_{s\to0} \frac{s(s+2)}{6s^2} = +\infty
+\end{align*}
+\[\implies \begin{cases}
+	e_p = 0 \\
+	e_v = \frac{1}{3} \\
+	e_a = +\infty
+\end{cases}\]
+\end{esercizio}
+
+\begin{esercizio}
+Siano dati
+\[
+	G_c(s) = k \qquad G_p(s) = \frac{1}{s(s+4)} \qquad H(s) = 1
+\]
+Si determini quando il sistema è \emph{asintoticamente stabile}, il valore di \(k\) tale che \(e_v = 0.1\) e \(e_p\), \(e_a\).
+
+\paragraph{Soluzione}
+Per la stabilità ricorro a \(G_0(s)\):
+\begin{align*}
+	G_0(s) &= \frac{G(s)}{1+G(s)H(s)} \quad \text{con } G(s) = G_c(s)G_p(s) \\
+	\implies G_0(s) &= \frac{\frac{k}{s(s+4)}}{1+\frac{k}{s(s+4)}} =
+		\frac{\frac{k}{s(s+4)}}{\frac{s(s+4)+k}{s(s+4)}} =
+		\frac{k}{s^2+4s+k}
+\end{align*}
+Noto che per \(k>0\) i coefficienti sono tutti positivi, quindi per il \emph{Lemma di Routh} il sistema è asintoticamente stabile per \(k>0\).
+
+Dato che il sistema è a retroazione unitaria:
+\begin{align*}
+	G_{eq}(s) &= G(s) = \frac{k}{s(s+4)} \longrightarrow \text{sistema di \emph{tipo 1}} \\
+	&\implies \begin{cases}
+		e_p = 0 \\
+		e_v = \frac{4}{k} = 0.1 \implies k=40 \\
+		e_a = +\infty
+	\end{cases}
+\end{align*}
+\end{esercizio}
