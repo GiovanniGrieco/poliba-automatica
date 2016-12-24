@@ -58,3 +58,63 @@ Dato che il sistema è a retroazione unitaria:
 	\end{cases}
 \end{align*}
 \end{esercizio}
+
+\begin{esercizio}
+Siano dati
+\[
+	G_c(s) = k \qquad G_p(s) = \frac{s+3}{(s+1)^2(s+p)} \qquad
+	H(s) = s+2 \qquad e(t) = u(t) -3y(t)
+\]
+
+\paragraph{Verifica la stabilità del sistema.}
+\[
+	G_0(s) = \frac{G(s)}{1+G(s)H(s)} =
+		\frac{\frac{k(s+3)}{(s+1)^2(s+p)}}{1+\frac{k(s+3)}{(s+1)^2(s+p)}(s+2)} =
+		\frac{k(s+3)}{(s+1)^2(s+p)+k(s+3)(s+2)}
+\]
+Per il \emph{Lemma di Routh} il sistema è asintoticamente stabile per \(k>0,\,p>0\).
+
+\paragraph{Stabilire la relazione tra \(p\) e \(k\) tale che \(e_p = 0.1\).}
+\begin{align*}
+	G_{eq}(s) &= \frac{\gamma G(s)}{1+G(s) \bigl(H(s) - \gamma\bigr)} \quad
+			\text{con } \gamma = 3 \\
+	G_{eq}(s) &= \frac{\frac{3k(s+3)}{(s+1)^3(s+p)}}{1+\frac{k(s+3)}{(s+1)^3(s+p)}(s+2-3)} = \\
+		  &= \frac{3k(s+3)}{(s+1)^3(s+p)+k(s+3)(s-1)} \;
+			\longrightarrow \text{sistema di \emph{tipo 0}} \\
+	k_p &= \lim_{s\to0} G_{eq}(s) = \frac{9k}{p-3k} \\
+	\implies e_p &= \frac{1}{1+k_p} = \frac{1}{1+\frac{9k}{p-3k}} = \frac{p-3k}{p-3k+9k} = \frac{p-3k}{p+6k} = \frac{1}{10} \\
+	\implies p &= 4k
+\end{align*}
+
+\paragraph{Verificare se esiste una relazione tra \(p\) e \(k\) tale che \(e_v\) ed \(e_a\) siano finiti.}
+\[
+	G_{eq}(s) = \frac{3k(s+3)}{(s+1)^3(s+p)+k(s+3)(s-1)} = \frac{3k(s+3)}{s^3 +(p+2+k)s^2 +(1+2p+2k)s +p-3k}
+\]
+Per far sì che \(e_v\) sia finito, il sistema deve essere di tipo 1, quindi \(p-3k=0 \rightarrow p = 3k\). Per far sì che \(e_p\) sia finito, il sistema deve essere di tipo 2, quindi \(1+2p+2k=0\). Ponendo a sistema le equazioni:
+\[\begin{cases}
+	p = \frac{3}{8} \\
+	k = \frac{1}{8}
+\end{cases}\]
+\(p>0\), \(k>0\), quindi la relazione è valida.
+\end{esercizio}
+
+\begin{esercizio}
+Siano dati
+\[
+	G_c(s) = 1 \qquad G_p(s) = \frac{10}{s(s+10)} \qquad
+	H(s) = h > 0 \qquad e(t) = u(t) -hy(t)
+\]
+\paragraph{Determinare \(h\) tale che \(e_v\leq0.2\).}
+Si nota che la retroazione è \emph{parametrica}, quindi si deve porre \(G_{eq}(s)=hG(s)\).
+\begin{align*}
+	G_{eq}(s) &= hG(s) = \frac{10h}{s(s+10)} \longrightarrow \text{sistema di \emph{tipo 1}} \\
+	e_v &= \lim_{s\to0} \frac{1}{1+sG_{eq}(s)} =
+		\lim_{s\to0} \frac{1}{1+s\frac{10h}{s(s+10)}} = \\
+	    &= \lim_{s\to0} \frac{s+10}{s+10+10h} =
+	    	\frac{1}{h} \leq \frac{1}{5}
+	    	\rightarrow h \geq 5
+\end{align*}
+
+\paragraph{Con \(h=5\) stabilire il valore a regime, il valore massimo di sovraelongazione e il tempo di picco.}
+.
+\end{esercizio}
