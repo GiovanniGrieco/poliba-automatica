@@ -386,7 +386,7 @@ e di conseguenza anche lo schema equivalente
 	\node [sum, right of=A] (sumA) {};
 	\node [sum, right of=B] (sumB) {};
 	\node [output, right of=sum] (y) {};
-	\draw (u) -- node[pos=0]{\(u\)} (tmp1);
+	\draw (u) -- node[pos=0]{\(x\)} (tmp1);
 	\draw [->] (tmp1) |- (A);
 	\draw [->] (tmp1) |- (B);
 	\draw (tmp1) -- (tmp2);
@@ -527,13 +527,13 @@ con i rispettivi sommatori, a valle dei blocchi.
 	\draw [->] (sum) -- (A);
 	\draw [->] (A) -- node[pos=1]{\(y\)} (y);
 	\draw (A) -- node[name=o]{} (y);
-	\node [block, below of=A] (B) {\(\frac{1}{BC} + \frac{1}{C} + 1\)};
+	\node [block, below of=A] (B) {\(\frac{1}{BC} - \frac{1}{C} - 1\)};
 	\draw [->] (o) |- (B);
 	\draw [->] (B) -| node[pos=0.9,anchor=east]{\(-\)} (sum);
 \end{tikzpicture}\end{center}
 che esprime l'equazione
 \[
-	y = \frac{ABC}{1 + \Bigl( \frac{1}{BC} + \frac{1}{C} + 1 \Bigr) ABC}
+	y = \frac{ABC}{1 + \Bigl( \frac{1}{BC} - \frac{1}{C} - 1 \Bigr) ABC}
 \]
 \end{esercizio}
 
@@ -682,7 +682,7 @@ trasferimento ottenute.
 \end{tikzpicture}\end{center}
 
 \[
-	y_x = \frac{G_1 G_2}{1 + H G_1 G_2}
+	y_x = \frac{G_1 G_2}{1 - H G_1 G_2}
 \]
 
 \paragraph{Risposta a \(d\)}
@@ -701,12 +701,12 @@ trasferimento ottenute.
 \end{tikzpicture}\end{center}
 
 \[
-	y_d = \frac{G_2}{1 + G_1 G_2 H}
+	y_d = \frac{G_2}{1 - G_1 G_2 H}
 \]
 
 Quindi la funzione di trasferimento dell'intero sistema è
 \[
-	y = y_x + y_d = \frac{G_2 ( 1 + G_1 )}{1 + G_1 G_2 H}
+	y = y_x + y_d = \frac{G_2 ( 1 + G_1 )}{1 - G_1 G_2 H}
 \]
 \end{esercizio}
 
