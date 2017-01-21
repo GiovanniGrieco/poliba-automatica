@@ -134,7 +134,7 @@ dell'addizione, può essere rivalutata come
 		\draw [->] (x) -- node[]{\(X(s)\)} (sum2);
 		\draw [->] (sum2) -- node[]{\(Z(s)\)} (z);
 	\end{scope}
-	\begin{scope}[xshift=11cm]
+	\begin{scope}[xshift=7cm,yshift=-4cm]
 		\node [input] (x) {};
 		\node [sum, right of=x, node distance=2cm] (sum) {};
 		\node [input, above of=sum] (y) {};
@@ -472,52 +472,50 @@ Riconoscendo che \(A \| C\), posso semplificare il blocco come segue:
 Una semplificazione ottimale del suddetto schema sarebbe portare i nodi,
 con i rispettivi sommatori, a valle dei blocchi.
 \begin{center}\begin{tikzpicture}[auto,node distance=2cm,>=latex']
-	\begin{scope}
-		\node [input] (x) {};
-		\node [sum, right of=x] (sum1) {};
-		\node [block, right of=sum1] (A) {\(A\)};
-		\node [block, right of=A] (B) {\(B \cdot C\)};
-		\node [output, right of=B, node distance=3cm] (y) {};
-		\draw [->] (x) -- node[pos=0]{\(x\)} (sum1);
-		\draw [->] (sum1) -- (A);
-		\draw [->] (A) -- node[name=AB]{} (B);
-		\draw [->] (B) -- node[pos=1]{\(y\)} (y);
-		\draw (B) -- node[name=o1,pos=0.3]{} (y);
-		\draw (B) -- node[name=o2,pos=0.6]{} (y);
-		\node [block, below of=o1, node distance=1.5cm] (C) {\(\frac{1}{C}\)};
-		\node [sum, below of=C] (sum2) {};
-		\draw [->] (o1) -- (C);
-		\draw [->] (C) -- (sum2);
-		\draw [->] (o2) |- (sum2);
-		\node [sum, below of=AB, node distance=2.5cm] (sum3) {};
-		\draw [->] (sum2) -- node[pos=0.9,anchor=north]{\(-\)} (sum3);
-		\draw [->] (AB) -- (sum3);
-		\draw [->] (sum3) -| node[pos=0.9,anchor=east]{\(-\)} (sum1);
-	\end{scope}
-	\begin{scope}[xshift=8.5cm]
-		\node [input] (x) {};
-		\node [sum, right of=x] (sum1) {};
-		\node [block, right of=sum1] (A) {\(A \cdot B \cdot C\)};
-		\node [output, right of=A, node distance=4cm] (y) {};
-		\draw [->] (x) -- node[pos=0]{\(x\)} (sum1);
-		\draw [->] (sum1) -- (A);
-		\draw [->] (A) -- node[pos=1]{\(y\)} (y);
-		\draw (A) -- node[name=o1,pos=0.2]{} (y);
-		\draw (A) -- node[name=o2,pos=0.6]{} (y);
-		\draw (A) -- node[name=o3,pos=0.85]{} (y);
-		\node [block, below of=o1] (B) {\(\frac{1}{BC}\)};
-		\node [block, below of=o2] (C) {\(\frac{1}{C}\)};
-		\node [sum, below of=B] (sum2) {};
-		\node [sum, below of=C] (sum3) {};
-		\draw [->] (o1) -- (B);
-		\draw [->] (o2) -- (C);
-		\draw [->] (o3) |- (sum3);
-		\draw [->] (B) -- (sum2);
-		\draw [->] (C) -- (sum3);
-		\draw [->] (sum3) -- node[pos=0.9,anchor=north]{\(-\)} (sum2);
-		\draw [->] (sum2) -| node[pos=0.9,anchor=east]{\(-\)} (sum1);
-	\end{scope}
-\end{tikzpicture}
+	\node [input] (x) {};
+	\node [sum, right of=x] (sum1) {};
+	\node [block, right of=sum1] (A) {\(A\)};
+	\node [block, right of=A] (B) {\(B \cdot C\)};
+	\node [output, right of=B, node distance=3cm] (y) {};
+	\draw [->] (x) -- node[pos=0]{\(x\)} (sum1);
+	\draw [->] (sum1) -- (A);
+	\draw [->] (A) -- node[name=AB]{} (B);
+	\draw [->] (B) -- node[pos=1]{\(y\)} (y);
+	\draw (B) -- node[name=o1,pos=0.3]{} (y);
+	\draw (B) -- node[name=o2,pos=0.6]{} (y);
+	\node [block, below of=o1, node distance=1.5cm] (C) {\(\frac{1}{C}\)};
+	\node [sum, below of=C] (sum2) {};
+	\draw [->] (o1) -- (C);
+	\draw [->] (C) -- (sum2);
+	\draw [->] (o2) |- (sum2);
+	\node [sum, below of=AB, node distance=2.5cm] (sum3) {};
+	\draw [->] (sum2) -- node[pos=0.9,anchor=north]{\(-\)} (sum3);
+	\draw [->] (AB) -- (sum3);
+	\draw [->] (sum3) -| node[pos=0.9,anchor=east]{\(-\)} (sum1);
+\end{tikzpicture} \\
+\begin{tikzpicture}[auto,node distance=2cm,>=latex']
+	\node [input] (x) {};
+	\node [sum, right of=x] (sum1) {};
+	\node [block, right of=sum1] (A) {\(A \cdot B \cdot C\)};
+	\node [output, right of=A, node distance=4cm] (y) {};
+	\draw [->] (x) -- node[pos=0]{\(x\)} (sum1);
+	\draw [->] (sum1) -- (A);
+	\draw [->] (A) -- node[pos=1]{\(y\)} (y);
+	\draw (A) -- node[name=o1,pos=0.2]{} (y);
+	\draw (A) -- node[name=o2,pos=0.6]{} (y);
+	\draw (A) -- node[name=o3,pos=0.85]{} (y);
+	\node [block, below of=o1] (B) {\(\frac{1}{BC}\)};
+	\node [block, below of=o2] (C) {\(\frac{1}{C}\)};
+	\node [sum, below of=B] (sum2) {};
+	\node [sum, below of=C] (sum3) {};
+	\draw [->] (o1) -- (B);
+	\draw [->] (o2) -- (C);
+	\draw [->] (o3) |- (sum3);
+	\draw [->] (B) -- (sum2);
+	\draw [->] (C) -- (sum3);
+	\draw [->] (sum3) -- node[pos=0.9,anchor=north]{\(-\)} (sum2);
+	\draw [->] (sum2) -| node[pos=0.9,anchor=east]{\(-\)} (sum1);
+\end{tikzpicture} \\
 \begin{tikzpicture}[auto,node distance=2cm,>=latex']
 	\node [input] (x) {};
 	\node [sum, right of=x] (sum) {};
