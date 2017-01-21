@@ -5,7 +5,7 @@
 \usepackage[italian]{babel}
 \usepackage[babel]{csquotes}
 
-\usepackage[mark]{gitinfo2}
+\usepackage{gitinfo2}
 
 % ambienti math
 \usepackage{amsmath}
@@ -102,3 +102,13 @@
 
 % Simboli matematici di default
 \renewcommand\epsilon{\varepsilon}
+
+% diagrammi a blocchi
+\tikzset{
+    block/.style = {draw, fill=white, rectangle, minimum height=3em, minimum width=3em},
+    tmp/.style  = {coordinate},
+    sum/.style= {draw, fill=white, circle, node distance=1cm},
+    input/.style = {coordinate},
+    output/.style= {coordinate},
+    pinstyle/.style = {pin edge={to-,thin,black}}
+}

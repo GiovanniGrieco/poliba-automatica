@@ -7,32 +7,25 @@
 \newcommand*{\@university}{Politecnico di Bari}
 \newcommand*{\coursedegree}[1]{\gdef\@coursedegree{#1}}
 \newcommand*{\@coursedegree}{Corso di Laurea in Ingegneria Informatica e dell'Automazione}
-\newcommand*{\subtitle}[1]{\gdef\@subtitle{#1}}
-\newcommand*{\professor}[1]{\gdef\@professor{#1}}
-\newcommand*{\department}[1]{\gdef\@department{#1}}
-\newcommand*{\authoremail}[1]{\gdef\@authoremail{#1}}
-\newcommand*{\authorURL}[1]{\gdef\@authorURL{#1}}
-\newcommand*{\@authorURL}{}
-\newcommand*{\version}[1]{\gdef\@version{#1}}
+\newcommand*{\professor}[2][m]{\gdef\@professor{Corso del\ifthenelse{\equal{#1}{f}}{la}{} Prof.\ifthenelse{\equal{#1}{f}}{ssa}{} #2}}
+\newcommand*{\assistant}[1]{\gdef\@assistant{Assistente #1}}
+\newcommand*{\@assistant}{}
+\newcommand*{\@department}[1]{Dipartimento di Ingegneria Elettrica e dell'Informazione}
 \newcommand*{\versiondate}[1]{\gdef\@versiondate{#1}}
 \renewcommand*{\maketitle}{%
 \begin{titlepage}
 	\centering
-	\includegraphics[width=0.20\textwidth]{images/logo_poliba}\par\vspace{1cm}
+	\includegraphics[width=0.20\textwidth]{images/logo_poliba.png} \par\vspace{1cm}
 	{\scshape\LARGE\@university\unskip\strut\par}
 	\vspace{1cm}
 	{\scshape\Large\@coursedegree\unskip\strut\par}
 	\vspace{1.5cm}
 	{\huge\bfseries\@title\unskip\strut\par}
-	\vspace{0.5cm}
-	{\LARGE\bfseries\@subtitle\unskip\strut\par}
-	\vspace{2cm}
-	{\Large\itshape Corso tenuto dalla \@professor\unskip\strut\\ \@department\unskip\strut\par}
-	\vfill
-	a cura di\par\@author\unskip\strut\\\href{\@authoremail}{\@authoremail\unskip\strut}
+	\vspace{2.5cm}
+	{\Large\itshape \@professor\unskip\strut\\ \ifthenelse{\equal{\@assistant}{}}{}{\@assistant\unskip\strut\\} \@department\unskip\strut\par}
 	\vfill
 	% Bottom of the page
-	{\large Versione \@version\unskip\strut\\(\@versiondate\unskip\strut)\par}
+	{\large Revisione del \@versiondate\unskip\strut\par}
 \end{titlepage}
 }
 \endinput
