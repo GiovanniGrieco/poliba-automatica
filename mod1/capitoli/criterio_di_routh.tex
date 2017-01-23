@@ -217,7 +217,7 @@ Il sistema presenta 3 permanenze e 2 variazioni, quindi è \emph{instabile}.
 \end{esempio}
 
 \section{Esercizi svolti}
-\begin{esercizio} Si applichi il criterio di Routh a
+\exercise{} Si applichi il criterio di Routh a
 \[
 	P(s) = s^4 + 4s^3 + 3s^2 + 8s + 5
 \]
@@ -235,9 +235,9 @@ Il sistema presenta 3 permanenze e 2 variazioni, quindi è \emph{instabile}.
 	\draw [->] ({pic cs:e21m1}) [bend right] to node[left]{\scriptsize v} ({pic cs:e21m0});
 \end{tikzpicture}
 Il sistema è \emph{instabile} con 2 poli aventi \(\Re s > 0\).
-\end{esercizio}
 
-\begin{esercizio} Si applichi il criterio di Routh a
+
+\exercise{} Si applichi il criterio di Routh a
 \[
 	P(s) = 8s^4 + 3s^3 + 7s^2 + 2s + 1
 \]
@@ -255,9 +255,9 @@ Il sistema è \emph{instabile} con 2 poli aventi \(\Re s > 0\).
 	\draw [->] ({pic cs:e22m1}) [bend right] to node[left]{\scriptsize p} ({pic cs:e22m0});
 \end{tikzpicture}
 Il sistema presenta solo poli con \(\Re s < 0\), quindi è \emph{asintoticamente stabile}.
-\end{esercizio}
 
-\begin{esercizio} Si applichi il criterio di Routh a
+
+\exercise{} Si applichi il criterio di Routh a
 \[
 	P(s) = s^4 + s^3 + 5s^2 + 5s + 2
 \]
@@ -277,9 +277,9 @@ Il sistema presenta solo poli con \(\Re s < 0\), quindi è \emph{asintoticamente
 	\draw [->] ({pic cs:e23m1}) [bend right] to node[left]{\scriptsize p} ({pic cs:e23m0});
 \end{tikzpicture}
 Il sistema presenta 2 poli con \(\Re s > 0\), quindi è \emph{instabile}.
-\end{esercizio}
 
-\begin{esercizio} Si applichi il criterio di Routh a
+
+\exercise{} Si applichi il criterio di Routh a
 \[
 	P(s) = s^5 + s^4 + 4s^3 + 4s^2 + 7s + 7
 \]
@@ -301,9 +301,9 @@ Il sistema presenta 2 poli con \(\Re s > 0\), quindi è \emph{instabile}.
 	\draw [->] ({pic cs:e24m1}) [bend right] to node[left]{\scriptsize v} ({pic cs:e24m0});
 \end{tikzpicture}
 Il sistema presenta 2 poli con \(\Re s > 0\), quindi è \emph{instabile}.
-\end{esercizio}
 
-\begin{esercizio} Si applichi il criterio di Routh a
+
+\exercise{} Si applichi il criterio di Routh a
 \[
 	P(s) = s^5 + 2s^4 + 4s^3 + 4s^2 + 3s + 2
 \]
@@ -327,9 +327,9 @@ Il sistema presenta 2 poli con \(\Re s > 0\), quindi è \emph{instabile}.
 Il sistema presenta, al limite della stabilità, due poli puramente immaginari dati
 dall'equazione \(s^2 + 1 = 0\), questa utilizzata per sostituire la riga nulla.
 Quindi il sistema è \emph{semplicemente stabile}.
-\end{esercizio}
 
-\begin{esercizio} Si applichi il criterio di Routh e si stabiliscano i poli per
+
+\exercise{} Si applichi il criterio di Routh e si stabiliscano i poli per
 \[
 	P(s) = s^6 + s^5 + 3s^4 + 3s^3 + 3s^2 + 2s + 1
 \]
@@ -358,9 +358,10 @@ Il sistema deve avere 6 poli (equazione di grado 6): infatti presenta 2 poli con
 \(\Re s_i > 0\), 2 poli puramente immaginari \(s_{1,2} = \pm\jmath\) soluzioni
 dell'equazione \(s^2 + 1 = 0\), ricavata per sostituire la riga nulla \(s^1\),
 e 2 poli con \(\Re s_i < 0\). Per concludere, il sistema è \emph{instabile}.
-\end{esercizio}
 
-\begin{esercizio}[Parametrico] Si applichi il criterio di Routh a
+
+\exercise{Parametrico}
+Si applichi il criterio di Routh a
 \[
 	P(s) = s^3 + 5s^2 + 6s + k
 \]
@@ -425,9 +426,9 @@ e 2 poli con \(\Re s_i < 0\). Per concludere, il sistema è \emph{instabile}.
 		La soluzione dell'equazione \(30s = 0\) coincide con l'origine,
 		quindi il sistema è \emph{semplicemente stabile}
 \end{itemize}
-\end{esercizio}
 
-\begin{esercizio}[Parametrico] Si applichi il criterio di Routh e si stabiliscano i poli per
+
+\exercise{Parametrico} Si applichi il criterio di Routh e si stabiliscano i poli per
 \[
 	G_0 (s) = \frac{s-1}{s^2 + 5s^2 + (k-6)s + k}
 \]
@@ -495,9 +496,9 @@ e 2 poli con \(\Re s_i < 0\). Per concludere, il sistema è \emph{instabile}.
 			3 \text{ poli con } \Re s_i < 0
 		\end{cases} \implies \text{sistema \emph{asintoticamente stabile}}\]
 \end{itemize}
-\end{esercizio}
 
-\begin{esercizio}[Sistema a retroazione negativa] Dato il sistema
+
+\exercise{Sistema a retroazione negativa} Dato il sistema
 \begin{center}\begin{tikzpicture}[auto,node distance=2cm,>=latex']
 	\node [input] (x) {};
 	\node [sum, right of=x] (sum) {};
@@ -597,9 +598,8 @@ Di conseguenza
 		\end{cases}\]
 	\item Il sistema non è asintoticamente stabile \(\forall k\)
 \end{itemize}
-\end{esercizio}
 
-\begin{esercizio}[Parametrico] Si applichi il criterio di Routh e si discutino i poli al variare di \(k\) per
+\exercise{Parametrico} Si applichi il criterio di Routh e si discutino i poli al variare di \(k\) per
 \[
 	G(s) = \frac{250k (s-3)}{(s+3)(s^2 +50s +2500)}
 \]
@@ -671,9 +671,9 @@ Di conseguenza
 			2 \text{ poli con } \Re s_i < 0
 		\end{cases} \implies \text{sistema \emph{instabile}}\]
 \end{itemize}
-\end{esercizio}
 
-\begin{esercizio}[Parametrico] Si applichi il criterio di Routh e si discutino i
+
+\exercise{Parametrico} Si applichi il criterio di Routh e si discutino i
 poli al variare di \(k\) al seguente sistema
 \[
 	G_c(s) = k \qquad G_p(s) = \frac{s-1}{s (s+1) (s^2 +8s +25)}
@@ -728,9 +728,9 @@ I casi sono
 	\item Se \(k = 164+36\sqrt{26}\): 1 polo con \(\Re s > 0 \implies\) sistema \emph{instabile}
 	\item Se \(k > 164+36\sqrt{26}\): 1 polo con \(\Re s > 0 \implies\) sistema \emph{instabile}
 \end{itemize}
-\end{esercizio}
 
-\begin{esercizio} Si applichi il criterio di Routh a
+
+\exercise{} Si applichi il criterio di Routh a
 \[
 	G_0(s) = \frac{s-2}{s^5 +5s^4 +11s^3 +23s^2 +28s +12}
 \]
@@ -755,4 +755,4 @@ I casi sono
 	2 \text{ poli puramente immaginari} \\
 	3 \text{ poli con } \Re s_i < 0
 \end{cases} \implies \text{sistema \emph{semplicemente stabile}}\]
-\end{esercizio}
+

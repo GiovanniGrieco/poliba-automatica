@@ -373,8 +373,9 @@ e di conseguenza anche lo schema equivalente
 	\draw [->] (ctrl) -- node[]{\(Y(s)\)} (y);
 \end{tikzpicture}\end{center}
 
-\subsection{Esercizi}
-\begin{esercizio}[Dati \(A=\frac{1}{2}\) e \(y=x\), determinare \(B\)] ~ % fixes paragraph spacing
+\section{Esercizi}
+\exercise{}
+Dati \(A=\frac{1}{2}\) e \(y=x\), determinare \(B\)
 
 \begin{center}\begin{tikzpicture}[auto,node distance=2cm,>=latex']
 	\node [input] (u) {};
@@ -404,9 +405,10 @@ Sostituendo le condizioni, si ha \(\frac{1}{2} + B - 2 = 1\), ovvero
 \[
 	B = \frac{5}{2}
 \]
-\end{esercizio}
 
-\begin{esercizio}[Dati \(A=2\), \(B=\frac{1}{2}\), \(y=3x\), determinare \(C\)] ~
+
+\exercise{}
+Dati \(A=2\), \(B=\frac{1}{2}\), \(y=3x\), determinare \(C\)]
 
 \begin{center}\begin{tikzpicture}[auto,node distance=2cm,>=latex']
 	\node [input] (x) {};
@@ -442,9 +444,10 @@ Riconoscendo che \(A \| C\), posso semplificare il blocco come segue:
 	1+(2+C)\frac{1}{2} &= 2 + \frac{C}{2} = \frac{1}{6} \\
 	C &= -\frac{11}{3}
 \end{align*}
-\end{esercizio}
 
-\begin{esercizio}[Semplifica il seguente sistema a blocchi e ricava la funzione di trasferimento] ~
+
+\exercise{}
+Semplifica il seguente sistema a blocchi e ricava la funzione di trasferimento
 
 \begin{center}\begin{tikzpicture}[auto,node distance=2cm,>=latex']
 	\node [input] (x) {};
@@ -533,9 +536,10 @@ che esprime l'equazione
 \[
 	y = \frac{ABC}{1 + \Bigl( \frac{1}{BC} - \frac{1}{C} - 1 \Bigr) ABC}
 \]
-\end{esercizio}
 
-\begin{esercizio}[Semplifica il seguente sistema a blocchi e ricava la funzione di trasferimento] ~
+
+\exercise{}
+Semplifica il seguente sistema a blocchi e ricava la funzione di trasferimento
 \begin{center}\begin{tikzpicture}[auto,node distance=2cm,>=latex']
 	\node [input] (x) {};
 	\node [sum, right of=x, node distance=2cm] (sum1) {};
@@ -637,10 +641,10 @@ del sistema:
 \[
 	y = \frac{1 + AB}{1 + BC \frac{1}{1 + AB} (1 + AB)} = \frac{1 + AB}{1 + BC}
 \]
-\end{esercizio}
 
-\begin{esercizio}[Determina la funzione di trasferimento del seguente sistema] ~
 
+\exercise{}
+Determina la funzione di trasferimento del seguente sistema
 \begin{center}\begin{tikzpicture}[auto,node distance=2cm,>=latex']
 	\node [input] (x) {};
 	\node [sum, right of=x] (sum1) {};
@@ -706,10 +710,10 @@ Quindi la funzione di trasferimento dell'intero sistema è
 \[
 	y = y_x + y_d = \frac{G_2 ( 1 + G_1 )}{1 - G_1 G_2 H}
 \]
-\end{esercizio}
 
-\begin{esercizio}[Determina la funzione di trasferimento del seguente sistema] ~
 
+\exercise{}
+Determina la funzione di trasferimento del seguente sistema
 \begin{center}\begin{tikzpicture}[auto,node distance=2cm,>=latex']
 	\node [input] (x) {};
 	\node [sum, right of=x] (sum1) {};
@@ -813,4 +817,4 @@ Infine si semplifica il sistema a retroazione negativa e si ricava la seguente e
 	\frac{\frac{G_1 G_2}{1 - G_1 G_3}}{\frac{1 - G_1 G_3 + G_4 G_1 G_2}{1 - G_1 G_3}} \Bigl( \frac{G_2 G_5 + G_6}{G_2} \Bigr) =
 	\frac{G_1 \bigl( G_2 G_5 + G_6 \bigr)}{1 - G_1 \bigl( G_3 - G_2 G_4 \bigr)}
 \]
-\end{esercizio}
+

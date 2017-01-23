@@ -117,3 +117,9 @@
     output/.style= {coordinate},
     pinstyle/.style = {pin edge={to-,thin,black}}
 }
+
+\newcommand{\exercise}[1]{
+    \stepcounter{subsection}
+    \def\desc{\ifthenelse{\equal{#1}{}}{}{ --- #1}}
+    \subsection*{Esercizio \arabic{chapter}.\arabic{subsection}\desc}
+}
