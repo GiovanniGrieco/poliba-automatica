@@ -11,7 +11,6 @@
 \newcommand*{\assistant}[1]{\gdef\@assistant{Assistente #1}}
 \newcommand*{\@assistant}{}
 \newcommand*{\@department}[1]{Dipartimento di Ingegneria Elettrica e dell'Informazione}
-\newcommand*{\versiondate}[1]{\gdef\@versiondate{#1}}
 \renewcommand*{\maketitle}{%
 \begin{titlepage}
 	\centering
@@ -24,8 +23,6 @@
 	\vspace{2.5cm}
 	{\Large\itshape \@professor\unskip\strut\\ \ifthenelse{\equal{\@assistant}{}}{}{\@assistant\unskip\strut\\} \@department\unskip\strut\par}
 	\vfill
-	% Bottom of the page
-	{\large Revisione del \@versiondate\unskip\strut\par}
 \end{titlepage}
 }
 \endinput
