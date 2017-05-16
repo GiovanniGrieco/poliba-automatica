@@ -1,3 +1,4 @@
+%!TEX root=../../automatica.tex
 \chapter{Luogo delle radici}
 \section{Metodo di risoluzione}
 Il metodo consiste nel dividere lo svolgimento del problema in microsezioni.
@@ -185,7 +186,7 @@ Determinare il luogo delle radici al variare di \(k>0\).
 		\]
 		Si sceglie il primo perché è il valore che appartiene al luogo delle radici.
 	\item \emph{Punti di intersezione con l'asse immaginario}:
-		applico il criterio di Routh per \(P(s) = s^3 +6s +5s +k\):
+		applico il criterio di Routh per \(P(s) = s^3 +6s^2 +5s +k\):
 		\[\begin{array}{r|rr}
 			s^3      & 1 & 5 \\
 			\bm{s^2} & 6 & k \\
@@ -385,9 +386,9 @@ Determinare il luogo delle radici per \(k>0\).
 	\item \emph{Stabilità}:
 		\[\begin{cases}
 			k=0\colon & \text{sistema \emph{semplicemente stabile}} \\
-			0<k<\frac{13}{2}\colon & \text{sistema \emph{asintoticamente stabile}} \\
-			k=\frac{13}{2}\colon & \text{sistema \emph{semplicemente stabile}} \\
-			k>\frac{13}{2}\colon & \text{sistema \emph{instabile} con 2 poli instabili}
+			0<k<\frac{65}{4}\colon & \text{sistema \emph{asintoticamente stabile}} \\
+			k=\frac{65}{4}\colon & \text{sistema \emph{semplicemente stabile}} \\
+			k>\frac{65}{4}\colon & \text{sistema \emph{instabile} con 2 poli instabili}
 		\end{cases}\]
 \end{itemize}
 
@@ -511,7 +512,7 @@ Determinare il luogo delle radici per \(k\in\mathbb{R}^2\).
 	\item \emph{Punti doppi}:
 		\[
 			k = -\frac{1}{G(s)} = + \frac{(s+2)(s-2)(s+4)}{1-s} \quad
-			\text{per } s \in \Bigl(-4,-\frac{5}{2}\Bigr)
+			\text{per } s \in \Bigl(-4,-2\Bigr)
 		\]
 		\[\begin{array}{rr}
 			\toprule
@@ -560,8 +561,8 @@ Quindi si ha \(G(s)H(s) = G(s)\) considerando \(H(s)\) unitario.
 \begin{itemize}
 	\item \emph{Punti di singolarità}:
 		\begin{itemize}
-			\item poli: \(\bigl\{ -1 \bigr\}\)
-			\item zeri: \(\bigl\{ -5,0,5 \bigr\}\)
+			\item poli: \(\bigl\{ -5,0,5 \bigr\}\)
+			\item zeri: \(\bigl\{ -1 \bigr\}\)
 		\end{itemize}
 	\item \emph{Asintoti}:
 		\[
@@ -632,7 +633,7 @@ Determinare il luogo delle radici per \(k>0\) e \(k<0\).
 		\end{array}\]
 		Per \(k = 48 = 16\cdot3\) si ha \(-16s^2-16\cdot12=0 \rightarrow
 		s = \pm\jmath2\sqrt{3}\).
-	\item \emph{Angoli di partenza} per \(s = \pm\jmath2\sqrt{3}\):
+	\item \emph{Angoli di partenza} per \(s = -2\pm\jmath2\):
 		\begin{align*}
 			\varphi_- &= \pi + \angle(-2-\jmath2-1) -\angle(-2-\jmath2+2-\jmath2) -2\angle(-2-\jmath2-0) = \\
 				  &= \pi + \arctan{\frac{2}{3}} -\pi +\frac{\pi}{2} -2\arctan{1} +2\pi = \\
@@ -666,7 +667,7 @@ Determinare il luogo delle radici per \(k>0\) e \(k<0\).
 	\item \emph{Punti doppi}:
 		\[
 			k = -\frac{s^2\bigl((s+2)^2+4\bigr)}{s-1} \quad
-			\text{per } s \in (-1,+\infty)
+			\text{per } s \in (1,+\infty)
 		\]
 		\[\begin{array}{rr}
 			\toprule
@@ -795,7 +796,7 @@ Determinare il luogo delle radici per \(k>0\) e \(k<0\).
 			\midrule
 			     8 &      -436 \\
 			\bm{9} & \bm{-390} \\
-			    10 &      -918 \\
+			    10 &      -382.5 \\
 			\bottomrule
 		\end{array}\]
 		Per \(s=9\) si ha un punto doppio di \emph{confluenza}.
@@ -968,7 +969,7 @@ Sempre nell'ipotesi \(G_C(s)=k\), si discuta la stabilità del sistema in anello
 
 \subsubsection{Per il valore di \(k\) determinato, individuare sul luogo la porzione dei rami in cui sono posizionati gli altri due poli.}
 
-Dato che per \(s\approx2\), \(k\approx24\), gli altri due poli devono per forza trovarsi dopo il punto di emergenza, in direzione per gli asintoti.
+Dato che per \(s\approx2\), \(k\approx14\), gli altri due poli devono per forza trovarsi dopo il punto di emergenza, in direzione per gli asintoti.
 
 \exercise{}
 \[kG(s) = k\frac{(s+1)(s+2)}{s^3(s^2+2s+2)}\]
@@ -982,7 +983,7 @@ Dato che per \(s\approx2\), \(k\approx24\), gli altri due poli devono per forza 
 	\item Mappa poli-zeri e luogo delle radici:
 		\begin{center}\includegraphics[scale=.5]{mod1/assets/rl_ex317.eps}\end{center}
 	\item Asintoti: \begin{itemize}
-		\item \(\displaystyle \sigma_a = \frac{01+\jmath-1-\jmath+2+1}{3} = \frac{1}{3}\)
+		\item \(\displaystyle \sigma_a = \frac{-1+\jmath-1-\jmath+2+1}{3} = \frac{1}{3}\)
 		\item \(\displaystyle \theta_a = \frac{\qty(2\qty[0,1,2]+1)\pi}{3} = \qty[\frac{\pi}{3},\pi,\frac{5}{3}\pi]\)
 	\end{itemize}
 	\item Punti doppi: ne prevedo uno in \((-\infty,2)\). Utilizzo la \emph{tabella di taratura}
